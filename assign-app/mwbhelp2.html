@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Tracker</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3, #FFC107, #FF5722);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            font-size: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .controls-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .color-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-btn.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 3px white, 0 0 0 6px #2c3e50;
+        }
+
+        #table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            background-color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 800px;
+        }
+
+        th {
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            color: white;
+            font-weight: 600;
+            padding: 12px 15px;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            text-align: center;
+            min-width: 50px;
+            height: 45px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        .name-cell {
+            font-weight: 600;
+            background-color: #e3f2fd;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .label-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+        }
+
+        .secondary-btn {
+            background: linear-gradient(to right, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .delete-btn {
+            background: linear-gradient(to right, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .add-btn {
+            background: linear-gradient(to right, #FF9800, #F57C00);
+            color: white;
+        }
+
+        #table-select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #1976D2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .no-table {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .controls-group {
+                min-width: 100%;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span>Assignment Tracker</span>
+            <span>📊</span>
+        </h1>
+        
+        <div class="instructions">
+            <h3>📝 How to Use:</h3>
+            <p>1. Create a new table or select an existing one.</p>
+            <p>2. Add names/groups using the "Add Names" button.</p>
+            <p>3. Click on any cell to mark assignments using the selected color.</p>
+            <p>4. Use the Export button to save your data.</p>
+        </div>
+        
+        <div class="controls">
+            <div class="controls-group">
+                <label>Select Table:</label>
+                <div style="display: flex; gap: 10px;">
+                    <select id="table-select"></select>
+                    <button id="add-table-btn" class="add-btn">New Table ➕</button>
+                </div>
+            </div>
+            
+            <div class="controls-group">
+                <label>Table Actions:</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button id="add-names-btn" class="primary-btn">Add Names ➕</button>
+                    <button id="import-btn" class="secondary-btn">Import 📂</button>
+                    <button id="export-btn" class="secondary-btn">Export 📤</button>
+                    <button id="delete-table-btn" class="delete-btn">Delete ❌</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="color-buttons">
+            <button class="color-btn default-btn selected" data-color="white" style="background-color: white;">⬜</button>
+            <button class="color-btn" style="background-color: #ff0000;" data-color="#ff0000">🔴</button>
+            <button class="color-btn" style="background-color: #ffff00;" data-color="#ffff00">🟨</button>
+            <button class="color-btn" style="background-color: #00ff00;" data-color="#00ff00">🟩</button>
+            <button class="color-btn" style="background-color: #0000ff;" data-color="#0000ff">🔵</button>
+            <button class="color-btn" style="background-color: #ff00ff;" data-color="#ff00ff">🟣</button>
+            <button class="color-btn" style="background-color: #ffa500;" data-color="#ffa500">🟠</button>
+            <button class="color-btn" style="background-color: #800080;" data-color="#800080">🌸</button>
+            <button class="color-btn" style="background-color: #00ffff;" data-color="#00ffff">🟦</button>
+            <button class="color-btn" style="background-color: #ff6347;" data-color="#ff6347">🍅</button>
+            <button class="color-btn" style="background-color: #a52a2a;" data-color="#a52a2a">🍁</button>
+            <button class="color-btn" style="background-color: #008080;" data-color="#008080">🌊</button>
+        </div>
+        
+        <div id="table-container"></div>
+        
+        <div class="footer">
+            <p>Assignment Tracker v2.0 • All data is stored locally in your browser</p>
+        </div>
+    </div>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📝 Manage Table</h2>
+            
+            <div class="label-group">
+                <label for="table-name">Table Name:</label>
+                <input type="text" id="table-name" placeholder="Enter table name">
+            </div>
+            
+            <div class="label-group">
+                <label for="names-input">Names (comma separated):</label>
+                <input type="text" id="names-input" placeholder="e.g., Alice, Bob, Charlie">
+            </div>
+            
+            <div class="button-group">
+                <button id="save-table-btn" class="primary-btn">Save Table ✅</button>
+                <button id="cancel-btn" class="delete-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const tableContainer = document.getElementById('table-container');
+            const addNamesBtn = document.getElementById('add-names-btn');
+            const addTableBtn = document.getElementById('add-table-btn');
+            const modal = document.getElementById('modal');
+            const closeModal = document.getElementsByClassName('close')[0];
+            const saveTableBtn = document.getElementById('save-table-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const importBtn = document.getElementById('import-btn');
+            const exportBtn = document.getElementById('export-btn');
+            const tableSelect = document.getElementById('table-select');
+            const deleteTableBtn = document.getElementById('delete-table-btn');
+            const tableNameInput = document.getElementById('table-name');
+            const namesInput = document.getElementById('names-input');
+            const colorButtons = document.querySelectorAll('.color-btn');
+            
+            // State variables
+            let selectedColor = 'white';
+            let tables = JSON.parse(localStorage.getItem('tables')) || {};
+            let cellColors = JSON.parse(localStorage.getItem('cellColors')) || {};
+            let currentTable = Object.keys(tables)[0] || '';
+            
+            // Initialize application
+            function initApp() {
+                updateTableSelect();
+                renderTable(currentTable);
+                updateColorButtons();
+            }
+            
+            // Update table select dropdown
+            function updateTableSelect() {
+                tableSelect.innerHTML = '';
+                if (Object.keys(tables).length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'No tables available';
+                    tableSelect.appendChild(option);
+                    return;
+                }
+                
+                Object.keys(tables).forEach(tableName => {
+                    const option = document.createElement('option');
+                    option.value = tableName;
+                    option.textContent = tableName;
+                    tableSelect.appendChild(option);
+                });
+                
+                if (currentTable && tableSelect.querySelector(`option[value="${currentTable}"]`)) {
+                    tableSelect.value = currentTable;
+                } else if (Object.keys(tables).length > 0) {
+                    currentTable = Object.keys(tables)[0];
+                    tableSelect.value = currentTable;
+                }
+            }
+            
+            // Render the table
+            function renderTable(tableName) {
+                if (!tableName || !tables[tableName]) {
+                    tableContainer.innerHTML = '<p class="no-table">No table selected. Create a new table or add names to an existing one.</p>';
+                    return;
+                }
+                
+                const names = tables[tableName];
+                let tableHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                `;
+                
+                // Create week headers
+                for (let i = 1; i <= 24; i++) {
+                    tableHTML += `<th>wk${i}</th>`;
+                }
+                
+                tableHTML += `</tr></thead><tbody>`;
+                
+                // Create rows for each name
+                names.forEach((name, rowIndex) => {
+                    tableHTML += `<tr><td class="name-cell">${name}</td>`;
+                    
+                    // Create cells for each week
+                    for (let week = 1; week <= 24; week++) {
+                        const colorKey = `${tableName}_${rowIndex}_${week}`;
+                        const bgColor = cellColors[colorKey] || 'white';
+                        tableHTML += `<td data-row="${rowIndex}" data-week="${week}" style="background-color: ${bgColor};"></td>`;
+                    }
+                    
+                    tableHTML += `</tr>`;
+                });
+                
+                tableHTML += `</tbody></table>`;
+                tableContainer.innerHTML = tableHTML;
+                
+                // Add click event listeners to cells
+                const cells = tableContainer.querySelectorAll('td:not(.name-cell)');
+                cells.forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        cell.style.backgroundColor = selectedColor;
+                        saveCellColor(cell);
+                    });
+                });
+            }
+            
+            // Save cell color to localStorage
+            function saveCellColor(cell) {
+                const rowIndex = parseInt(cell.dataset.row);
+                const week = parseInt(cell.dataset.week);
+                
+                if (isNaN(rowIndex) || isNaN(week)) return;
+                
+                const colorKey = `${currentTable}_${rowIndex}_${week}`;
+                cellColors[colorKey] = selectedColor;
+                localStorage.setItem('cellColors', JSON.stringify(cellColors));
+            }
+            
+            // Update selected color button
+            function updateColorButtons() {
+                colorButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    if (btn.dataset.color === selectedColor) {
+                        btn.classList.add('selected');
+                    }
+                });
+            }
+            
+            // Event Listeners
+            colorButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedColor = btn.dataset.color;
+                    updateColorButtons();
+                });
+            });
+            
+            addNamesBtn.addEventListener('click', () => {
+                if (!currentTable) {
+                    alert('Please select or create a table first.');
+                    return;
+                }
+                tableNameInput.value = currentTable;
+                namesInput.value = tables[currentTable].join(', ');
+                modal.style.display = 'flex';
+            });
+            
+            addTableBtn.addEventListener('click', () => {
+                tableNameInput.value = '';
+                namesInput.value = '';
+                modal.style.display = 'flex';
+                tableNameInput.focus();
+            });
+            
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            cancelBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            saveTableBtn.addEventListener('click', () => {
+                const tableName = tableNameInput.value.trim();
+                const names = namesInput.value.split(',')
+                    .map(name => name.trim())
+                    .filter(name => name);
+                
+                if (!tableName) {
+                    alert('Please enter a table name.');
+                    tableNameInput.focus();
+                    return;
+                }
+                
+                if (names.length === 0) {
+                    alert('Please enter at least one name.');
+                    namesInput.focus();
+                    return;
+                }
+                
+                // If table name changed, remove old table's cell colors
+                if (currentTable && currentTable !== tableName) {
+                    Object.keys(cellColors).forEach(key => {
+                        if (key.startsWith(`${currentTable}_`)) {
+                            delete cellColors[key];
+                        }
+                    });
+                    localStorage.setItem('cellColors', JSON.stringify(cellColors));
+                }
+                
+                tables[tableName] = names;
+                localStorage.setItem('tables', JSON.stringify(tables));
+                
+                currentTable = tableName;
+                modal.style.display = 'none';
+                updateTableSelect();
+                renderTable(currentTable);
+            });
+            
+            tableSelect.addEventListener('change', (e) => {
+                currentTable = e.target.value;
+                renderTable(currentTable);
+            });
+            
+            deleteTableBtn.addEventListener('click', () => {
+                if (!currentTable) {
+                    alert('No table selected to delete.');
+                    return;
+                }
+                
+                if (confirm(`Are you sure you want to delete the table "${currentTable}"?`)) {
+                    delete tables[currentTable];
+                    
+                    // Remove cell colors for this table
+                    Object.keys(cellColors).forEach(key => {
+                        if (key.startsWith(`${currentTable}_`)) {
+                            delete cellColors[key];
+                        }
+                    });
+                    
+                    localStorage.setItem('tables', JSON.stringify(tables));
+                    localStorage.setItem('cellColors', JSON.stringify(cellColors));
+                    
+                    if (Object.keys(tables).length > 0) {
+                        currentTable = Object.keys(tables)[0];
+                    } else {
+                        currentTable = '';
+                    }
+                    
+                    updateTableSelect();
+                    renderTable(currentTable);
+                }
+            });
+            
+            importBtn.addEventListener('click', () => {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '.json';
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            try {
+                                const data = JSON.parse(e.target.result);
+                                if (!data.tables || !data.cellColors) {
+                                    throw new Error('Invalid file structure');
+                                }
+                                tables = data.tables;
+                                cellColors = data.cellColors;
+                                
+                                localStorage.setItem('tables', JSON.stringify(tables));
+                                localStorage.setItem('cellColors', JSON.stringify(cellColors));
+                                
+                                currentTable = Object.keys(tables)[0] || '';
+                                updateTableSelect();
+                                renderTable(currentTable);
+                                
+                                alert('Data imported successfully!');
+                            } catch (error) {
+                                alert('Invalid file format. Please select a valid JSON file.');
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                };
+                fileInput.click();
+            });
+            
+            exportBtn.addEventListener('click', () => {
+                if (Object.keys(tables).length === 0) {
+                    alert('No data to export.');
+                    return;
+                }
+                
+                const data = {
+                    tables: tables,
+                    cellColors: cellColors
+                };
+                
+                const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute('href', dataStr);
+                downloadAnchor.setAttribute('download', `assignment-tracker-${new Date().toISOString().split('T')[0]}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                document.body.removeChild(downloadAnchor);
+            });
+            
+            // Initialize the app
+            initApp();
+        });
+    </script>
+</body>
+</html>
