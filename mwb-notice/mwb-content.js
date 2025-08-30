@@ -602,15 +602,15 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Owusuwaa Appiah &",
+            "text": "Owusuwaa Appiah & Margaret Entsie",
             "edited": true
           },
           {
-            "text": "Victoria Yeboah &",
+            "text": "Victoria Yeboah & Naomi Entsie",
             "edited": true
           },
           {
-            "text": "Elizabeth Yeboah &",
+            "text": "Elizabeth Yeboah & Lois Ofosu",
             "edited": true
           }
         ],
@@ -624,15 +624,15 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Perlita Gyamfua &",
+            "text": "Perlita Gyamfua & Joana Ekwama Entsie",
             "edited": true
           },
           {
-            "text": "Winifred Appiah &",
+            "text": "Winifred Appiah  & Mary Entsie",
             "edited": true
           },
           {
-            "text": "Jemimah Miezah &",
+            "text": "Jemimah Miezah & Joana Entsie",
             "edited": true
           }
         ],
@@ -646,11 +646,11 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Rosina Yankson &",
+            "text": "Rosina Yankson & Nancy Baidoo",
             "edited": true
           },
           {
-            "text": "Adwoa Onwona &",
+            "text": "Adwoa Onwona & Claudia Polley",
             "edited": true
           },
           {
@@ -756,7 +756,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Emmanuel Entsie",
+            "text": "Emmanuel Asante",
             "edited": true
           },
           {
@@ -883,7 +883,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Nancy Baidoo & Mary Entsie",
+            "text": "Esther Ofori & Esther Takie",
             "edited": true
           }
         ],
@@ -897,7 +897,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Lois Sowolo & Claudia Sam",
+            "text": "Erica Sowolo & Claudia Sam",
             "edited": true
           },
           {
