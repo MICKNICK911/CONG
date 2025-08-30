@@ -770,7 +770,7 @@ const NoticeData =
         ],
         "Closing Prayer": [
           {
-            "text": "Isaac Arhin",
+            "text": "Reuben Sowolo",
             "edited": true
           },
           {
@@ -778,7 +778,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Reuben Sowolo",
+            "text": "Isaac Arhin",
             "edited": true
           },
           {
