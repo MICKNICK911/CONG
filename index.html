@@ -1288,7 +1288,7 @@ function initApp() {
         }, 800);
     }, 2000);
     
-    // loadFromLocalStorage();
+    loadFromLocalStorage();
     checkCurrentMonth(false);
     renderTabs();
     renderTable();
@@ -1299,7 +1299,8 @@ function initApp() {
 
 function loadFromLocalStorage() {
     try {
-        const savedData = localStorage.getItem('mwbRosterData');
+        //const savedData = localStorage.getItem('mwbRosterData'); improvise
+        const savedData = false;
         if (savedData) {
             allMonthsData = JSON.parse(savedData);
             if (Object.keys(allMonthsData).length === 0) {
@@ -1320,7 +1321,8 @@ function loadFromLocalStorage() {
             allMonthsData = structuredClone(defaultData);
         }
         
-        const savedCategories = localStorage.getItem('mwbCategories');
+        //const savedCategories = localStorage.getItem('mwbCategories'); improvise
+        const savedCategories = false;
         if (savedCategories) {
             appCategories = JSON.parse(savedCategories);
             if (Object.keys(appCategories).length === 0) {
