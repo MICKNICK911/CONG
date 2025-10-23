@@ -1,5 +1,5 @@
-const NoticeData = 
-  {"july": {
+const NoticeData = {
+    "july": {
       "id": "july",
       "name": "July 2025",
       "weeks": [
@@ -627,7 +627,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Winifred Appiah  & Mary Entsie",
+            "text": "Winifred Appiah  & Mary Entsie",
             "edited": true
           },
           {
@@ -798,7 +798,7 @@ const NoticeData =
       "weeks": [
         {
           "range": "October 6 - 12",
-          "isCurrent": true
+          "isCurrent": false
         },
         {
           "range": "October 13 - 19",
@@ -806,7 +806,7 @@ const NoticeData =
         },
         {
           "range": "October 20 - 26",
-          "isCurrent": false
+          "isCurrent": true
         },
         {
           "range": "October 27 - November 2",
@@ -882,7 +882,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Esther Ofori & Esther Takie",
+            "text": "Esther Ofori & Esther Takie",
             "edited": true
           }
         ],
@@ -1111,11 +1111,11 @@ const NoticeData =
         ],
         "4": [
           {
-            "text": "Barbara Asamoah & Joana Entsie",
+            "text": "Barbara Asamoah & Joana Entsie",
             "edited": true
           },
           {
-            "text": "Hannah Adumoah & Cynthia Sam",
+            "text": "Hannah Adumoah & Cynthia Sam",
             "edited": true
           },
           {
@@ -1123,31 +1123,31 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Lilian Bawuah & Juliana Entsie",
+            "text": "Lilian Bawuah & Juliana Entsie",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Lois Ofosu & Owusuwaa Appiah",
+            "text": "Lois Ofosu & Owusuwaa Appiah",
             "edited": true
           },
           {
-            "text": "Nhyira Appiah & Adwoa Onwona",
+            "text": "Nhyira Appiah & Adwoa Onwona",
             "edited": true
           },
           {
-            "text": "Abigail Asiedu & Dora Asare",
+            "text": "Abigail Asiedu & Dora Asare",
             "edited": true
           },
           {
-            "text": "Mawusi Appiah & Mary Entsie",
+            "text": "Mawusi Appiah & Mary Entsie",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "Mary Entsie & Adelaide Allotey",
+            "text": "Mary Entsie & Adelaide Allotey",
             "edited": true
           },
           {
@@ -1155,7 +1155,7 @@ const NoticeData =
             "edited": true
           },
           {
-            "text": "Margaret Entsie & Pricilla Essel",
+            "text": "Margaret Entsie & Pricilla Essel",
             "edited": true
           },
           {
@@ -1302,15 +1302,7 @@ const NoticeData =
       "roles": {
         "1": [
           {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
             "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
             "edited": true
           },
           {
@@ -1318,7 +1310,15 @@ const NoticeData =
             "edited": true
           },
           {
+            "text": "Derrick Yankson",
+            "edited": true
+          },
+          {
             "text": "Abel Eshun",
+            "edited": true
+          },
+          {
+            "text": "Anthony Entsie",
             "edited": true
           }
         ],
@@ -1368,63 +1368,63 @@ const NoticeData =
         ],
         "4": [
           {
-            "text": "Gloria Adobea & Juliana Entsie",
+            "text": "Gloria Adobea & Juliana Entsie",
             "edited": true
           },
           {
-            "text": "Christiana Amponsah & Adwoa Onwona",
+            "text": "Christiana Amponsah & Adwoa Onwona",
             "edited": true
           },
           {
-            "text": "Alimatu Saadia & Lois Soworlo",
+            "text": "Alimatu Saadia & Lois Soworlo",
             "edited": true
           },
           {
-            "text": "Mercy Entsie & Rebecca Abgenyo",
+            "text": "Mercy Entsie & Rebecca Abgenyo",
             "edited": true
           },
           {
-            "text": "Erica Sowolo & Rosina Yankson",
+            "text": "Erica Sowolo & Rosina Yankson",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Naomi Entsie & Tracy Yeboah",
+            "text": "Naomi Entsie & Tracy Yeboah",
             "edited": true
           },
           {
-            "text": "Perlita Gyamfua & Joana Entsie",
+            "text": "Perlita Gyamfua & Joana Entsie",
             "edited": true
           },
           {
-            "text": "Cynthia Sam & Stephanie Onwona",
+            "text": "Cynthia Sam & Stephanie Onwona",
             "edited": true
           },
           {
-            "text": "Dorah Asare & Nancy Baidoo",
+            "text": "Dorah Asare & Nancy Baidoo",
             "edited": true
           },
           {
-            "text": "Claudia Sam & Sis Atobora",
+            "text": "Claudia Sam & Sis Atobora",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "Esther Takie & Selina Gyamfi",
+            "text": "Esther Takie & Selina Gyamfi",
             "edited": true
           },
           {
-            "text": "Adwoa Eshun & Victoria Yeboah",
+            "text": "Adwoa Eshun & Victoria Yeboah",
             "edited": true
           },
           {
-            "text": "Joana E. Entsie & Elizabeth Yeboah",
+            "text": "Joana E. Entsie & Elizabeth Yeboah",
             "edited": true
           },
           {
-            "text": "Augusta Appiah & Winifred Appiah",
+            "text": "Augusta Appiah & Winifred Appiah",
             "edited": true
           },
           {
@@ -1456,7 +1456,7 @@ const NoticeData =
         ],
         "8": [
           {
-            "text": "Kingsley Arhin",
+            "text": "Circuit Overseer First Talk",
             "edited": true
           },
           {
