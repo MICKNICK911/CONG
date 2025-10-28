@@ -259,6 +259,167 @@
             font-size: 0.9rem;
         }
 
+        /* User Guide Styles */
+        .user-guide {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .guide-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .guide-toggle:hover {
+            transform: scale(1.1);
+            background-color: #2980b9;
+        }
+
+        .guide-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .guide-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .guide-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .guide-modal.active .guide-content {
+            transform: translateY(0);
+        }
+
+        .guide-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .guide-header h2 {
+            margin: 0;
+        }
+
+        .guide-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide-body {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .guide-step {
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .guide-step.active {
+            display: block;
+        }
+
+        .guide-step h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .guide-step p {
+            margin-bottom: 1rem;
+        }
+
+        .guide-step-image {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-style: italic;
+            color: var(--dark-color);
+        }
+
+        .guide-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .guide-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .guide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .guide-dot.active {
+            background-color: var(--secondary-color);
+        }
+
+        .guide-feature-highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 1px dashed var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
         /* Desktop styles */
         @media (min-width: 768px) {
             .controls {
@@ -343,6 +504,89 @@
                 <p>Mid-Week Meeting Assignment Schedule &copy; 2025</p>
             </div>
         </footer>
+    </div>
+
+    <!-- User Guide -->
+    <div class="user-guide">
+        <button class="guide-toggle">?</button>
+    </div>
+
+    <!-- Guide Modal -->
+    <div class="guide-modal">
+        <div class="guide-content">
+            <div class="guide-header">
+                <h2>📖 How to Use This App</h2>
+                <button class="guide-close">×</button>
+            </div>
+            <div class="guide-body">
+                <div class="guide-step active" id="step-1">
+                    <h3>👋 Welcome!</h3>
+                    <p>This app helps you view meeting assignments for each week. Let's take a quick tour of the features.</p>
+                    <div class="guide-step-image">
+                        📅 Meeting Assignment Schedule
+                    </div>
+                    <p>You can always access this guide by clicking the <strong>?</strong> button in the bottom right corner.</p>
+                </div>
+                
+                <div class="guide-step" id="step-2">
+                    <h3>📅 Month Selection</h3>
+                    <p>Use the <strong>Month dropdown</strong> to navigate between different months.</p>
+                    <div class="guide-feature-highlight">
+                        <strong>Try it:</strong> Select a different month to see assignments for that period
+                    </div>
+                    <p>The app contains schedules from July to December 2025.</p>
+                </div>
+                
+                <div class="guide-step" id="step-3">
+                    <h3>📆 Week Selection</h3>
+                    <p>Use the <strong>Week dropdown</strong> to view assignments for specific weeks within the selected month.</p>
+                    <div class="guide-feature-highlight">
+                        <strong>Tip:</strong> Each month has 4-5 weeks of assignments
+                    </div>
+                    <p>You can also use the <strong>◀️ ▶️ navigation buttons</strong> to move between weeks quickly.</p>
+                </div>
+                
+                <div class="guide-step" id="step-4">
+                    <h3>🟢 Current Week Indicator</h3>
+                    <p>When viewing the current week, you'll see a green indicator at the top.</p>
+                    <div class="guide-step-image">
+                        🟢 This is the current week
+                    </div>
+                    <p>This helps you quickly identify which assignments are for this week's meeting.</p>
+                </div>
+                
+                <div class="guide-step" id="step-5">
+                    <h3>👥 Assignment Cards</h3>
+                    <p>Each role is displayed in a separate card with the assigned person's name.</p>
+                    <div class="guide-step-image">
+                        <strong>Bible Reading:</strong><br>
+                        John Doe
+                    </div>
+                    <p>For assignments with two people, you'll see both <strong>Osuani</strong> (Main) and <strong>Boafo</strong> (Assistant) roles.</p>
+                </div>
+                
+                <div class="guide-step" id="step-6">
+                    <h3>🎯 You're All Set!</h3>
+                    <p>You now know how to use all the features of the Meeting Assignment Schedule.</p>
+                    <div class="guide-feature-highlight">
+                        <strong>Remember:</strong> The app automatically shows the current week's assignments when you first open it
+                    </div>
+                    <p>If you need help again, just click the <strong>?</strong> button anytime!</p>
+                </div>
+            </div>
+            <div class="guide-navigation">
+                <button id="guide-prev" disabled>Previous</button>
+                <div class="guide-dots">
+                    <div class="guide-dot active" data-step="1"></div>
+                    <div class="guide-dot" data-step="2"></div>
+                    <div class="guide-dot" data-step="3"></div>
+                    <div class="guide-dot" data-step="4"></div>
+                    <div class="guide-dot" data-step="5"></div>
+                    <div class="guide-dot" data-step="6"></div>
+                </div>
+                <button id="guide-next">Next</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1921,6 +2165,8 @@
         // App state
         let currentMonth = '';
         let currentWeekIndex = 0;
+        let currentGuideStep = 1;
+        const totalGuideSteps = 6;
 
         // DOM elements
         const splashScreen = document.getElementById('splash-screen');
@@ -1932,6 +2178,14 @@
         const nextWeekBtn = document.getElementById('next-week');
         const currentWeekIndicator = document.getElementById('current-week-indicator');
         const scheduleGrid = document.getElementById('schedule-grid');
+
+        // Guide elements
+        const guideToggle = document.querySelector('.guide-toggle');
+        const guideModal = document.querySelector('.guide-modal');
+        const guideClose = document.querySelector('.guide-close');
+        const guidePrev = document.getElementById('guide-prev');
+        const guideNext = document.getElementById('guide-next');
+        const guideDots = document.querySelectorAll('.guide-dot');
 
         // Role name mapping
         const roleNameMap = {
@@ -1951,6 +2205,15 @@
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     app.style.display = 'block';
+                    
+                    // Show guide for first-time users
+                    const hasSeenGuide = localStorage.getItem('hasSeenGuide');
+                    if (!hasSeenGuide) {
+                        setTimeout(() => {
+                            showGuide();
+                            localStorage.setItem('hasSeenGuide', 'true');
+                        }, 1000);
+                    }
                 }, 500);
             }, 3000);
 
@@ -1968,6 +2231,60 @@
             
             // Update date every 60 minute
             setInterval(updateCurrentDate, 3600000);
+        }
+
+        // Guide functions
+        function showGuide() {
+            guideModal.classList.add('active');
+            currentGuideStep = 1;
+            updateGuide();
+        }
+
+        function hideGuide() {
+            guideModal.classList.remove('active');
+        }
+
+        function updateGuide() {
+            // Hide all steps
+            document.querySelectorAll('.guide-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`step-${currentGuideStep}`).classList.add('active');
+            
+            // Update dots
+            guideDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (parseInt(dot.dataset.step) === currentGuideStep) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            // Update button states
+            guidePrev.disabled = currentGuideStep === 1;
+            guideNext.textContent = currentGuideStep === totalGuideSteps ? 'Finish' : 'Next';
+        }
+
+        function nextGuideStep() {
+            if (currentGuideStep < totalGuideSteps) {
+                currentGuideStep++;
+                updateGuide();
+            } else {
+                hideGuide();
+            }
+        }
+
+        function prevGuideStep() {
+            if (currentGuideStep > 1) {
+                currentGuideStep--;
+                updateGuide();
+            }
+        }
+
+        function goToGuideStep(step) {
+            currentGuideStep = step;
+            updateGuide();
         }
 
         // Get current 2025 date
@@ -2321,6 +2638,25 @@
                     currentWeekIndex++;
                     updateWeekSelect();
                     renderSchedule();
+                }
+            });
+            
+            // Guide event listeners
+            guideToggle.addEventListener('click', showGuide);
+            guideClose.addEventListener('click', hideGuide);
+            guidePrev.addEventListener('click', prevGuideStep);
+            guideNext.addEventListener('click', nextGuideStep);
+            
+            guideDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    goToGuideStep(parseInt(this.dataset.step));
+                });
+            });
+            
+            // Close guide when clicking outside
+            guideModal.addEventListener('click', function(e) {
+                if (e.target === guideModal) {
+                    hideGuide();
                 }
             });
         }
