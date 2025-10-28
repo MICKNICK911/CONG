@@ -1921,7 +1921,6 @@
         // App state
         let currentMonth = '';
         let currentWeekIndex = 0;
-        let currentWeekInfo = { monthId: '', weekIndex: -1 };
 
         // DOM elements
         const splashScreen = document.getElementById('splash-screen');
@@ -1955,7 +1954,7 @@
                 }, 500);
             }, 3000);
 
-            // Find current week based on real date
+            // Find current week based on 2025 date
             findCurrentWeek();
             
             // Update current date
@@ -1968,14 +1967,21 @@
             setupEventListeners();
             
             // Update date every minute
-            setInterval(updateCurrentDate, 3600000);
+            setInterval(updateCurrentDate, 60000);
         }
 
-        // Find current week based on real date
-        function findCurrentWeek() {
+        // Get current 2025 date
+        function getCurrent2025Date() {
             const now = new Date();
-            const currentDate = now.getDate();
-            const currentMonthNum = now.getMonth() + 1; // JavaScript months are 0-indexed
+            // Set year to 2025 while keeping current month and day
+            return new Date(2025, now.getMonth(), now.getDate());
+        }
+
+        // Find current week based on 2025 date
+        function findCurrentWeek() {
+            const currentDate = getCurrent2025Date();
+            const currentMonthNum = currentDate.getMonth() + 1;
+            const currentDay = currentDate.getDate();
             
             // Convert month number to name
             const monthNames = [
@@ -1988,7 +1994,7 @@
             let foundMonth = null;
             let foundWeekIndex = -1;
             
-            // Look for exact month match first
+            // Look for exact month match
             for (const monthId in NoticeData) {
                 const month = NoticeData[monthId];
                 if (month.name.includes(currentMonthName)) {
@@ -2011,16 +2017,12 @@
                     }
                     
                     // Check if current date falls within this week
-                    if (currentDate >= startDate && currentDate <= endDate) {
+                    if (currentDay >= startDate && currentDay <= endDate) {
                         foundWeekIndex = index;
                     }
                 });
                 
                 if (foundWeekIndex !== -1) {
-                    currentWeekInfo = {
-                        monthId: foundMonth.id,
-                        weekIndex: foundWeekIndex
-                    };
                     currentMonth = foundMonth.id;
                     currentWeekIndex = foundWeekIndex;
                     return;
@@ -2032,10 +2034,6 @@
                 const month = NoticeData[monthId];
                 const currentWeek = month.weeks.findIndex(week => week.isCurrent);
                 if (currentWeek !== -1) {
-                    currentWeekInfo = {
-                        monthId: month.id,
-                        weekIndex: currentWeek
-                    };
                     currentMonth = month.id;
                     currentWeekIndex = currentWeek;
                     return;
@@ -2044,17 +2042,13 @@
             
             // Final fallback: use first month and first week
             const firstMonth = Object.values(NoticeData)[0];
-            currentWeekInfo = {
-                monthId: firstMonth.id,
-                weekIndex: 0
-            };
             currentMonth = firstMonth.id;
             currentWeekIndex = 0;
         }
 
-        // Update current date display
+        // Update current date display with 2025 date
         function updateCurrentDate() {
-            const now = new Date();
+            const currentDate = getCurrent2025Date();
             const options = { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -2063,11 +2057,11 @@
                 hour: '2-digit',
                 minute: '2-digit'
             };
-            currentDateElement.textContent = `📅 ${now.toLocaleDateString('en-US', options)}`;
+            currentDateElement.textContent = `📅 ${currentDate.toLocaleDateString('en-US', options)}`;
             
             // Check if we need to update the current week
-            const currentDate = now.getDate();
-            const currentMonthNum = now.getMonth() + 1;
+            const currentDay = currentDate.getDate();
+            const currentMonthNum = currentDate.getMonth() + 1;
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
@@ -2088,7 +2082,7 @@
                     }
                     
                     // If current date is outside the current week range, find the correct week
-                    if (currentDate < startDate || currentDate > endDate) {
+                    if (currentDay < startDate || currentDay > endDate) {
                         findCurrentWeek();
                         updateWeekSelect();
                         renderSchedule();
@@ -2130,9 +2124,28 @@
             nextWeekBtn.disabled = currentWeekIndex === month.weeks.length - 1;
             
             // Show current week indicator if this is the current week
-            const isCurrentWeek = currentWeekInfo && 
-                                 currentMonth === currentWeekInfo.monthId && 
-                                 currentWeekIndex === currentWeekInfo.weekIndex;
+            const currentDate = getCurrent2025Date();
+            const currentDay = currentDate.getDate();
+            const currentMonthNum = currentDate.getMonth() + 1;
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            const currentMonthName = monthNames[currentMonthNum - 1];
+            
+            const currentMonthData = NoticeData[currentMonth];
+            const isCurrentWeek = currentMonthData && 
+                                 currentMonthData.name.includes(currentMonthName) &&
+                                 currentMonthData.weeks[currentWeekIndex] && 
+                                 (() => {
+                                     const week = currentMonthData.weeks[currentWeekIndex];
+                                     const rangeParts = week.range.split(' - ');
+                                     const startDate = parseInt(rangeParts[0].split(' ')[1]);
+                                     let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                                     if (isNaN(endDate)) endDate = parseInt(rangeParts[1]);
+                                     return currentDay >= startDate && currentDay <= endDate;
+                                 })();
+            
             currentWeekIndicator.classList.toggle('active', isCurrentWeek);
         }
 
