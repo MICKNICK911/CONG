@@ -1967,14 +1967,15 @@
             setupEventListeners();
             
             // Update date every minute
-            setInterval(updateCurrentDate, 60000);
+            setInterval(updateCurrentDate, 3600000);
         }
 
         // Get current 2025 date
         function getCurrent2025Date() {
             const now = new Date();
             // Set year to 2025 while keeping current month and day
-            return new Date(2025, now.getMonth(), now.getDate());
+            //return new Date(2025, now.getMonth(), now.getDate());
+            return now;
         }
 
         // Find current week based on 2025 date
