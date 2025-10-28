@@ -1966,7 +1966,7 @@
             renderSchedule();
             setupEventListeners();
             
-            // Update date every minute
+            // Update date every 60 minute
             setInterval(updateCurrentDate, 3600000);
         }
 
@@ -1974,6 +1974,7 @@
         function getCurrent2025Date() {
             const now = new Date();
             // Set year to 2025 while keeping current month and day
+            
             //return new Date(2025, now.getMonth(), now.getDate());
             return now;
         }
@@ -2018,7 +2019,7 @@
                     }
                     
                     // Check if current date falls within this week
-                    if (currentDay >= startDate && currentDay <= endDate) {
+                    if (currentDay >= startDate /*&& currentDay <= endDate*/) {
                         foundWeekIndex = index;
                     }
                 });
