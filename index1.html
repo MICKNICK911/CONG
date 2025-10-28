@@ -1,0 +1,2760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Duty Roster Scheduler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --duplicate-color: #ff6b6b;
+            --adjacent-color: #6bff6b;
+            --stats-color: #8e44ad;
+            --splash-color: #1a5276;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --due-highlight: #ffeb3b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            height: 1700px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .container.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        #splashScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--splash-color), #154360);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .splash-content {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            transform: scale(0.9);
+            animation: scaleIn 1.2s forwards;
+        }
+        
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .splash-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .splash-subtitle {
+            font-size: 1.8rem;
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.2s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .splash-loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top: 8px solid #f1c40f;
+            animation: spin 1.5s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .splash-note {
+            color: #ecf0f1;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 20px auto 0;
+            animation: fadeInUp 1.4s ease forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .month-indicator {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #f1c40f;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 5px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 10px 0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button.active {
+            background: var(--accent-color);
+        }
+        
+        button.print {
+            background: var(--success-color);
+        }
+        
+        button.reset {
+            background: #9b59b6;
+        }
+        
+        button.add {
+            background: #27ae60;
+        }
+        
+        button.import {
+            background: #8e44ad;
+        }
+        
+        button.export {
+            background: #16a085;
+        }
+        
+        button.stats {
+            background: var(--stats-color);
+        }
+        
+        button.info {
+            background: #f39c12;
+        }
+
+        button.infohelper {
+            background: #0075FF;
+        }
+        
+        button.infohelper {
+            background: #0075FF;
+        }
+        
+        button.names {
+            background: #d35400;
+        }
+        
+        button.auto-assign {
+            background: #c0392b;
+        }
+        
+        button.undo {
+            background: #7f8c8d;
+        }
+        
+        .search-container {
+            flex-grow: 1;
+            max-width: 300px;
+            position: relative;
+        }
+        
+        input[type="text"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 50px;
+            border: 2px solid var(--secondary-color);
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        input[type="number"], input[type="date"] {
+            padding: 12px 20px;
+        }
+        
+        input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
+        }
+        
+        input:invalid {
+            border-color: var(--accent-color);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            overflow-x: auto;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+        
+        .month-tab {
+            padding: 8px 20px;
+            background: #e9ecef;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .month-tab.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .month-tab:hover:not(.active) {
+            background: #dee2e6;
+        }
+        
+        .close-tab {
+            background: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            /* display: flex; */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .close-tab:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .table-container {
+            background-color: white;
+            overflow-x: auto;
+            padding: 20px;
+            position: relative;
+            height: 1000px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: var(--transition);
+        }
+        
+        th {
+            background: linear-gradient(to bottom, var(--primary-color), var(--dark-color));
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #f1f8ff;
+        }
+        
+        .role-header {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            cursor: pointer;
+        }
+        
+        .role-header:hover {
+            background: linear-gradient(to right, #2980b9, #2573a7);
+        }
+        
+        .week-header {
+            cursor: pointer;
+        }
+        
+        .week-header:hover {
+            background: linear-gradient(to bottom, #1a2a6c, #233d8d);
+        }
+        
+        .current-week {
+            background-color: #fffde7;
+            box-shadow: inset 0 0 0 3px #ffd54f;
+            position: relative;
+        }
+        
+        .current-week::after {
+            content: "cc";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.3rem;
+            padding: 3px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .due-week {
+            background-color: var(--due-highlight);
+            box-shadow: inset 0 0 0 3px #fbc02d;
+            position: relative;
+        }
+        
+        .due-week::after {
+            content: "Due";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--warning-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background-color: rgba(231, 76, 60, 0.2);
+            font-weight: bold;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+        
+        .editable-cell {
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.2s;
+            min-width: 180px;
+            max-width: 180px;
+        }
+        
+        .editable-cell:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .editable-cell:focus {
+            outline: 2px solid var(--secondary-color);
+            background-color: white;
+        }
+        
+        .copied-content {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .duplicate-highlight {
+            background-color: rgba(255, 107, 107, 0.3);
+            box-shadow: inset 0 0 0 2px var(--duplicate-color);
+        }
+        
+        .adjacent-highlight {
+            background-color: rgba(107, 255, 107, 0.3);
+            box-shadow: inset 0 0 0 2px var(--adjacent-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            background-color: var(--success-color);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(200%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .legend-duplicate {
+            background-color: rgba(255, 107, 107, 0.3);
+            border: 1px solid var(--duplicate-color);
+        }
+        
+        .legend-adjacent {
+            background-color: rgba(107, 255, 107, 0.3);
+            border: 1px solid var(--adjacent-color);
+        }
+        
+        .legend-copied {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(to right, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.4rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="date"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px 0;
+        }
+        
+        .category-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .category-item button {
+            background-color: var(--accent-color);
+            margin-top: 10px;
+        }
+        
+        .table-selector {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .table-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .table-option:last-child {
+            border-bottom: none;
+        }
+        
+        .table-option input {
+            margin-right: 10px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-footer button {
+            padding: 8px 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            border-left: 4px solid var(--stats-color);
+        }
+        
+        .stats-card h3 {
+            color: var(--stats-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .stats-table th {
+            background: var(--stats-color);
+            color: white;
+            text-align: left;
+            padding: 10px 15px;
+        }
+        
+        .stats-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        
+        .stats-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .stats-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .stats-table .rank {
+            font-weight: bold;
+            color: var(--stats-color);
+            text-align: center;
+        }
+        
+        .stats-table .count {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .stats-table .role-count {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .role-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .role-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .role-card h4 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .role-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .role-card li {
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .role-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .role-card .count {
+            font-weight: bold;
+            color: var(--stats-color);
+        }
+        
+        #instructionsModal .modal-content {
+            max-width: 800px;
+        }
+        
+        .instructions {
+            background: linear-gradient(to right, #e0f7fa, #bbdefb);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .instructions h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .instructions li i {
+            color: var(--success-color);
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 900px) {
+            .header-controls {
+                flex-direction: column;
+            }
+            
+            .btn-group {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .role-header {
+                width: 150px;
+                min-width: 150px;
+                max-width: 150px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .splash-title {
+                font-size: 3rem;
+            }
+            
+            .splash-subtitle {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .btn-group button {
+                flex: 1 0 40%;
+            }
+            
+            button {
+                font-size: 0.85rem;
+                padding: 8px 15px;
+            }
+            
+            .app-title {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+            
+            .role-header {
+                width: 120px;
+                min-width: 120px;
+                max-width: 120px;
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .splash-title {
+                font-size: 2.2rem;
+            }
+            
+            .splash-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .splash-loader {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        @media print {
+            .header-controls, footer, .tabs-container, .legend {
+                display: none;
+            }
+            
+            .table-container {
+                padding: 0;
+                box-shadow: none;
+            }
+            
+            table {
+                min-width: auto;
+            }
+            
+            .modal, .notification, .search-container {
+                display: none !important;
+            }
+            
+            body {
+                padding: 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="splashScreen">
+        <div class="splash-content">
+            <h1 class="splash-title">MWB ASSIGNMENTS SCHEDULE</h1>
+            <h2 class="splash-subtitle">designed by Bro Mike Appiah</h2>
+            <div class="splash-loader"></div>
+            <p class="splash-note">Advanced scheduling tool for managing meeting assignments and duties</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="app-title">
+                <div>
+                    <h1><i class="fas fa-calendar-alt"></i> MWB Assignment For Sarpeiman East Twi</h1>
+                    <div class="month-indicator" id="monthIndicator">August 2025</div>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div class="btn-group">
+                    <button id="prevMonthBtn"><i class="fas fa-arrow-left"></i> Prev</button>
+                    <button id="currentMonthBtn" class="active"><i class="fas fa-calendar-check"></i> Current</button>
+                    <button id="nextMonthBtn">Next <i class="fas fa-arrow-right"></i></button>
+                    <button id="printBtn" class="print" style="display: none;"><i class="fas fa-print"></i> Print</button>
+                    <button id="resetBtn" class="reset" style="display: none;"><i class="fas fa-sync"></i> Reset</button>
+                    <button id="addTableBtn" class="add" style="display: none;"><i class="fas fa-plus"></i> Add Table</button>
+                    <button id="namesBtn" class="names" style="display: none;"><i class="fas fa-users"></i> Names</button>
+                    <button id="autoAssignBtn" class="auto-assign" style="display: none;"><i class="fas fa-magic"></i> Auto Assign</button>
+                    <button id="undoBtn" class="undo" style="display: none;"><i class="fas fa-undo"></i> Undo</button>
+                    <button id="exportBtn" class="export" style="display: none;"><i class="fas fa-file-export"></i> Export</button>
+                    <button id="importBtn" class="import" style="display: none;"><i class="fas fa-file-import"></i> Import</button>
+                    <button id="statsBtn" class="stats" style="display: none;"><i class="fas fa-chart-bar"></i> Statistics</button>
+                    <button id="infoBtn" class="info" style="display: none;"><i class="fas fa-info-circle"></i> Help</button>
+                    <button id="helpBtn" class="infohelper" onclick="window.location.href='mwbhelp2.html'" style="display: none;"><i class="fas fa-thumbs-up"></i>Tracker</button>
+                </div>
+                
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search for names...">
+                </div>
+            </div>
+        </header>
+        
+        <div class="tabs-container" id="tabsContainer"></div>
+        
+        <div class="table-container">
+            <table id="rosterTable">
+                <thead>
+                    <tr>
+                        <th>Role / Week</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>Advanced Meeting Work Book Assignment Schedule Designed By Bro Kwasi Appiah | 0545800158</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">Changes saved successfully!</div>
+
+    <div class="modal" id="addTableModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Create New Table</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newTableName">Table Name:</label>
+                    <input type="text" id="newTableName" placeholder="Enter table name (e.g., September 2025)">
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Start Date of First Week:</label>
+                    <input type="date" id="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="numRows">Number of Roles:</label>
+                    <input type="number" id="numRows" min="1" value="10" placeholder="Number of roles">
+                </div>
+                <div class="form-group">
+                    <label for="numWeeks">Number of Weeks:</label>
+                    <input type="number" id="numWeeks" min="1" value="4" placeholder="Number of weeks">
+                </div>
+                <div class="form-group">
+                    <label>Copy from existing table:</label>
+                    <div class="table-selector" id="tableSelector"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelAddTableBtn">Cancel</button>
+                <button id="confirmAddTableBtn" class="add">Create Table</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="namesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-users"></i> Manage Name Lists</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <button id="addCategoryBtn" class="add"><i class="fas fa-plus"></i> Add New Category</button>
+                    <button id="generateFromTableBtn" class="export"><i class="fas fa-table"></i> Generate from Table</button>
+                </div>
+                <div id="categoriesContainer"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelNamesBtn">Cancel</button>
+                <button id="saveCategoriesBtn" class="add">Save Names</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-import"></i> Import Data</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="importFile">Select JSON file to import:</label>
+                    <input type="file" id="importFile" accept=".json">
+                </div>
+                <p><strong>Note:</strong> Importing will replace all existing data with the imported content.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelImportBtn">Cancel</button>
+                <button id="confirmImportBtn" class="import">Import Data</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="statsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-chart-bar"></i> Assignment Statistics</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <h3><i class="fas fa-users"></i> Top Assignees</h3>
+                        <table class="stats-table" id="topAssigneesTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3><i class="fas fa-tasks"></i> Role Distribution</h3>
+                        <div id="roleBreakdown"></div>
+                    </div>
+                </div>
+                
+                <div class="stats-card" style="margin-top: 20px;">
+                    <h3><i class="fas fa-user-tag"></i> Detailed Assignment Stats</h3>
+                    <table class="stats-table" id="detailedStatsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Total</th>
+                                <th>Role Breakdown</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeStatsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="instructionsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> How to use this scheduler</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> How to use this scheduler</h3>
+                    <ul>
+                        <li><i class="fas fa-mouse-pointer"></i> Click on any assignment cell to edit names</li>
+                        <li><i class="fas fa-heading"></i> Click on role names or week headers to edit them</li>
+                        <li><i class="fas fa-users"></i> Use "Names" to manage name lists for auto-assignment</li>
+                        <li><i class="fas fa-magic"></i> Use "Auto Assign" to automatically fill the schedule</li>
+                        <li><i class="fas fa-undo"></i> Use "Undo" to revert the last auto-assignment</li>
+                        <li><i class="fas fa-save"></i> Changes are automatically saved to your browser</li>
+                        <li><i class="fas fa-search"></i> Use search to highlight names across the schedule</li>
+                        <li><i class="fas fa-plus"></i> Add new tables for additional months, specifying the start date for the first week</li>
+                        <li><i class="fas fa-copy"></i> Populate new tables from existing ones</li>
+                        <li><i class="fas fa-trash"></i> Delete unnecessary tables</li>
+                        <li><i class="fas fa-file-export"></i> Export/Import data to share across devices</li>
+                        <li><i class="fas fa-chart-bar"></i> View detailed statistics for duty assignments</li>
+                    </ul>
+                    
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color legend-duplicate"></div>
+                            <span>Duplicate names in same week</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color legend-adjacent"></div>
+                            <span>Same name in adjacent weeks</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-copied">Red text</span>
+                            <span>Copied from another table</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeInstructionsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="mwb-notice/mwb-content.js"></script>
+    <script>
+// Polyfill for structuredClone for older browsers
+if (typeof structuredClone !== 'function') {
+    window.structuredClone = obj => JSON.parse(JSON.stringify(obj));
+}
+
+const defaultData = NoticeData; // mwb-content.js
+
+const defaultCategories = {
+    "Chairman": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Derrick Yankson,Dickson Onwona,Isaac Newton Sam,Wonder Soworlo,Michael Appiah".split(','),
+        standby: []
+    },
+    "Opening Prayer": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    },
+    "1": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    },
+    "2": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    },
+    "3": {
+        normal:"Jesse Yeboah,Raymond Sam,Frank Essah,Emmanuel Entsie,Francis Entsie,Foster Entsie,Sadick Mohammed,Augustine Appiah,Paul Asiedu,Stephen Essilfie,Reuben Soworlo,Ebenezer Normanyo,Isaac Arhin,Samuel Larbi,Boaz Yeboah,Joseph Eshun,Kwasi Amponsah,Jeromoth Arhin,Stanley Yamekpe,John Essel,Michael Obeng".split(','),
+        standby: []
+    },
+    "4": {
+        normal: "Margaret Entsie,Mary Entsie,Joana Entsie,Naomi Entsie,Claudia Polley,Esther Takie,Adjoa Eshun,Gloria Adobea,Claudia Sam,Joan Sam,Joana Cynthia,Adwoa Onwona,Stephanie Onwona,Christina Amponsah,Nancy Baidoo,Elizabeth Yeboah,Abigail Asiedua,Winifred Appiah,Juliana Entsie,Joana Ekwama Entsie,Lois Ofosu,Mercy Entsie,Vivian Arhin,Perlita Gyafua,Alimatu Saadia,Augusta Appiah,Mawusi Appiah,Owusuwaa Appiah,Nhyira Appiah,Barbara Amponsah,Lilian Ankomah,Rosina Yankson,Jemimah Miezah,Lois Soworlo,Erica Soworlo,Dora Asare,Victoria Yeboah,Selina Gyamfi,Barbara Asamoah,Rebecca Abgenyo,Adelaide Allotey,Pricilla Essel,Hannah Adumoah,Clara Prempeh".split(','),
+        standby: []
+    },
+    "5": {
+        normal:  "Margaret Entsie,Mary Entsie,Joana Entsie,Naomi Entsie,Claudia Polley,Esther Takie,Adjoa Eshun,Gloria Adobea,Claudia Sam,Joan Sam,Joana Cynthia,Adwoa Onwona,Stephanie Onwona,Christina Amponsah,Nancy Baidoo,Elizabeth Yeboah,Abigail Asiedua,Winifred Appiah,Juliana Entsie,Joana Ekwama Entsie,Lois Ofosu,Mercy Entsie,Vivian Arhin,Perlita Gyafua,Alimatu Saadia,Augusta Appiah,Mawusi Appiah,Owusuwaa Appiah,Nhyira Appiah,Barbara Amponsah,Lilian Ankomah,Rosina Yankson,Jemimah Miezah,Lois Soworlo,Erica Soworlo,Dora Asare,Victoria Yeboah,Selina Gyamfi,Barbara Asamoah,Rebecca Abgenyo,Adelaide Allotey,Pricilla Essel,Hannah Adumoah,Clara Prempeh".split(','),
+        standby: []
+    },
+    "6": {
+        normal:"Margaret Entsie,Mary Entsie,Joana Entsie,Naomi Entsie,Claudia Polley,Esther Takie,Adjoa Eshun,Gloria Adobea,Claudia Sam,Joan Sam,Joana Cynthia,Adwoa Onwona,Stephanie Onwona,Christina Amponsah,Nancy Baidoo,Elizabeth Yeboah,Abigail Asiedua,Winifred Appiah,Juliana Entsie,Joana Ekwama Entsie,Lois Ofosu,Mercy Entsie,Vivian Arhin,Perlita Gyafua,Alimatu Saadia,Augusta Appiah,Mawusi Appiah,Owusuwaa Appiah,Nhyira Appiah,Barbara Amponsah,Lilian Ankomah,Rosina Yankson,Jemimah Miezah,Lois Soworlo,Erica Soworlo,Dora Asare,Victoria Yeboah,Selina Gyamfi,Barbara Asamoah,Rebecca Abgenyo,Adelaide Allotey,Pricilla Essel,Hannah Adumoah,Clara Prempeh".split(','),
+        standby: []
+    },
+    "7": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    },
+    "8": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    },
+    "9": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Derrick Yankson,Dickson Onwona,Isaac Newton Sam,Wonder Soworlo,Michael Appiah".split(','),
+        standby: []
+    },
+    "10": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Derrick Yankson,Dickson Onwona,Isaac Newton Sam,Wonder Soworlo,Michael Appiah".split(','),
+        standby: []
+    },
+    "Closing Prayer": {
+        normal: "Mark Arhibald Entsie,Abel Ekow Eshun,Ephraim Sam,Hilkiah Entsie,Kingsley Arhin,Obed Gyamfi,Mark Anthony Entsie,Collins Yeboah,Isaac Ampomah,Alexander Ankomah,Derrick Yankson,Gideon Miezah,Dickson Onwona,Samuel Onwona,Isaac Newton Sam,Daniel Boakye,Wonder Soworlo,Emmanuel Asante,Michael Appiah,Shadrach Asare".split(','),
+        standby: []
+    }
+};
+
+let allMonthsData = {};
+let appCategories = {};
+let currentMonthId = 'august';
+let highlightedNames = new Set();
+let previousState = null;
+
+const tableBody = document.querySelector('#rosterTable tbody');
+const tableHead = document.querySelector('#rosterTable thead tr');
+const monthIndicator = document.getElementById('monthIndicator');
+const searchInput = document.getElementById('searchInput');
+const notification = document.getElementById('notification');
+const tabsContainer = document.getElementById('tabsContainer');
+const splashScreen = document.getElementById('splashScreen');
+const container = document.querySelector('.container');
+
+const addTableModal = document.getElementById('addTableModal');
+const namesModal = document.getElementById('namesModal');
+const importModal = document.getElementById('importModal');
+const statsModal = document.getElementById('statsModal');
+const instructionsModal = document.getElementById('instructionsModal');
+const newTableNameInput = document.getElementById('newTableName');
+const startDateInput = document.getElementById('startDate');
+const numRowsInput = document.getElementById('numRows');
+const numWeeksInput = document.getElementById('numWeeks');
+const tableSelector = document.getElementById('tableSelector');
+const importFileInput = document.getElementById('importFile');
+const categoriesContainer = document.getElementById('categoriesContainer');
+const topAssigneesTable = document.getElementById('topAssigneesTable')?.querySelector('tbody');
+const detailedStatsTable = document.getElementById('detailedStatsTable')?.querySelector('tbody');
+const roleBreakdown = document.getElementById('roleBreakdown');
+
+function initApp() {
+    if (!tableBody || !tableHead || !monthIndicator || !searchInput || !notification || !tabsContainer || !splashScreen || !container) {
+        console.error('Required DOM elements are missing');
+        showNotification('Error: Required UI elements are missing. Please check the HTML structure.');
+        return;
+    }
+
+    setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        splashScreen.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            container.classList.add('loaded');
+        }, 800);
+    }, 2000);
+    
+    loadFromLocalStorage();
+    checkCurrentMonth(false);
+    renderTabs();
+    renderTable();
+    setupEventListeners();
+    
+    setInterval(() => checkCurrentMonth(false), 3600000);
+}
+
+function loadFromLocalStorage() {
+    try {
+        //const savedData = localStorage.getItem('mwbRosterData'); improvise
+        const savedData = false;
+        if (savedData) {
+            allMonthsData = JSON.parse(savedData);
+            if (Object.keys(allMonthsData).length === 0) {
+                allMonthsData = structuredClone(defaultData);
+            } else {
+                Object.values(allMonthsData).forEach(month => {
+                    Object.keys(month.roles).forEach(role => {
+                        month.roles[role] = month.roles[role].map(assignment => {
+                            if (typeof assignment === 'string') {
+                                return { text: assignment, edited: false };
+                            }
+                            return assignment;
+                        });
+                    });
+                });
+            }
+        } else {
+            allMonthsData = structuredClone(defaultData);
+        }
+        
+        //const savedCategories = localStorage.getItem('mwbCategories'); improvise
+        const savedCategories = false;
+        if (savedCategories) {
+            appCategories = JSON.parse(savedCategories);
+            if (Object.keys(appCategories).length === 0) {
+                appCategories = structuredClone(defaultCategories);
+            }
+        } else {
+            appCategories = structuredClone(defaultCategories);
+        }
+        
+        if (!allMonthsData[currentMonthId]) {
+            currentMonthId = Object.keys(allMonthsData)[0] || 'august';
+        }
+    } catch (e) {
+        console.error("Error loading from localStorage:", e);
+        allMonthsData = structuredClone(defaultData);
+        appCategories = structuredClone(defaultCategories);
+        currentMonthId = 'august';
+        showNotification('Error loading saved data, reset to default');
+    }
+}
+
+function saveToLocalStorage() {
+    try {
+        localStorage.setItem('mwbRosterData', JSON.stringify(allMonthsData));
+        localStorage.setItem('mwbCategories', JSON.stringify(appCategories));
+        showNotification('Changes saved successfully!');
+    } catch (e) {
+        console.error("Error saving to localStorage:", e);
+        if (e.name === 'QuotaExceededError') {
+            showNotification('Error: Local storage is full. Please export and clear some data.');
+        } else {
+            showNotification('Error saving changes: ' + e.message);
+        }
+    }
+}
+
+function showNotification(message) {
+    if (!notification) return;
+    notification.textContent = message;
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
+function parseDateRange(range, tableName) {
+    const monthNames = [
+        'january', 'february', 'march', 'april', 'may', 'june',
+        'july', 'august', 'september', 'october', 'november', 'december'
+    ];
+    const yearMatch = tableName.match(/\d{4}/);
+    let year = yearMatch ? parseInt(yearMatch[0]) : new Date().getFullYear();
+    
+    try {
+        if (range.includes('-')) {
+            const [startStr, endStr] = range.split('-').map(s => s.trim());
+            const [startMonth, startDay] = startStr.split(' ').filter(Boolean);
+            const endParts = endStr ? endStr.split(' ').filter(Boolean) : [startMonth, startDay];
+            const [endMonth, endDay] = endParts.length > 1 ? endParts : [startMonth, endParts[0]];
+            
+            if (!monthNames.includes(startMonth.toLowerCase()) || (endMonth && !monthNames.includes(endMonth.toLowerCase()))) {
+                throw new Error("Invalid month name");
+            }
+            
+            // Handle year-end transitions
+            let endYear = year;
+            if (endMonth && monthNames.indexOf(startMonth.toLowerCase()) > monthNames.indexOf(endMonth.toLowerCase())) {
+                endYear = year + 1;
+            }
+            
+            const startDate = new Date(`${startMonth} ${startDay}, ${year}`);
+            const endDate = new Date(`${endMonth || startMonth} ${endDay || startDay}, ${endYear}`);
+            
+            if (isNaN(startDate) || isNaN(endDate)) {
+                throw new Error("Invalid date format");
+            }
+            
+            return { startDate, endDate };
+        } else {
+            const [month, day] = range.split(' ').filter(Boolean);
+            if (!monthNames.includes(month.toLowerCase())) {
+                throw new Error("Invalid month name");
+            }
+            const date = new Date(`${month} ${day}, ${year}`);
+            if (isNaN(date)) {
+                throw new Error("Invalid date format");
+            }
+            return { startDate: date, endDate: date };
+        }
+    } catch (e) {
+        console.error("Error parsing date range:", range, e);
+        return { startDate: new Date(), endDate: new Date() };
+    }
+}
+
+function formatWeekRange(startDate, endDate) {
+    const startMonth = startDate.toLocaleString('default', { month: 'long' });
+    const endMonth = endDate.toLocaleString('default', { month: 'long' });
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    return startMonth === endMonth
+        ? `${startMonth} ${startDay} - ${endDay}`
+        : `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
+}
+
+function checkCurrentMonth(switchToCurrent = false) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const currentMonthName = today.toLocaleString('default', { month: 'long' }).toLowerCase();
+    const currentYear = today.getFullYear();
+    
+    Object.values(allMonthsData).forEach(month => {
+        month.weeks.forEach(week => {
+            week.isCurrent = false;
+        });
+    });
+    
+    let matchingMonthId = null;
+    for (const monthId in allMonthsData) {
+        const month = allMonthsData[monthId];
+        const monthMatch = month.name.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s*(\d{4})/i);
+        if (monthMatch) {
+            const [_, monthName, year] = monthMatch;
+            if (monthName.toLowerCase() === currentMonthName && parseInt(year) === currentYear) {
+                matchingMonthId = monthId;
+                break;
+            }
+        }
+    }
+    
+    for (const monthId in allMonthsData) {
+        const month = allMonthsData[monthId];
+        month.weeks.forEach((week, index) => {
+            const { startDate, endDate } = parseDateRange(week.range, month.name);
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(23, 59, 59, 999);
+            if (today >= startDate && today <= endDate) {
+                week.isCurrent = true;
+            }
+        });
+    }
+    
+    saveToLocalStorage();
+    if (switchToCurrent && matchingMonthId && matchingMonthId !== currentMonthId) {
+        currentMonthId = matchingMonthId;
+        renderTabs();
+        renderTable();
+    } else if (allMonthsData[currentMonthId]) {
+        const currentMonthData = allMonthsData[currentMonthId];
+        const hasCurrentWeek = currentMonthData.weeks.some(week => week.isCurrent);
+        const monthMatch = currentMonthData.name.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s*(\d{4})/i);
+        if (monthMatch) {
+            const [_, monthName, year] = monthMatch;
+            if (monthName.toLowerCase() === currentMonthName && parseInt(year) === currentYear && hasCurrentWeek) {
+                renderTabs();
+                renderTable();
+            }
+        }
+    }
+}
+
+function renderTabs() {
+    if (!tabsContainer) return;
+    tabsContainer.innerHTML = '';
+    Object.keys(allMonthsData).forEach(monthId => {
+        const month = allMonthsData[monthId];
+        const tab = document.createElement('div');
+        tab.className = `month-tab ${monthId === currentMonthId ? 'active' : ''}`;
+        tab.dataset.monthId = monthId;
+        tab.innerHTML = `
+            ${month.name}
+            <div class="close-tab" data-month-id="${monthId}">×</div>
+        `;
+        tabsContainer.appendChild(tab);
+    });
+}
+
+function handleTabClick(e) {
+    if (!e.target.classList.contains('close-tab')) {
+        currentMonthId = this.dataset.monthId;
+        renderTabs();
+        renderTable();
+    }
+}
+
+function handleCloseTab(e) {
+    e.stopPropagation();
+    const monthId = this.dataset.monthId;
+    deleteTable(monthId);
+}
+
+function deleteTable(monthId) {
+    if (Object.keys(allMonthsData).length <= 1) {
+        showNotification('You need at least one table!');
+        return;
+    }
+    
+    if (confirm(`Are you sure you want to delete the "${allMonthsData[monthId].name}" table?`)) {
+        delete allMonthsData[monthId];
+        currentMonthId = Object.keys(allMonthsData)[0];
+        saveToLocalStorage();
+        renderTabs();
+        renderTable();
+        showNotification('Table deleted successfully!');
+    }
+}
+
+function openAddTableModal() {
+    if (!tableSelector || !addTableModal) return;
+    tableSelector.innerHTML = '';
+    const emptyOption = document.createElement('div');
+    emptyOption.className = 'table-option';
+    emptyOption.innerHTML = `
+        <input type="radio" name="sourceTable" id="emptyTable" value="" checked>
+        <label for="emptyTable">Create Empty Table</label>
+    `;
+    tableSelector.appendChild(emptyOption);
+    
+    Object.keys(allMonthsData).forEach(monthId => {
+        const month = allMonthsData[monthId];
+        const option = document.createElement('div');
+        option.className = 'table-option';
+        option.innerHTML = `
+            <input type="radio" name="sourceTable" id="${monthId}" value="${monthId}">
+            <label for="${monthId}">${month.name}</label>
+        `;
+        tableSelector.appendChild(option);
+    });
+    
+    if (newTableNameInput) newTableNameInput.value = '';
+    if (startDateInput) startDateInput.value = '';
+    if (numRowsInput) numRowsInput.value = '10';
+    if (numWeeksInput) numWeeksInput.value = '4';
+    addTableModal.style.display = 'flex';
+}
+
+function createNewTable() {
+    if (!newTableNameInput || !startDateInput || !numRowsInput || !numWeeksInput) {
+        showNotification('Required form elements are missing');
+        return;
+    }
+    
+    const tableName = newTableNameInput.value.trim();
+    const startDateValue = startDateInput.value;
+    const numRows = parseInt(numRowsInput.value) || 10;
+    const numWeeks = parseInt(numWeeksInput.value) || 4;
+    
+    if (!tableName) {
+        showNotification('Please enter a table name');
+        newTableNameInput.focus();
+        return;
+    }
+    
+    if (!startDateValue) {
+        showNotification('Please select a start date');
+        startDateInput.focus();
+        return;
+    }
+    
+    if (numRows < 1 || numWeeks < 1) {
+        showNotification('Number of roles and weeks must be at least 1');
+        numRowsInput.focus();
+        return;
+    }
+    
+    const tableNames = Object.values(allMonthsData).map(month => month.name.toLowerCase());
+    if (tableNames.includes(tableName.toLowerCase())) {
+        showNotification('Table name already exists');
+        newTableNameInput.focus();
+        return;
+    }
+    
+    const sourceTableRadio = document.querySelector('input[name="sourceTable"]:checked');
+    const sourceMonthId = sourceTableRadio ? sourceTableRadio.value : '';
+    
+    const monthId = 'month_' + Date.now();
+    let weeks = [];
+    let roles = {};
+    let copiedFrom = null;
+    
+    const startDate = new Date(startDateValue);
+    if (isNaN(startDate)) {
+        showNotification('Invalid start date');
+        startDateInput.focus();
+        return;
+    }
+    
+    const yearMatch = tableName.match(/\d{4}/);
+    const defaultYear = yearMatch ? parseInt(yearMatch[0]) : startDate.getFullYear();
+    
+    weeks = [];
+    for (let i = 0; i < numWeeks; i++) {
+        const weekStart = new Date(startDate.getTime() + i * 7 * 24 * 60 * 60 * 1000);
+        const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+        weekStart.setFullYear(defaultYear);
+        weekEnd.setFullYear(defaultYear);
+        const range = formatWeekRange(weekStart, weekEnd);
+        weeks.push({ range, isCurrent: false });
+    }
+    
+    if (sourceMonthId && allMonthsData[sourceMonthId]) {
+        const source = allMonthsData[sourceMonthId];
+        copiedFrom = sourceMonthId;
+        const sourceRoles = Object.keys(source.roles);
+        for (let i = 0; i < Math.min(numRows, sourceRoles.length); i++) {
+            const roleName = sourceRoles[i];
+            roles[roleName] = source.roles[roleName].slice(0, numWeeks).map(assignment => ({
+                text: assignment.text,
+                edited: false
+            }));
+            while (roles[roleName].length < numWeeks) {
+                roles[roleName].push({ text: "", edited: false });
+            }
+        }
+        for (let i = sourceRoles.length; i < numRows; i++) {
+            roles[`Role ${i + 1}`] = Array(numWeeks).fill({ text: "", edited: false });
+        }
+    } else {
+        for (let i = 0; i < numRows; i++) {
+            roles[`Role ${i + 1}`] = Array(numWeeks).fill({ text: "", edited: false });
+        }
+    }
+    
+    allMonthsData[monthId] = {
+        id: monthId,
+        name: tableName,
+        weeks: weeks,
+        roles: roles,
+        copiedFrom: copiedFrom
+    };
+    
+    if (!appCategories[`Role ${numRows}`]) {
+        for (let i = 1; i <= numRows; i++) {
+            if (!appCategories[`Role ${i}`]) {
+                appCategories[`Role ${i}`] = { normal: [], standby: [] };
+            }
+        }
+    }
+    
+    currentMonthId = monthId;
+    saveToLocalStorage();
+    checkCurrentMonth(false);
+    renderTabs();
+    renderTable();
+    showNotification('Table added successfully!');
+    addTableModal.style.display = 'none';
+}
+
+function openNamesModal() {
+    if (!categoriesContainer || !namesModal) return;
+    categoriesContainer.innerHTML = '';
+    
+    Object.keys(appCategories).forEach(category => {
+        const categoryItem = document.createElement('div');
+        categoryItem.className = 'category-item';
+        categoryItem.innerHTML = `
+            <div class="form-group">
+                <label for="category-${category}">Role:</label>
+                <input type="text" id="category-${category}" value="${category}">
+            </div>
+            <div class="form-group">
+                <label for="normal-${category}">Normal Names (comma-separated):</label>
+                <input type="text" id="normal-${category}" value="${appCategories[category].normal.join(', ')}">
+            </div>
+            <div class="form-group">
+                <label for="standby-${category}">Standby Names (comma-separated):</label>
+                <input type="text" id="standby-${category}" value="${appCategories[category].standby.join(', ')}">
+            </div>
+            <button class="delete-category" data-category="${category}"><i class="fas fa-trash"></i> Delete Category</button>
+        `;
+        categoriesContainer.appendChild(categoryItem);
+    });
+    
+    namesModal.style.display = 'flex';
+}
+
+function saveCategories() {
+    if (!categoriesContainer || !namesModal) {
+        showNotification('Error: Names modal is not properly initialized');
+        return;
+    }
+
+    const newCategories = {};
+    const categoryItems = categoriesContainer.querySelectorAll('.category-item');
+    let hasError = false;
+
+    // Validate and collect new categories
+    categoryItems.forEach((item, index) => {
+        const categoryInput = item.querySelector(`input[id^="category-"]`);
+        const normalInput = item.querySelector(`input[id^="normal-"]`);
+        const standbyInput = item.querySelector(`input[id^="standby-"]`);
+
+        if (!categoryInput || !normalInput || !standbyInput) {
+            showNotification(`Error: Invalid form structure for category ${index + 1}`);
+            hasError = true;
+            return;
+        }
+
+        const category = categoryInput.value.trim();
+        const originalCategory = categoryInput.id.replace('category-', '');
+
+        if (!category) {
+            showNotification('Category name cannot be empty');
+            hasError = true;
+            categoryInput.focus();
+            return;
+        }
+
+        // Check for duplicates, excluding the original category name
+        if (newCategories[category] || (Object.keys(appCategories).some(cat => cat.toLowerCase() === category.toLowerCase() && cat !== originalCategory))) {
+            showNotification(`Category "${category}" already exists`);
+            hasError = true;
+            categoryInput.focus();
+            return;
+        }
+
+        const normalNames = normalInput.value.split(',').map(name => name.trim()).filter(name => name);
+        const standbyNames = standbyInput.value.split(',').map(name => name.trim()).filter(name => name);
+
+        newCategories[category] = {
+            normal: normalNames,
+            standby: standbyNames
+        };
+    });
+
+    if (hasError) return;
+
+    try {
+        // Backup old categories
+        const oldCategories = structuredClone(appCategories);
+
+        // Update categories
+        appCategories = newCategories;
+
+        // Update roles in all months
+        Object.keys(allMonthsData).forEach(monthId => {
+            const month = allMonthsData[monthId];
+            const updatedRoles = {};
+
+            Object.keys(month.roles).forEach(role => {
+                // Find matching category, preserving case if possible
+                const newRoleName = Object.keys(appCategories).find(cat => cat.toLowerCase() === role.toLowerCase()) || role;
+                updatedRoles[newRoleName] = month.roles[role];
+            });
+
+            month.roles = updatedRoles;
+        });
+
+        // Save to localStorage
+        saveToLocalStorage();
+        renderTable();
+        namesModal.style.display = 'none';
+        showNotification('Name lists saved successfully!');
+    } catch (e) {
+        console.error('Error saving categories:', e);
+        showNotification('Error saving name lists: ' + e.message);
+        // Restore old categories on error
+        appCategories = oldCategories;
+    }
+}
+
+function addNewCategory() {
+    if (!categoriesContainer) return;
+    const newCategoryName = `Role ${Object.keys(appCategories).length + 1}`;
+    appCategories[newCategoryName] = { normal: [], standby: [] };
+    
+    const categoryItem = document.createElement('div');
+    categoryItem.className = 'category-item';
+    categoryItem.innerHTML = `
+        <div class="form-group">
+            <label for="category-${newCategoryName}">Role:</label>
+            <input type="text" id="category-${newCategoryName}" value="${newCategoryName}">
+        </div>
+        <div class="form-group">
+            <label for="normal-${newCategoryName}">Normal Names (comma-separated):</label>
+            <input type="text" id="normal-${newCategoryName}" value="">
+        </div>
+        <div class="form-group">
+            <label for="standby-${newCategoryName}">Standby Names (comma-separated):</label>
+            <input type="text" id="standby-${newCategoryName}" value="">
+        </div>
+        <button class="delete-category" data-category="${newCategoryName}"><i class="fas fa-trash"></i> Delete Category</button>
+    `;
+    categoriesContainer.appendChild(categoryItem);
+}
+
+function deleteCategory(category) {
+    if (Object.keys(appCategories).length <= 1) {
+        showNotification('At least one category is required');
+        return;
+    }
+    
+    if (confirm(`Are you sure you want to delete the "${category}" category?`)) {
+        // Migrate assignments to first available category
+        const newCategory = Object.keys(appCategories)[0];
+        Object.values(allMonthsData).forEach(month => {
+            if (month.roles[category]) {
+                month.roles[newCategory] = month.roles[category];
+                delete month.roles[category];
+            }
+        });
+        
+        delete appCategories[category];
+        openNamesModal();
+    }
+}
+
+function generateNamesFromTable() {
+    if (!allMonthsData[currentMonthId]) return;
+    const currentMonthData = allMonthsData[currentMonthId];
+    const newCategories = {};
+    
+    Object.keys(currentMonthData.roles).forEach(role => {
+        const names = new Set();
+        currentMonthData.roles[role].forEach(assignment => {
+            if (assignment.text) {
+                assignment.text.split(' & ').forEach(name => {
+                    const trimmedName = name.trim();
+                    if (trimmedName) names.add(trimmedName);
+                });
+            }
+        });
+        newCategories[role] = {
+            normal: Array.from(names),
+            standby: appCategories[role]?.standby || []
+        };
+    });
+    
+    appCategories = newCategories;
+    saveToLocalStorage();
+    openNamesModal();
+    showNotification('Name lists generated from current table!');
+}
+
+function getPreviousMonths(currentMonthId, numMonths = 3) {
+    const monthIds = Object.keys(allMonthsData);
+    const currentIndex = monthIds.indexOf(currentMonthId);
+    if (currentIndex === -1) return [];
+    
+    const prevMonthIds = [];
+    for (let i = 1; i <= numMonths && currentIndex - i >= 0; i++) {
+        prevMonthIds.push(monthIds[currentIndex - i]);
+    }
+    return prevMonthIds;
+}
+
+function getHistoricalAssignments(monthIds) {
+    const assignments = {};
+    monthIds.forEach(monthId => {
+        const month = allMonthsData[monthId];
+        Object.keys(month.roles).forEach(role => {
+            month.roles[role].forEach((assignment, weekIndex) => {
+                if (assignment.text) {
+                    const names = assignment.text.split(' & ').map(name => name.trim().toLowerCase()).filter(name => name);
+                    names.forEach(name => {
+                        if (!assignments[name]) {
+                            assignments[name] = [];
+                        }
+                        assignments[name].push({ role, weekIndex, monthId });
+                    });
+                }
+            });
+        });
+    });
+    return assignments;
+}
+
+function autoAssignRoles() {
+    if (!allMonthsData[currentMonthId]) {
+        showNotification('No table selected for auto-assignment');
+        return;
+    }
+    
+    previousState = structuredClone(allMonthsData[currentMonthId]);
+    
+    const currentMonthData = allMonthsData[currentMonthId];
+    const numWeeks = currentMonthData.weeks.length;
+    const roles = Object.keys(currentMonthData.roles);
+    
+    const prevMonthIds = getPreviousMonths(currentMonthId, 3);
+    // Add current month to historical assignments
+    const allHistoricalMonths = [currentMonthId, ...prevMonthIds];
+    const historicalAssignments = getHistoricalAssignments(allHistoricalMonths);
+    
+    roles.forEach(role => {
+        const category = appCategories[role] || { normal: [], standby: [] };
+        const normalNames = [...category.normal];
+        const standbyNames = [...category.standby];
+        
+        let availableNormal = [...normalNames];
+        let availableStandby = [...standbyNames];
+        
+        const isMultiNameRole = normalNames.some(name => name.includes(' & '));
+        
+        const weekAssignments = [];
+        for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
+            weekAssignments[weekIndex] = new Set();
+        }
+        
+        for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
+            if (currentMonthData.roles[role][weekIndex].edited) {
+                const names = currentMonthData.roles[role][weekIndex].text
+                    .split(' & ')
+                    .map(name => name.trim().toLowerCase())
+                    .filter(name => name);
+                names.forEach(name => weekAssignments[weekIndex].add(name));
+                continue;
+            }
+            
+            const prevWeekNames = weekIndex > 0 ? weekAssignments[weekIndex - 1] : new Set();
+            const nextWeekNames = weekIndex < numWeeks - 1 ? weekAssignments[weekIndex + 1] : new Set();
+            
+            const assignSingle = () => {
+                let selectedName = '';
+                for (let i = 0; i < 2; i++) {
+                    if (availableNormal.length > 0) {
+                        const shuffledNormal = availableNormal.sort(() => Math.random() - 0.5);
+                        for (const name of shuffledNormal) {
+                            const nameLower = name.toLowerCase();
+                            const recentAssignments = historicalAssignments[nameLower] || [];
+                            const recentCount = recentAssignments.filter(a => a.role === role).length;
+                            if (recentCount >= 3) continue;
+                            if (!weekAssignments[weekIndex].has(nameLower) &&
+                                !prevWeekNames.has(nameLower) &&
+                                !nextWeekNames.has(nameLower)) {
+                                selectedName = name;
+                                availableNormal = availableNormal.filter(n => n !== name);
+                                break;
+                            }
+                        }
+                        if (selectedName) break;
+                    }
+                    if (i === 1 && availableStandby.length > 0) {
+                        const shuffledStandby = availableStandby.sort(() => Math.random() - 0.5);
+                        for (const name of shuffledStandby) {
+                            const nameLower = name.toLowerCase();
+                            const recentAssignments = historicalAssignments[nameLower] || [];
+                            const recentCount = recentAssignments.filter(a => a.role === role).length;
+                            if (recentCount >= 3) continue;
+                            if (!weekAssignments[weekIndex].has(nameLower)) {
+                                selectedName = name;
+                                availableStandby = availableStandby.filter(n => n !== name);
+                                break;
+                            }
+                        }
+                    }
+                }
+                return selectedName;
+            };
+            
+            const assignMulti = () => {
+                let selectedNames = [];
+                for (let i = 0; i < 2; i++) {
+                    if (availableNormal.length >= 2) {
+                        const shuffledNormal = availableNormal.sort(() => Math.random() - 0.5);
+                        let pairFound = false;
+                        for (let j = 0; j < shuffledNormal.length - 1; j++) {
+                            const name1 = shuffledNormal[j];
+                            const name1Lower = name1.toLowerCase();
+                            if (weekAssignments[weekIndex].has(name1Lower) ||
+                                prevWeekNames.has(name1Lower) ||
+                                nextWeekNames.has(name1Lower)) {
+                                continue;
+                            }
+                            const recentAssignments1 = historicalAssignments[name1Lower] || [];
+                            const recentCount1 = recentAssignments1.filter(a => a.role === role).length;
+                            if (recentCount1 >= 3) continue;
+                            
+                            for (let k = j + 1; k < shuffledNormal.length; k++) {
+                                const name2 = shuffledNormal[k];
+                                const name2Lower = name2.toLowerCase();
+                                if (weekAssignments[weekIndex].has(name2Lower) ||
+                                    prevWeekNames.has(name2Lower) ||
+                                    nextWeekNames.has(name2Lower)) {
+                                    continue;
+                                }
+                                const recentAssignments2 = historicalAssignments[name2Lower] || [];
+                                const recentCount2 = recentAssignments2.filter(a => a.role === role).length;
+                                if (recentCount2 >= 3) continue;
+                                
+                                selectedNames = [name1, name2];
+                                availableNormal = availableNormal.filter(n => n !== name1 && n !== name2);
+                                pairFound = true;
+                                break;
+                            }
+                            if (pairFound) break;
+                        }
+                        if (pairFound) break;
+                    }
+                    if (i === 1 && availableStandby.length >= 2) {
+                        const shuffledStandby = availableStandby.sort(() => Math.random() - 0.5);
+                        let pairFound = false;
+                        for (let j = 0; j < shuffledStandby.length - 1; j++) {
+                            const name1 = shuffledStandby[j];
+                            const name1Lower = name1.toLowerCase();
+                            if (weekAssignments[weekIndex].has(name1Lower)) continue;
+                            const recentAssignments1 = historicalAssignments[name1Lower] || [];
+                            const recentCount1 = recentAssignments1.filter(a => a.role === role).length;
+                            if (recentCount1 >= 3) continue;
+                            
+                            for (let k = j + 1; k < shuffledStandby.length; k++) {
+                                const name2 = shuffledStandby[k];
+                                const name2Lower = name2.toLowerCase();
+                                if (weekAssignments[weekIndex].has(name2Lower)) continue;
+                                const recentAssignments2 = historicalAssignments[name2Lower] || [];
+                                const recentCount2 = recentAssignments2.filter(a => a.role === role).length;
+                                if (recentCount2 >= 3) continue;
+                                
+                                selectedNames = [name1, name2];
+                                availableStandby = availableStandby.filter(n => n !== name1 && n !== name2);
+                                pairFound = true;
+                                break;
+                            }
+                            if (pairFound) break;
+                        }
+                        if (pairFound) break;
+                    }
+                }
+                return selectedNames.length === 2 ? selectedNames.join(' & ') : '';
+            };
+            
+            let selected = '';
+            if (isMultiNameRole) {
+                selected = assignMulti();
+            } else {
+                selected = assignSingle();
+            }
+            
+            if (selected) {
+                currentMonthData.roles[role][weekIndex] = { text: selected, edited: true };
+                selected.split(' & ').forEach(name => {
+                    const nameLower = name.trim().toLowerCase();
+                    weekAssignments[weekIndex].add(nameLower);
+                });
+            } else {
+                currentMonthData.roles[role][weekIndex] = { text: '', edited: true };
+            }
+        }
+    });
+    
+    saveToLocalStorage();
+    renderTable();
+    showNotification('Auto-assignment completed!');
+}
+
+function undoAutoAssign() {
+    if (!previousState) {
+        showNotification('No previous state to revert to');
+        return;
+    }
+    
+    allMonthsData[currentMonthId] = structuredClone(previousState);
+    previousState = null;
+    saveToLocalStorage();
+    renderTable();
+    showNotification('Auto-assignment undone!');
+}
+
+function exportData() {
+    try {
+        const data = {
+            months: allMonthsData,
+            categories: appCategories
+        };
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'duty-roster-data.json';
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        document.body.appendChild(linkElement);
+        linkElement.click();
+        document.body.removeChild(linkElement);
+        showNotification('Data exported successfully!');
+    } catch (e) {
+        console.error('Error exporting data:', e);
+        showNotification('Error exporting data');
+    }
+}
+
+function importData() {
+    if (!importFileInput) {
+        showNotification('Import file input is missing');
+        return;
+    }
+    
+    const file = importFileInput.files[0];
+    if (!file) {
+        showNotification('Please select a file to import');
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            if (typeof importedData !== 'object' || !importedData.months) {
+                showNotification('Invalid data format: Missing months data');
+                return;
+            }
+            allMonthsData = importedData.months;
+            appCategories = importedData.categories || structuredClone(defaultCategories);
+            
+            Object.values(allMonthsData).forEach(month => {
+                Object.keys(month.roles).forEach(role => {
+                    month.roles[role] = month.roles[role].map(assignment => {
+                        if (typeof assignment === 'string') {
+                            return { text: assignment, edited: false };
+                        }
+                        return assignment;
+                    });
+                });
+            });
+            
+            currentMonthId = Object.keys(allMonthsData)[0];
+            saveToLocalStorage();
+            checkCurrentMonth(false);
+            renderTabs();
+            renderTable();
+            showNotification('Data imported successfully!');
+            importModal.style.display = 'none';
+            importFileInput.value = '';
+        } catch (e) {
+            console.error('Error parsing JSON file:', e);
+            showNotification('Error parsing JSON file');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function renderTable() {
+    try {
+        if (!tableBody || !tableHead || !monthIndicator) {
+            showNotification('Table elements are missing');
+            return;
+        }
+        
+        if (!allMonthsData[currentMonthId]) {
+            showNotification('No data available for the selected month');
+            return;
+        }
+        
+        const currentMonthData = allMonthsData[currentMonthId];
+        tableHead.innerHTML = '<th>Role / Week</th>';
+        tableBody.innerHTML = '';
+        monthIndicator.textContent = currentMonthData.name || 'Untitled';
+        
+        const fragment = document.createDocumentFragment();
+        currentMonthData.weeks.forEach((week, weekIndex) => {
+            const th = document.createElement('th');
+            th.textContent = week.range;
+            th.classList.add('week-header');
+            th.dataset.weekIndex = weekIndex;
+            // th.setAttribute('contenteditable', 'true');
+            th.setAttribute('contenteditable', 'false');
+            if (week.isCurrent) {
+                th.classList.add('current-week');
+            }
+            fragment.appendChild(th);
+        });
+        tableHead.appendChild(fragment);
+        
+        const bodyFragment = document.createDocumentFragment();
+        for (const [roleName, assignments] of Object.entries(currentMonthData.roles)) {
+            const row = document.createElement('tr');
+            const roleCell = document.createElement('td');
+            roleCell.textContent = roleName;
+            roleCell.classList.add('role-header');
+            roleCell.dataset.role = roleName;
+            // roleCell.setAttribute('contenteditable', 'true');
+            roleCell.setAttribute('contenteditable', 'false');
+            row.appendChild(roleCell);
+            
+            assignments.forEach((assignment, weekIndex) => {
+                const cell = document.createElement('td');
+                cell.classList.add('editable-cell');
+                // cell.setAttribute('contenteditable', 'true');
+                cell.setAttribute('contenteditable', 'false');
+                cell.setAttribute('data-role', roleName);
+                cell.setAttribute('data-week', weekIndex);
+                cell.setAttribute('role', 'gridcell');
+                cell.setAttribute('aria-label', `Assignment for ${roleName}, week ${weekIndex + 1}`);
+                cell.setAttribute('tabindex', '0');
+                
+                if (assignment.text) {
+                    cell.innerHTML = assignment.text.split(' & ').map(name => {
+                        const isHighlighted = highlightedNames.has(name.trim().toLowerCase());
+                        const displayName = isHighlighted ? `<span class="highlight">${name}</span>` : name;
+                        if (currentMonthData.copiedFrom && !assignment.edited) {
+                            return `<span class="copied-content">${displayName}</span>`;
+                        } else if (assignment.edited) {
+                            return `<span class="edited-content">${displayName}</span>`;
+                        }
+                        return displayName;
+                    }).join(' & ');
+                }
+                
+                if (currentMonthData.weeks[weekIndex].isCurrent) {
+                    cell.classList.add('current-week');
+                }
+                
+                row.appendChild(cell);
+            });
+            
+            bodyFragment.appendChild(row);
+        }
+        
+        tableBody.appendChild(bodyFragment);
+        
+        applyHighlightingRules();
+    } catch (e) {
+        console.error('Render error:', e);
+        showNotification('Error rendering table. Try refreshing.');
+    }
+}
+
+function handleCellKeydown(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        this.blur();
+    }
+}
+
+function handleRoleKeydown(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        this.blur();
+    }
+}
+
+function handleWeekKeydown(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        this.blur();
+    }
+}
+
+function handleRoleEdit(e) {
+    try {
+        const cell = e.target;
+        const oldRoleName = cell.dataset.role;
+        const newRoleName = cell.textContent.trim();
+        
+        if (!newRoleName || newRoleName === oldRoleName) {
+            cell.textContent = oldRoleName;
+            return;
+        }
+        
+        const currentMonthData = allMonthsData[currentMonthId];
+        if (Object.keys(currentMonthData.roles).includes(newRoleName)) {
+            showNotification('Role name already exists');
+            cell.textContent = oldRoleName;
+            return;
+        }
+        
+        const assignments = currentMonthData.roles[oldRoleName];
+        delete currentMonthData.roles[oldRoleName];
+        currentMonthData.roles[newRoleName] = assignments;
+        
+        if (appCategories[oldRoleName]) {
+            const categoryData = appCategories[oldRoleName];
+            delete appCategories[oldRoleName];
+            appCategories[newRoleName] = categoryData;
+        }
+        
+        cell.dataset.role = newRoleName;
+        
+        document.querySelectorAll(`[data-role="${oldRoleName}"]`).forEach(cell => {
+            cell.setAttribute('data-role', newRoleName);
+        });
+        
+        saveToLocalStorage();
+        showNotification('Role name updated successfully!');
+        renderTable();
+    } catch (e) {
+        console.error('Error editing role:', e);
+        showNotification('Error updating role');
+    }
+}
+
+function handleWeekEdit(e) {
+    try {
+        const cell = e.target;
+        const weekIndex = parseInt(cell.dataset.weekIndex);
+        const newRange = cell.textContent.trim();
+        
+        if (!newRange) {
+            cell.textContent = allMonthsData[currentMonthId].weeks[weekIndex].range;
+            showNotification('Week range cannot be empty');
+            return;
+        }
+        
+        if (!/\w+ \d+ - \w+ \d+/.test(newRange)) {
+            showNotification('Use format "Month DD - Month DD"');
+            return;
+        }
+        
+        allMonthsData[currentMonthId].weeks[weekIndex].range = newRange;
+        saveToLocalStorage();
+        checkCurrentMonth(false);
+        renderTable();
+    } catch (e) {
+        console.error('Error editing week:', e);
+        showNotification('Error updating week range');
+    }
+}
+
+function applyHighlightingRules() {
+    try {
+        if (!allMonthsData[currentMonthId]) return;
+        
+        const currentMonthData = allMonthsData[currentMonthId];
+        const roles = currentMonthData.roles;
+        
+        // Reset all highlighting
+        document.querySelectorAll('.editable-cell').forEach(cell => {
+            cell.classList.remove('duplicate-highlight', 'adjacent-highlight');
+        });
+        
+        // Duplicate name highlighting
+        for (const weekIndex in currentMonthData.weeks) {
+            const nameCounts = {};
+            for (const roleName in roles) {
+                const assignment = roles[roleName][weekIndex].text;
+                if (assignment) {
+                    const names = assignment.split(' & ').map(name => name.trim()).filter(name => name);
+                    names.forEach(name => {
+                        nameCounts[name.toLowerCase()] = (nameCounts[name.toLowerCase()] || 0) + 1;
+                    });
+                }
+            }
+            
+            for (const roleName in roles) {
+                const assignment = roles[roleName][weekIndex].text;
+                if (assignment) {
+                    const names = assignment.split(' & ').map(name => name.trim()).filter(name => name);
+                    const hasDuplicate = names.some(name => nameCounts[name.toLowerCase()] > 1);
+                    if (hasDuplicate) {
+                        const cell = document.querySelector(`td[data-role="${roleName}"][data-week="${weekIndex}"]`);
+                        if (cell) cell.classList.add('duplicate-highlight');
+                    }
+                }
+            }
+        }
+        
+        // Adjacent week highlighting
+        const weekNames = currentMonthData.weeks.map(() => new Set());
+        
+        for (const weekIndex in currentMonthData.weeks) {
+            for (const roleName in roles) {
+                const assignment = roles[roleName][weekIndex].text;
+                if (assignment) {
+                    const names = assignment.split(' & ').map(name => name.trim()).filter(name => name);
+                    names.forEach(name => weekNames[weekIndex].add(name.toLowerCase()));
+                }
+            }
+        }
+        
+        for (let weekIndex = 0; weekIndex < currentMonthData.weeks.length; weekIndex++) {
+            const currentNames = weekNames[weekIndex];
+            
+            if (weekIndex > 0) {
+                const prevNames = weekNames[weekIndex - 1];
+                const commonNames = [...currentNames].filter(name => prevNames.has(name));
+                
+                for (const roleName in roles) {
+                    const currentAssignment = roles[roleName][weekIndex].text || "";
+                    const prevAssignment = roles[roleName][weekIndex - 1].text || "";
+                    
+                    const currentCell = document.querySelector(`td[data-role="${roleName}"][data-week="${weekIndex}"]`);
+                    const prevCell = document.querySelector(`td[data-role="${roleName}"][data-week="${weekIndex - 1}"]`);
+                    
+                    if (currentAssignment && currentCell) {
+                        const names = currentAssignment.split(' & ').map(name => name.trim().toLowerCase()).filter(name => name);
+                        if (names.some(name => commonNames.includes(name))) {
+                            currentCell.classList.add('adjacent-highlight');
+                        }
+                    }
+                    
+                    if (prevAssignment && prevCell) {
+                        const names = prevAssignment.split(' & ').map(name => name.trim().toLowerCase()).filter(name => name);
+                        if (names.some(name => commonNames.includes(name))) {
+                            prevCell.classList.add('adjacent-highlight');
+                        }
+                    }
+                }
+            }
+            
+            if (weekIndex < currentMonthData.weeks.length - 1) {
+                const nextNames = weekNames[weekIndex + 1];
+                const commonNames = [...currentNames].filter(name => nextNames.has(name));
+                
+                for (const roleName in roles) {
+                    const currentAssignment = roles[roleName][weekIndex].text || "";
+                    const nextAssignment = roles[roleName][weekIndex + 1].text || "";
+                    
+                    const currentCell = document.querySelector(`td[data-role="${roleName}"][data-week="${weekIndex}"]`);
+                    const nextCell = document.querySelector(`td[data-role="${roleName}"][data-week="${weekIndex + 1}"]`);
+                    
+                    if (currentAssignment && currentCell) {
+                        const names = currentAssignment.split(' & ').map(name => name.trim().toLowerCase()).filter(name => name);
+                        if (names.some(name => commonNames.includes(name))) {
+                            currentCell.classList.add('adjacent-highlight');
+                        }
+                    }
+                    
+                    if (nextAssignment && nextCell) {
+                        const names = nextAssignment.split(' & ').map(name => name.trim().toLowerCase()).filter(name => name);
+                        if (names.some(name => commonNames.includes(name))) {
+                            nextCell.classList.add('adjacent-highlight');
+                        }
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Highlighting error:', e);
+    }
+}
+
+function handleCellEdit(e) {
+    try {
+        const cell = e.target;
+        const role = cell.getAttribute('data-role');
+        const weekIndex = parseInt(cell.getAttribute('data-week'));
+        const sanitizedContent = cell.textContent.trim().slice(0, 100).replace(/[<>:"/\\|?*]/g, '');
+        
+        allMonthsData[currentMonthId].roles[role][weekIndex] = {
+            text: sanitizedContent,
+            edited: true
+        };
+        
+        saveToLocalStorage();
+        renderTable();
+    } catch (e) {
+        console.error('Cell edit error:', e);
+        showNotification('Error saving cell content');
+    }
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+const debouncedHandleSearch = debounce(handleSearch, 300);
+
+function handleSearch() {
+    if (!searchInput) return;
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    highlightedNames.clear();
+    
+    if (searchTerm.length > 1) {
+        const currentMonthData = allMonthsData[currentMonthId];
+        for (const assignments of Object.values(currentMonthData.roles)) {
+            for (const assignment of assignments) {
+                const names = assignment.text.split(' & ').map(name => name.trim()).filter(name => name);
+                names.forEach(name => {
+                    if (name.toLowerCase().includes(searchTerm)) {
+                        highlightedNames.add(name.toLowerCase());
+                    }
+                });
+            }
+        }
+    }
+    
+    renderTable();
+}
+
+function calculateStatistics() {
+    const stats = {};
+    const roleStats = {};
+    
+    for (const monthId in allMonthsData) {
+        const month = allMonthsData[monthId];
+        for (const role in month.roles) {
+            if (!roleStats[role]) {
+                roleStats[role] = {};
+            }
+            month.roles[role].forEach(assignment => {
+                const names = assignment.text.split(' & ').map(name => name.trim()).filter(name => name);
+                names.forEach(name => {
+                    const normalizedName = name.toLowerCase();
+                    if (!stats[normalizedName]) {
+                        stats[normalizedName] = { total: 0, roles: {} };
+                    }
+                    stats[normalizedName].total += 1;
+                    if (!stats[normalizedName].roles[role]) {
+                        stats[normalizedName].roles[role] = 0;
+                    }
+                    stats[normalizedName].roles[role] += 1;
+                    if (!roleStats[role][normalizedName]) {
+                        roleStats[role][normalizedName] = 0;
+                    }
+                    roleStats[role][normalizedName] += 1;
+                });
+            });
+        }
+    }
+    
+    return { stats, roleStats };
+}
+
+function showStatisticsModal() {
+    if (!topAssigneesTable || !detailedStatsTable || !roleBreakdown) {
+        showNotification('Statistics elements are missing');
+        return;
+    }
+    
+    const { stats, roleStats } = calculateStatistics();
+    const statsArray = Object.entries(stats).map(([name, data]) => ({
+        name,
+        total: data.total,
+        roles: data.roles
+    }));
+    
+    statsArray.sort((a, b) => b.total - a.total);
+    topAssigneesTable.innerHTML = '';
+    detailedStatsTable.innerHTML = '';
+    roleBreakdown.innerHTML = '';
+    
+    statsArray.slice(0, 5).forEach((person, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="rank">${index + 1}</td>
+            <td>${person.name}</td>
+            <td class="count">${person.total}</td>
+        `;
+        topAssigneesTable.appendChild(row);
+    });
+    
+    statsArray.forEach(person => {
+        const row = document.createElement('tr');
+        const roleBreakdown = Object.entries(person.roles)
+            .map(([role, count]) => `${role}: ${count}`)
+            .join(', ');
+        
+        row.innerHTML = `
+            <td>${person.name}</td>
+            <td class="count">${person.total}</td>
+            <td class="role-count">${roleBreakdown}</td>
+        `;
+        detailedStatsTable.appendChild(row);
+    });
+    
+    const roleCards = document.createElement('div');
+    roleCards.className = 'role-breakdown';
+    
+    for (const role in roleStats) {
+        const roleCard = document.createElement('div');
+        roleCard.className = 'role-card';
+        
+        const roleTitle = document.createElement('h4');
+        roleTitle.textContent = role;
+        
+        const roleList = document.createElement('ul');
+        
+        const roleAssignments = Object.entries(roleStats[role])
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count);
+        
+        roleAssignments.slice(0, 5).forEach(assignment => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${assignment.name}</span>
+                <span class="count">${assignment.count}</span>
+            `;
+            roleList.appendChild(li);
+        });
+        
+        roleCard.appendChild(roleTitle);
+        roleCard.appendChild(roleList);
+        roleCards.appendChild(roleCard);
+    }
+    
+    roleBreakdown.appendChild(roleCards);
+    statsModal.style.display = 'flex';
+}
+
+function resetData() {
+    if (confirm('Are you sure you want to reset ALL tables and name lists to default? This cannot be undone.')) {
+        allMonthsData = structuredClone(defaultData);
+        appCategories = structuredClone(defaultCategories);
+        currentMonthId = 'august';
+        previousState = null;
+        saveToLocalStorage();
+        checkCurrentMonth(false);
+        renderTabs();
+        renderTable();
+        showNotification('All tables and name lists reset to default values');
+    }
+}
+
+function showInstructionsModal() {
+    if (!instructionsModal) return;
+    instructionsModal.style.display = 'flex';
+}
+
+function setupEventListeners() {
+    // Button event listeners
+    document.getElementById('prevMonthBtn').addEventListener('click', () => {
+        const monthIds = Object.keys(allMonthsData);
+        const currentIndex = monthIds.indexOf(currentMonthId);
+        const prevIndex = (currentIndex - 1 + monthIds.length) % monthIds.length;
+        currentMonthId = monthIds[prevIndex];
+        renderTabs();
+        renderTable();
+    });
+    
+    document.getElementById('currentMonthBtn').addEventListener('click', () => checkCurrentMonth(true));
+    
+    document.getElementById('nextMonthBtn').addEventListener('click', () => {
+        const monthIds = Object.keys(allMonthsData);
+        const currentIndex = monthIds.indexOf(currentMonthId);
+        const nextIndex = (currentIndex + 1) % monthIds.length;
+        currentMonthId = monthIds[nextIndex];
+        renderTabs();
+        renderTable();
+    });
+    
+    document.getElementById('printBtn').addEventListener('click', () => {
+        window.print();
+    });
+    
+    document.getElementById('resetBtn').addEventListener('click', resetData);
+    
+    document.getElementById('addTableBtn').addEventListener('click', openAddTableModal);
+    
+    document.getElementById('namesBtn').addEventListener('click', openNamesModal);
+    
+    document.getElementById('autoAssignBtn').addEventListener('click', autoAssignRoles);
+    
+    document.getElementById('undoBtn').addEventListener('click', undoAutoAssign);
+    
+    document.getElementById('exportBtn').addEventListener('click', exportData);
+    
+    document.getElementById('importBtn').addEventListener('click', () => {
+        if (importFileInput) importFileInput.value = '';
+        if (importModal) importModal.style.display = 'flex';
+    });
+    
+    document.getElementById('statsBtn').addEventListener('click', showStatisticsModal);
+    
+    document.getElementById('infoBtn').addEventListener('click', showInstructionsModal);
+    
+    // Search input
+    if (searchInput) {
+        searchInput.addEventListener('input', debouncedHandleSearch);
+    }
+    
+    // Modal buttons
+    document.getElementById('addCategoryBtn').addEventListener('click', addNewCategory);
+    document.getElementById('generateFromTableBtn').addEventListener('click', generateNamesFromTable);
+    document.getElementById('saveCategoriesBtn').addEventListener('click', saveCategories);
+    document.getElementById('confirmAddTableBtn').addEventListener('click', createNewTable);
+    document.getElementById('confirmImportBtn').addEventListener('click', importData);
+    
+    // Close buttons
+    document.querySelectorAll('.close-modal, #cancelAddTableBtn, #cancelNamesBtn, #cancelImportBtn, #closeStatsBtn, #closeInstructionsBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (addTableModal) addTableModal.style.display = 'none';
+            if (namesModal) namesModal.style.display = 'none';
+            if (importModal) importModal.style.display = 'none';
+            if (statsModal) statsModal.style.display = 'none';
+            if (instructionsModal) instructionsModal.style.display = 'none';
+        });
+    });
+    
+    // Delegated events for dynamic elements
+    document.body.addEventListener('click', (e) => {
+        if (e.target.matches('.month-tab:not(.close-tab)')) {
+            handleTabClick.call(e.target, e);
+        }
+        if (e.target.matches('.close-tab')) {
+            handleCloseTab.call(e.target, e);
+        }
+        if (e.target.matches('.delete-category')) {
+            const category = e.target.dataset.category;
+            deleteCategory(category);
+        }
+    });
+    
+    // Close modals by clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === addTableModal) {
+            addTableModal.style.display = 'none';
+        }
+        if (e.target === namesModal) {
+            namesModal.style.display = 'none';
+        }
+        if (e.target === importModal) {
+            importModal.style.display = 'none';
+        }
+        if (e.target === statsModal) {
+            statsModal.style.display = 'none';
+        }
+        if (e.target === instructionsModal) {
+            instructionsModal.style.display = 'none';
+        }
+    });
+
+    // Cell editing events
+    document.addEventListener('blur', (e) => {
+        if (e.target.classList.contains('editable-cell')) {
+            handleCellEdit(e);
+        } else if (e.target.classList.contains('role-header')) {
+            handleRoleEdit(e);
+        } else if (e.target.classList.contains('week-header')) {
+            handleWeekEdit(e);
+        }
+    }, true);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.target.classList.contains('editable-cell')) {
+            handleCellKeydown(e);
+        } else if (e.target.classList.contains('role-header')) {
+            handleRoleKeydown(e);
+        } else if (e.target.classList.contains('week-header')) {
+            handleWeekKeydown(e);
+        }
+    }, true);
+}
+
+window.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
