@@ -2340,7 +2340,7 @@
                     }
                     
                     // Check if current date falls within this week
-                    if (currentDay >= startDate || currentDay <= endDate) {
+                    if (currentDay >= startDate || currentDay <= endDate || currentDay >= startDate - 6) {
                        foundWeekIndex = index;
                     }
                 });
