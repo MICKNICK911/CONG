@@ -2328,16 +2328,20 @@
                     // Extract start and end dates from the range string
                     const rangeParts = week.range.split(' - ');
                     const startDate = parseInt(rangeParts[0].split(' ')[1]);
-                    let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                    //let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                    
+                    let endDate = parseInt(rangeParts[1]);
                     
                     // Handle case where end date might be in next month
                     if (isNaN(endDate)) {
-                        endDate = parseInt(rangeParts[1]);
+                        /*endDate = parseInt(rangeParts[1] );*/
+                        
+                 endDate = parseInt(rangeParts[1].split(' ')[1])       
                     }
                     
                     // Check if current date falls within this week
                     if (currentDay >= startDate || currentDay <= endDate) {
-                        foundWeekIndex = index;
+                       foundWeekIndex = index;
                     }
                 });
                 
