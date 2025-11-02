@@ -2398,10 +2398,14 @@
                 if (week) {
                     const rangeParts = week.range.split(' - ');
                     const startDate = parseInt(rangeParts[0].split(' ')[1]);
-                    let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                    //let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                    
+                    endDate = parseInt(rangeParts[1]);
                     
                     if (isNaN(endDate)) {
-                        endDate = parseInt(rangeParts[1]);
+                        //endDate = parseInt(rangeParts[1]);
+                        
+               endDate = parseInt(rangeParts[1].split(' ')[1]);
                     }
                     
                     // If current date is outside the current week range, find the correct week
