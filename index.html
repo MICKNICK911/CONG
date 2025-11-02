@@ -2409,7 +2409,7 @@
                     }
                     
                     // If current date is outside the current week range, find the correct week
-                    if (currentDay < startDate || currentDay > endDate) {
+                    if (currentDay < startDate || currentDay > endDate || currentDay >= startDate - 6) {
                         findCurrentWeek();
                         updateWeekSelect();
                         renderSchedule();
