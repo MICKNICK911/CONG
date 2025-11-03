@@ -2287,77 +2287,93 @@
             updateGuide();
         }
 
-        // Get current 2025 date
-        function getCurrent2025Date() {
-            const now = new Date();
-            // Set year to 2025 while keeping current month and day
-            
-            //return new Date(2025, now.getMonth(), now.getDate());
-            return now;
+        // Get current date (using actual date for real-time updates)
+        function getCurrentDate() {
+            return new Date();
         }
 
-        // Find current week based on 2025 date
-        function findCurrentWeek() {
-            const currentDate = getCurrent2025Date();
-            const currentMonthNum = currentDate.getMonth() + 1;
-            const currentDay = currentDate.getDate();
+        // Parse week range to extract start and end dates
+        function parseWeekRange(weekRange) {
+            const parts = weekRange.split(' - ');
+            if (parts.length !== 2) return null;
             
-            // Convert month number to name
+            const startStr = parts[0].trim();
+            const endStr = parts[1].trim();
+            
+            // Parse start date
+            const startParts = startStr.split(' ');
+            const startMonth = startParts[0];
+            const startDay = parseInt(startParts[1]);
+            
+            // Parse end date
+            const endParts = endStr.split(' ');
+            let endMonth, endDay;
+            
+            if (endParts.length === 2) {
+                // End date has month and day (e.g., "October 5")
+                endMonth = endParts[0];
+                endDay = parseInt(endParts[1]);
+            } else {
+                // End date only has day (same month as start)
+                endMonth = startMonth;
+                endDay = parseInt(endParts[0]);
+            }
+            
+            // Convert month names to numbers (0-11)
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
-            const currentMonthName = monthNames[currentMonthNum - 1];
             
-            // Find the current month in our data
-            let foundMonth = null;
-            let foundWeekIndex = -1;
+            const startMonthIndex = monthNames.indexOf(startMonth);
+            const endMonthIndex = monthNames.indexOf(endMonth);
             
-            // Look for exact month match
+            if (startMonthIndex === -1 || endMonthIndex === -1) return null;
+            
+            // Create date objects (using 2025 as the year)
+            const startDate = new Date(2025, startMonthIndex, startDay);
+            const endDate = new Date(2025, endMonthIndex, endDay);
+            
+            // If end date is before start date, it means we're spanning across years
+            // This shouldn't happen in our 2025 data, but handle it just in case
+            if (endDate < startDate) {
+                endDate.setFullYear(2026);
+            }
+            
+            return { startDate, endDate };
+        }
+
+        // Find current week based on current date
+        function findCurrentWeek() {
+            const currentDate = getCurrentDate();
+            
+            // Try to find the current week in all months
             for (const monthId in NoticeData) {
                 const month = NoticeData[monthId];
-                if (month.name.includes(currentMonthName)) {
-                    foundMonth = month;
-                    break;
-                }
-            }
-            
-            // If we found the month, find the current week
-            if (foundMonth) {
-                foundMonth.weeks.forEach((week, index) => {
-                    // Extract start and end dates from the range string
-                    const rangeParts = week.range.split(' - ');
-                    const startDate = parseInt(rangeParts[0].split(' ')[1]);
-                    //let endDate = parseInt(rangeParts[1].split(' ')[1]);
+                
+                for (let weekIndex = 0; weekIndex < month.weeks.length; weekIndex++) {
+                    const week = month.weeks[weekIndex];
+                    const dateRange = parseWeekRange(week.range);
                     
-                    let endDate = parseInt(rangeParts[1]);
+                    if (!dateRange) continue;
                     
-                    // Handle case where end date might be in next month
-                    if (isNaN(endDate)) {
-                        /*endDate = parseInt(rangeParts[1] );*/
-                        
-                 endDate = parseInt(rangeParts[1].split(' ')[1])       
-                    }
+                    const { startDate, endDate } = dateRange;
                     
                     // Check if current date falls within this week
-                    if (currentDay >= startDate || currentDay <= endDate || currentDay >= startDate - 6) {
-                       foundWeekIndex = index;
+                    if (currentDate >= startDate && currentDate <= endDate) {
+                        currentMonth = monthId;
+                        currentWeekIndex = weekIndex;
+                        return;
                     }
-                });
-                
-                if (foundWeekIndex !== -1) {
-                    currentMonth = foundMonth.id;
-                    currentWeekIndex = foundWeekIndex;
-                    return;
                 }
             }
             
-            // Fallback: use the data's isCurrent flag
+            // If no current week found, check for isCurrent flag
             for (const monthId in NoticeData) {
                 const month = NoticeData[monthId];
                 const currentWeek = month.weeks.findIndex(week => week.isCurrent);
                 if (currentWeek !== -1) {
-                    currentMonth = month.id;
+                    currentMonth = monthId;
                     currentWeekIndex = currentWeek;
                     return;
                 }
@@ -2369,9 +2385,9 @@
             currentWeekIndex = 0;
         }
 
-        // Update current date display with 2025 date
+        // Update current date display
         function updateCurrentDate() {
-            const currentDate = getCurrent2025Date();
+            const currentDate = getCurrentDate();
             const options = { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -2383,38 +2399,15 @@
             currentDateElement.textContent = `📅 ${currentDate.toLocaleDateString('en-US', options)}`;
             
             // Check if we need to update the current week
-            const currentDay = currentDate.getDate();
-            const currentMonthNum = currentDate.getMonth() + 1;
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            const currentMonthName = monthNames[currentMonthNum - 1];
+            const previousMonth = currentMonth;
+            const previousWeekIndex = currentWeekIndex;
             
-            // Check if current week has changed
-            const currentMonthData = NoticeData[currentMonth];
-            if (currentMonthData && currentMonthData.name.includes(currentMonthName)) {
-                const week = currentMonthData.weeks[currentWeekIndex];
-                if (week) {
-                    const rangeParts = week.range.split(' - ');
-                    const startDate = parseInt(rangeParts[0].split(' ')[1]);
-                    //let endDate = parseInt(rangeParts[1].split(' ')[1]);
-                    
-                    endDate = parseInt(rangeParts[1]);
-                    
-                    if (isNaN(endDate)) {
-                        //endDate = parseInt(rangeParts[1]);
-                        
-               endDate = parseInt(rangeParts[1].split(' ')[1]);
-                    }
-                    
-                    // If current date is outside the current week range, find the correct week
-                    if (currentDay < startDate || currentDay > endDate || currentDay >= startDate - 6) {
-                        findCurrentWeek();
-                        updateWeekSelect();
-                        renderSchedule();
-                    }
-                }
+            findCurrentWeek();
+            
+            // If the current week has changed, update the UI
+            if (previousMonth !== currentMonth || previousWeekIndex !== currentWeekIndex) {
+                updateWeekSelect();
+                renderSchedule();
             }
         }
 
@@ -2451,27 +2444,16 @@
             nextWeekBtn.disabled = currentWeekIndex === month.weeks.length - 1;
             
             // Show current week indicator if this is the current week
-            const currentDate = getCurrent2025Date();
-            const currentDay = currentDate.getDate();
-            const currentMonthNum = currentDate.getMonth() + 1;
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            const currentMonthName = monthNames[currentMonthNum - 1];
+            const currentDate = getCurrentDate();
+            const monthData = NoticeData[currentMonth];
+            const week = monthData.weeks[currentWeekIndex];
+            const dateRange = parseWeekRange(week.range);
             
-            const currentMonthData = NoticeData[currentMonth];
-            const isCurrentWeek = currentMonthData && 
-                                 currentMonthData.name.includes(currentMonthName) &&
-                                 currentMonthData.weeks[currentWeekIndex] && 
-                                 (() => {
-                                     const week = currentMonthData.weeks[currentWeekIndex];
-                                     const rangeParts = week.range.split(' - ');
-                                     const startDate = parseInt(rangeParts[0].split(' ')[1]);
-                                     let endDate = parseInt(rangeParts[1].split(' ')[1]);
-                                     if (isNaN(endDate)) endDate = parseInt(rangeParts[1]);
-                                     return currentDay >= startDate && currentDay <= endDate;
-                                 })();
+            let isCurrentWeek = false;
+            if (dateRange) {
+                const { startDate, endDate } = dateRange;
+                isCurrentWeek = (currentDate >= startDate && currentDate <= endDate);
+            }
             
             currentWeekIndicator.classList.toggle('active', isCurrentWeek);
         }
