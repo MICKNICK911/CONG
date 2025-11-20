@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Code Playground • Ultra-Stable Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    :root {
+        --bg: #f7f9fc;
+        --panel: #ffffff;
+        --text: #2d3748;
+        --primary: #4361ee;
+        --border: #e2e8f0;
+        --console-bg: #1e1e1e;
+        --console-text: #e2e8f0;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+        --html-bg: #fffbf7;
+        --css-bg: #f7fbff;
+        --js-bg: #fffef2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+    header { background:linear-gradient(135deg, #4361ee, #3a0ca3); color:white; padding:1rem 1.5rem; box-shadow:var(--shadow); z-index:10; }
+    .header-inner { max-width:1600px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    h1 { font-size:1.7rem; font-weight:700; }
+    .subtitle { font-size:0.95rem; opacity:0.92; }
+    .buttons { display:flex; gap:0.8rem; flex-wrap:wrap; }
+    button { background:rgba(255,255,255,0.22); border:none; color:white; padding:0.65rem 1.1rem; border-radius:8px; cursor:pointer; font-weight:600; transition:all .2s; }
+    button:hover { background:rgba(255,255,255,0.32); transform:translateY(-1px); }
+    button.primary { background:#4cc9f0; }
+    button.primary:hover { background:#3ab8e0; }
+
+    main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+    .split-h { flex:1; display:flex; position:relative; }
+    .editor-panel, .preview-panel { background:var(--panel); display:flex; flex-direction:column; box-shadow:var(--shadow); }
+    .editor-panel { flex:1; min-width:240px; border-right:1px solid var(--border); }
+    .preview-panel { flex:1; min-width:240px; }
+
+    .tabs { display:flex; background:#f8fafc; border-bottom:1px solid var(--border); user-select:none; }
+    .tab { padding:0.9rem 1.6rem; cursor:pointer; font-weight:600; color:#64748b; transition:all .2s; }
+    .tab.active { color:var(--primary); background:white; border-bottom:3px solid var(--primary); }
+
+    textarea { flex:1; padding:1.2rem; font-family: 'Menlo', 'Consolas', monospace; font-size:14.5px; line-height:1.6; border:none; outline:none; resize:none; }
+    textarea:focus { background:white !important; }
+    
+    #html { background-color: var(--html-bg); }
+    #css { background-color: var(--css-bg); }
+    #js { background-color: var(--js-bg); }
+
+    .preview-header { padding:0.8rem 1.2rem; background:#f8fafc; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-weight:600; }
+    iframe { flex:1; border:none; background:white; }
+
+    .console { height:200px; background:var(--console-bg); color:var(--console-text); font-family: 'Menlo', monospace; font-size:13px; display:flex; flex-direction:column; border-top:1px solid var(--border); }
+    .console-header { padding:0.6rem 1rem; background:#0d0d0d; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+    .console-body { flex:1; padding:0.8rem 1rem; overflow-y:auto; white-space:pre-wrap; word-break:break-all; }
+    .log-log { color:#94a3b8; }
+    .log-warn { color:#fbbf24; }
+    .log-error { color:#f87171; }
+
+    .splitter { width:7px; background:#cbd5e1; cursor:col-resize; transition:background .2s; }
+    .splitter:hover, .splitter.drag { background:var(--primary); }
+    .vsplit { height:7px; background:#cbd5e1; cursor:row-resize; position:relative; }
+    .vsplit:hover { background:var(--primary); }
+    
+    .hidden { display: none; }
+
+    @media (max-width: 768px) {
+        .split-h { flex-direction:column; }
+        .splitter { display:none; }
+        .editor-panel, .preview-panel { height:50%; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div>
+            <h1>Code Playground</h1>
+            <div class="subtitle">Ultra-stable • Real-time • No crashes guaranteed</div>
+        </div>
+        <div class="buttons">
+            <button id="reset">Reset</button>
+            <button id="copy">Copy All</button>
+            <button id="clear">Clear Console</button>
+            <button class="primary" id="run">Run →</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="split-h">
+        <section class="editor-panel">
+            <div class="tabs">
+                <div class="tab active" data-lang="html">HTML</div>
+                <div class="tab" data-lang="css">CSS</div>
+                <div class="tab" data-lang="js">JavaScript</div>
+            </div>
+            <textarea id="html" spellcheck="false"></textarea>
+            <textarea id="css" spellcheck="false" class="hidden"></textarea>
+            <textarea id="js" spellcheck="false" class="hidden"></textarea>
+            <div class="vsplit"></div>
+        </section>
+
+            <div class="splitter" id="hsplit"></div>
+
+        <section class="preview-panel">
+            <div class="preview-header">
+                <span>Preview</span>
+                <button id="refresh">Refresh</button>
+            </div>
+            <iframe id="preview" sandbox="allow-scripts allow-modals"></iframe>
+        </section>
+    </div>
+
+    <section class="console">
+        <div class="console-header">
+            <span>Console</span>
+        </div>
+        <div class="console-body" id="console">Console ready.</div>
+    </section>
+</main>
+
+<script>
+"use strict";
+
+// Elements
+const editors = {
+    html: document.getElementById('html'),
+    css:  document.getElementById('css'),
+    js:   document.getElementById('js')
+};
+const tabs = document.querySelectorAll('.tab');
+const iframe = document.getElementById('preview');
+const consoleEl = document.getElementById('console');
+
+// Default beautiful starter code
+const defaults = {
+    html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+    <h1>Hello from the Playground!</h1>
+    <p>Edit freely — nothing can break this app.</p>
+    <button id="clickme">Click Me</button>
+    <div id="log"></div>
+</body>
+</html>`.trim(),
+
+    css: `body { font-family: system-ui, sans-serif; max-width: 720px; margin: 3rem auto; padding: 2rem; background: #f8fafc; line-height: 1.7; color: #333; }
+h1 { color: #4361ee; }
+#clickme { background: #4361ee; color: white; border: none; padding: 0.9rem 1.8rem; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+#clickme:hover { background: #3a0ca3; }
+#log > div { margin: 0.5rem 0; padding: 0.8rem; background: white; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }`.trim(),
+
+    js: `document.getElementById('clickme')?.addEventListener('click', () => {
+    const div = document.createElement('div');
+    div.textContent = 'Clicked at ' + new Date().toLocaleTimeString();
+    document.getElementById('log').appendChild(div);
+    console.log('Button clicked!');
+});
+console.log('%cPlayground ready!', 'color:#4cc9f0; font-size:14px; font-weight:bold;');`.trim()
+};
+
+// Load from localStorage safely
+function load() {
+    try {
+        Object.keys(editors).forEach(k => {
+            const saved = localStorage.getItem('pg_' + k);
+            editors[k].value = saved ?? defaults[k];
+        });
+    } catch(e) {
+        Object.keys(editors).forEach(k => editors[k].value = defaults[k]);
+    }
+}
+load();
+
+// Tab switching
+tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(tab => tab.classList.remove('active'));
+    t.classList.add('active');
+    Object.values(editors).forEach(ed => ed.classList.add('hidden'));
+    editors[t.dataset.lang].classList.remove('hidden');
+}));
+
+// Safe console logging
+function log(msg, type = 'log') {
+    const line = document.createElement('div');
+    line.className = 'log-' + type;
+    if (typeof msg === 'object') msg = JSON.stringify(msg, null, 2);
+    line.textContent = msg;
+    consoleEl.appendChild(line);
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+function clearConsole() { consoleEl.innerHTML = ''; }
+
+// Render using srcdoc (safest & fastest method)
+function render() {
+    clearConsole();
+    log('Rendering…', 'log');
+
+    const html = editors.html.value || '<body></body>';
+    const css = editors.css.value;
+    const js = editors.js.value;
+
+    const full = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>${css}</style>
+</head>
+<body>
+${html}
+<script>
+(() => {
+    const orig = { log: console.log, warn: console.warn, error: console.error };
+    const send = (type, args) => parent.postMessage({type, args}, '*');
+    console.log = (...a) => { orig.log(...a); send('log', a); };
+    console.warn = (...a) => { orig.warn(...a); send('warn', a); };
+    console.error = (...a) => { orig.error(...a); send('error', a); };
+    window.onerror = (m, s, l, c, e) => send('error', [m + ' (line ' + l + ')']);
+    try { ${js} } catch(e) { send('error', [e.message]); }
+})();
+<\/script>
+</body>
+</html>`;
+
+    iframe.srcdoc = full;
+}
+
+// Receive console messages
+window.addEventListener('message', e => {
+    if (e.data && e.data.type && e.data.args) {
+        const msg = e.data.args.map(a => 
+            typeof a === 'object' ? JSON.stringify(a) : String(a)
+        ).join(' ');
+        log(msg, e.data.type);
+    }
+});
+
+// Auto-save + auto-render (debounced)
+let timer;
+function changed() {
+    clearTimeout(timer);
+    timer = setTimeout(render, 500);
+    try {
+        localStorage.setItem('pg_html', editors.html.value);
+        localStorage.setItem('pg_css',  editors.css.value);
+        localStorage.setItem('pg_js',   editors.js.value);
+    } catch(e) {}
+}
+Object.values(editors).forEach(ed => ed.addEventListener('input', changed));
+
+// Buttons
+document.getElementById('run').onclick = render;
+document.getElementById('refresh').onclick = render;
+document.getElementById('clear').onclick = clearConsole;
+document.getElementById('reset').onclick = () => {
+    if (confirm('Reset everything to defaults?')) {
+        Object.keys(defaults).forEach(k => {
+            editors[k].value = defaults[k];
+            localStorage.setItem('pg_' + k, defaults[k]);
+        });
+        render();
+    }
+};
+document.getElementById('copy').onclick = async () => {
+    const code = `<!-- HTML -->\n${editors.html.value}\n\n<!-- CSS -->\n<style>\n${editors.css.value}\n</style>\n\n<!-- JS -->\n<script>\n${editors.js.value}\n<\/script>`;
+    await navigator.clipboard.writeText(code);
+    log('Copied full code to clipboard!', 'log');
+};
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'Enter') { e.preventDefault(); render(); }
+        if (e.key === 's') { e.preventDefault(); document.getElementById('copy').click(); }
+    }
+});
+
+// Resizers (horizontal & vertical)
+function createResizer(el, horizontal = true) {
+    el.addEventListener('mousedown', e => {
+        e.preventDefault();
+        el.classList.add('drag');
+        const start = horizontal ? e.clientX : e.clientY;
+        const startSize = horizontal 
+            ? document.querySelector('.editor-panel').offsetWidth
+            : document.querySelector('.console').offsetHeight;
+
+        const move = e => {
+            const delta = (horizontal ? e.clientX : e.clientY) - start;
+            if (horizontal) {
+                const w = Math.max(200, startSize + delta);
+                document.querySelector('.editor-panel').style.flex = `0 0 ${w}px`;
+            } else {
+                const h = Math.max(100, Math.min(500, startSize - delta));
+                document.querySelector('.console').style.height = h + 'px';
+            }
+        };
+        const up = () => {
+            el.classList.remove('drag');
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('mouseup', up);
+        };
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', up);
+    });
+}
+createResizer(document.getElementById('hsplit'), true);
+createResizer(document.querySelector('.vsplit'), false);
+
+// Initial render
+render();
+</script>
+</body>
+</html>
