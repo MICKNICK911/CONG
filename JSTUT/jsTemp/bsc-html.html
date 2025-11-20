@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character Encoding & Viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Document Metadata -->
+    <title>Professional HTML5 Sample</title>
+    <meta name="description" content="Comprehensive HTML5 example showcasing professional web development concepts">
+    <meta name="author" content="Expert Developer">
+    
+    <!-- Semantic Relationships -->
+    <link rel="canonical" href="https://example.com/page">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Semantic Layout Structure -->
+    <header role="banner">
+        <h1>Main Site Heading</h1>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Sectioning Elements -->
+        <section aria-labelledby="section-heading">
+            <h2 id="section-heading">Content Section</h2>
+            
+            <!-- Text Hierarchy & Formatting -->
+            <article>
+                <header>
+                    <h3>Article Title</h3>
+                    <p><time datetime="2023-10-05">October 5, 2023</time></p>
+                </header>
+                
+                <p>This is a <strong>important</strong> paragraph with <em>emphasized</em> text and a <a href="#link">hyperlink</a>.</p>
+                
+                <!-- Lists -->
+                <ul>
+                    <li>Unordered list item</li>
+                    <li>Another item</li>
+                </ul>
+                
+                <ol>
+                    <li>Ordered list item</li>
+                    <li>Second item</li>
+                </ol>
+            </article>
+
+            <!-- Media Elements -->
+            <figure>
+                <img src="image.jpg" alt="Descriptive alt text for accessibility" width="600" height="400">
+                <figcaption>Caption for the image</figcaption>
+            </figure>
+        </section>
+
+        <!-- Data Representation -->
+        <section>
+            <h2>Data Display</h2>
+            
+            <!-- Table with Semantic Structure -->
+            <table>
+                <caption>Sample Data Table</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>john@example.com</td>
+                        <td>Developer</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Form with Various Input Types -->
+            <form action="/submit" method="post">
+                <fieldset>
+                    <legend>Contact Form</legend>
+                    
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                    
+                    <label for="topic">Topic:</label>
+                    <select id="topic" name="topic">
+                        <option value="">Select a topic</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                    </select>
+                    
+                    <fieldset>
+                        <legend>Preferred Contact Method:</legend>
+                        <input type="radio" id="contact-email" name="contact" value="email" checked>
+                        <label for="contact-email">Email</label>
+                        
+                        <input type="radio" id="contact-phone" name="contact" value="phone">
+                        <label for="contact-phone">Phone</label>
+                    </fieldset>
+                    
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">Subscribe to newsletter</label>
+                    
+                    <button type="submit">Submit Form</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!-- Interactive Elements -->
+        <section>
+            <h2>Interactive Elements</h2>
+            <details>
+                <summary>Click to expand</summary>
+                <p>Hidden content revealed through interaction</p>
+            </details>
+            
+            <dialog id="dialog">
+                <p>This is a dialog window</p>
+                <button onclick="document.getElementById('dialog').close()">Close</button>
+            </dialog>
+            <button onclick="document.getElementById('dialog').showModal()">Open Dialog</button>
+        </section>
+    </main>
+
+    <!-- Supplementary Content -->
+    <aside>
+        <h2>Related Content</h2>
+        <p>Supplementary information or sidebar content</p>
+    </aside>
+
+    <!-- Footer Content -->
+    <footer role="contentinfo">
+        <address>
+            Contact: <a href="mailto:info@example.com">info@example.com</a>
+        </address>
+        <p>&copy; 2023 Company Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional JavaScript Concepts</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .output {
+            background: #edf2f7;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            min-height: 50px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .user-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .user-list li {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: #e9ecef;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--dark);
+            color: white;
+            border-radius: var(--border-radius);
+        }
+
+        .interactive-demo {
+            background: #eef2ff;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Professional JavaScript Concepts</h1>
+            <p class="subtitle">Essential patterns and techniques for modern web development</p>
+        </header>
+
+        <div class="concepts-grid">
+            <!-- Variable Scoping and Hoisting -->
+            <div class="card">
+                <h2>Variable Scoping & Hoisting</h2>
+                <p>Understanding <span class="highlight">var</span>, <span class="highlight">let</span>, and <span class="highlight">const</span> with hoisting behavior.</p>
+                
+                <div class="code-block">
+// Function scope with var (hoisted)<br>
+console.log(x); // undefined (hoisted)<br>
+var x = 5;<br><br>
+
+// Block scope with let/const (not hoisted)<br>
+// console.log(y); // ReferenceError<br>
+let y = 10;<br><br>
+
+// Const for immutable references<br>
+const PI = 3.14159;<br>
+// PI = 3; // TypeError<br>
+                </div>
+                
+                <button class="btn" onclick="demoScoping()">Run Scoping Example</button>
+                <div class="output" id="scoping-output"></div>
+            </div>
+
+            <!-- Functions and Closures -->
+            <div class="card">
+                <h2>Functions & Closures</h2>
+                <p>Different function types and closure patterns for data privacy.</p>
+                
+                <div class="code-block">
+// Function declaration (hoisted)<br>
+function greet(name) {<br>
+&nbsp;&nbsp;return `Hello, ${name}!`;<br>
+}<br><br>
+
+// Function expression<br>
+const multiply = function(a, b) {<br>
+&nbsp;&nbsp;return a * b;<br>
+};<br><br>
+
+// Arrow function<br>
+const divide = (a, b) => a / b;<br><br>
+
+// Closure example<br>
+function createCounter() {<br>
+&nbsp;&nbsp;let count = 0;<br>
+&nbsp;&nbsp;return function() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return count;<br>
+&nbsp;&nbsp;};<br>
+}
+                </div>
+                
+                <button class="btn" onclick="demoFunctions()">Run Functions Example</button>
+                <button class="btn btn-success" onclick="demoClosure()">Run Closure Example</button>
+                <div class="output" id="functions-output"></div>
+            </div>
+
+            <!-- Array Methods -->
+            <div class="card">
+                <h2>Array Methods</h2>
+                <p>Essential array operations with functional programming patterns.</p>
+                
+                <div class="code-block">
+const numbers = [1, 2, 3, 4, 5];<br><br>
+
+// Transform array<br>
+const doubled = numbers.map(n => n * 2);<br><br>
+
+// Filter elements<br>
+const evens = numbers.filter(n => n % 2 === 0);<br><br>
+
+// Reduce to single value<br>
+const sum = numbers.reduce((acc, n) => acc + n, 0);<br><br>
+
+// Find element<br>
+const firstEven = numbers.find(n => n % 2 === 0);<br><br>
+
+// Check condition<br>
+const allPositive = numbers.every(n => n > 0);
+                </div>
+                
+                <button class="btn" onclick="demoArrays()">Run Array Example</button>
+                <div class="output" id="arrays-output"></div>
+            </div>
+
+            <!-- Object Manipulation -->
+            <div class="card">
+                <h2>Object Manipulation</h2>
+                <p>Working with objects, destructuring, and modern syntax.</p>
+                
+                <div class="code-block">
+// Object creation and methods<br>
+const person = {<br>
+&nbsp;&nbsp;name: 'Alice',<br>
+&nbsp;&nbsp;age: 30,<br>
+&nbsp;&nbsp;greet() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
+&nbsp;&nbsp;}<br>
+};<br><br>
+
+// Destructuring<br>
+const { name, age } = person;<br><br>
+
+// Spread operator<br>
+const updatedPerson = { ...person, age: 31 };<br><br>
+
+// Object.keys, Object.values, Object.entries<br>
+const keys = Object.keys(person);
+                </div>
+                
+                <button class="btn" onclick="demoObjects()">Run Object Example</button>
+                <div class="output" id="objects-output"></div>
+            </div>
+
+            <!-- Promises and Async/Await -->
+            <div class="card">
+                <h2>Promises & Async/Await</h2>
+                <p>Handling asynchronous operations with modern patterns.</p>
+                
+                <div class="code-block">
+// Promise example<br>
+function fetchData() {<br>
+&nbsp;&nbsp;return new Promise((resolve, reject) => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;setTimeout(() => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Math.random() > 0.2 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? resolve('Data fetched!') <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: reject('Network error');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}, 1000);<br>
+&nbsp;&nbsp;});<br>
+}<br><br>
+
+// Async/await usage<br>
+async function getData() {<br>
+&nbsp;&nbsp;try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const result = await fetchData();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(result);<br>
+&nbsp;&nbsp;} catch (error) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+&nbsp;&nbsp;}<br>
+}
+                </div>
+                
+                <button class="btn" onclick="demoPromises()">Run Promise Example</button>
+                <button class="btn btn-success" onclick="demoAsyncAwait()">Run Async/Await Example</button>
+                <div class="output" id="async-output">
+                    <div class="status status-warning">Click a button to start async operation</div>
+                </div>
+            </div>
+
+            <!-- DOM Manipulation -->
+            <div class="card">
+                <h2>DOM Manipulation</h2>
+                <p>Selecting and modifying elements with event handling.</p>
+                
+                <div class="interactive-demo">
+                    <p>Click the buttons to modify this element:</p>
+                    <div id="demo-element" style="padding: 1rem; margin: 1rem 0; background: #e2e8f0; border-radius: 4px;">
+                        Original Content
+                    </div>
+                    <button class="btn" onclick="changeContent()">Change Content</button>
+                    <button class="btn btn-success" onclick="changeColor()">Change Color</button>
+                    <button class="btn btn-warning" onclick="toggleVisibility()">Toggle Visibility</button>
+                </div>
+                
+                <div class="code-block">
+// Selecting elements<br>
+const element = document.getElementById('demo-element');<br><br>
+
+// Modifying content<br>
+element.textContent = 'New content';<br>
+element.innerHTML = '&lt;strong&gt;Formatted&lt;/strong&gt; content';<br><br>
+
+// Changing styles<br>
+element.style.backgroundColor = 'lightblue';<br><br>
+
+// Adding/removing classes<br>
+element.classList.add('highlight');<br>
+element.classList.remove('highlight');<br><br>
+
+// Event handling<br>
+element.addEventListener('click', handleClick);
+                </div>
+            </div>
+
+            <!-- ES6+ Features -->
+            <div class="card">
+                <h2>ES6+ Features</h2>
+                <p>Modern JavaScript syntax and capabilities.</p>
+                
+                <div class="code-block">
+// Template literals<br>
+const message = `Hello, ${name}! You are ${age} years old.`;<br><br>
+
+// Default parameters<br>
+function createUser(name, role = 'user') {<br>
+&nbsp;&nbsp;return { name, role };<br>
+}<br><br>
+
+// Rest parameters<br>
+function sum(...numbers) {<br>
+&nbsp;&nbsp;return numbers.reduce((acc, n) => acc + n, 0);<br>
+}<br><br>
+
+// Optional chaining<br>
+const street = user?.address?.street;<br><br>
+
+// Nullish coalescing<br>
+const displayName = username ?? 'Anonymous';
+                </div>
+                
+                <button class="btn" onclick="demoES6()">Run ES6 Example</button>
+                <div class="output" id="es6-output"></div>
+            </div>
+
+            <!-- Error Handling -->
+            <div class="card">
+                <h2>Error Handling</h2>
+                <p>Graceful error handling with try/catch and custom errors.</p>
+                
+                <div class="code-block">
+// Basic error handling<br>
+try {<br>
+&nbsp;&nbsp;// Code that might throw an error<br>
+&nbsp;&nbsp;const data = JSON.parse(invalidJson);<br>
+} catch (error) {<br>
+&nbsp;&nbsp;console.error('Parsing error:', error.message);<br>
+&nbsp;&nbsp;// Handle error gracefully<br>
+}<br><br>
+
+// Custom error class<br>
+class ValidationError extends Error {<br>
+&nbsp;&nbsp;constructor(message) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;super(message);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.name = 'ValidationError';<br>
+&nbsp;&nbsp;}<br>
+}<br><br>
+
+// Throwing custom errors<br>
+function validateEmail(email) {<br>
+&nbsp;&nbsp;if (!email.includes('@')) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;throw new ValidationError('Invalid email format');<br>
+&nbsp;&nbsp;}<br>
+}
+                </div>
+                
+                <button class="btn" onclick="demoErrorHandling()">Run Error Example</button>
+                <div class="output" id="error-output"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Professional JavaScript Concepts &copy; 2023 | Open the browser console to see additional output</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variable Scoping and Hoisting Demo
+        function demoScoping() {
+            const output = document.getElementById('scoping-output');
+            output.innerHTML = '';
+            
+            // Demonstrate var hoisting
+            try {
+                output.innerHTML += `<div class="status status-warning">Before declaration: ${typeof x}</div>`;
+                var x = 5;
+                output.innerHTML += `<div class="status status-success">After declaration: x = ${x}</div>`;
+            } catch (e) {
+                output.innerHTML += `<div class="status status-error">Error: ${e.message}</div>`;
+            }
+            
+            // Demonstrate let/const block scoping
+            if (true) {
+                let blockScoped = 'I am block scoped';
+                output.innerHTML += `<div class="status status-success">Inside block: ${blockScoped}</div>`;
+            }
+            
+            // This would cause an error - uncomment to test
+            // output.innerHTML += `<div>Outside block: ${blockScoped}</div>`;
+            
+            output.innerHTML += `<div class="status status-success">Check the console for more scoping examples!</div>`;
+            
+            // Console examples
+            console.log("=== SCOPING DEMO ===");
+            console.log("Before declaration with var:", typeof hoistedVar); // undefined
+            var hoistedVar = "I'm hoisted";
+            console.log("After declaration:", hoistedVar);
+            
+            // This would throw ReferenceError
+            // console.log("Before declaration with let:", typeof notHoistedLet);
+            let notHoistedLet = "I'm not hoisted";
+            console.log("After declaration with let:", notHoistedLet);
+        }
+
+        // Functions and Closures Demo
+        function demoFunctions() {
+            const output = document.getElementById('functions-output');
+            output.innerHTML = '';
+            
+            // Function declaration
+            function greet(name) {
+                return `Hello, ${name}!`;
+            }
+            
+            // Function expression
+            const multiply = function(a, b) {
+                return a * b;
+            };
+            
+            // Arrow function
+            const divide = (a, b) => a / b;
+            
+            output.innerHTML += `
+                <div class="status status-success">Function declaration: ${greet('Alice')}</div>
+                <div class="status status-success">Function expression: 5 * 3 = ${multiply(5, 3)}</div>
+                <div class="status status-success">Arrow function: 15 / 3 = ${divide(15, 3)}</div>
+            `;
+            
+            console.log("=== FUNCTIONS DEMO ===");
+            console.log("Function declaration:", greet("Bob"));
+            console.log("Function expression:", multiply(4, 7));
+            console.log("Arrow function:", divide(20, 4));
+        }
+
+        // Closure Demo
+        function demoClosure() {
+            const output = document.getElementById('functions-output');
+            
+            function createCounter() {
+                let count = 0;
+                return function() {
+                    count++;
+                    return count;
+                };
+            }
+            
+            const counter = createCounter();
+            let results = [];
+            
+            for (let i = 0; i < 5; i++) {
+                results.push(counter());
+            }
+            
+            output.innerHTML += `
+                <div class="status status-success">Closure counter: ${results.join(', ')}</div>
+                <div class="status status-warning">Notice how the counter maintains state between calls</div>
+            `;
+            
+            console.log("=== CLOSURE DEMO ===");
+            console.log("Counter values:", results);
+        }
+
+        // Array Methods Demo
+        function demoArrays() {
+            const output = document.getElementById('arrays-output');
+            output.innerHTML = '';
+            
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            
+            const doubled = numbers.map(n => n * 2);
+            const evens = numbers.filter(n => n % 2 === 0);
+            const sum = numbers.reduce((acc, n) => acc + n, 0);
+            const firstEven = numbers.find(n => n % 2 === 0);
+            const allPositive = numbers.every(n => n > 0);
+            
+            output.innerHTML += `
+                <div class="status status-success">Original array: [${numbers.join(', ')}]</div>
+                <div class="status status-success">Map (doubled): [${doubled.join(', ')}]</div>
+                <div class="status status-success">Filter (evens): [${evens.join(', ')}]</div>
+                <div class="status status-success">Reduce (sum): ${sum}</div>
+                <div class="status status-success">Find (first even): ${firstEven}</div>
+                <div class="status status-success">Every (all positive): ${allPositive}</div>
+            `;
+            
+            console.log("=== ARRAY METHODS DEMO ===");
+            console.log("Original:", numbers);
+            console.log("Map (doubled):", doubled);
+            console.log("Filter (evens):", evens);
+            console.log("Reduce (sum):", sum);
+            console.log("Find (first even):", firstEven);
+            console.log("Every (all positive):", allPositive);
+        }
+
+        // Object Manipulation Demo
+        function demoObjects() {
+            const output = document.getElementById('objects-output');
+            output.innerHTML = '';
+            
+            const person = {
+                name: 'Alice',
+                age: 30,
+                profession: 'Developer',
+                greet() {
+                    return `Hello, I'm ${this.name}`;
+                }
+            };
+            
+            // Destructuring
+            const { name, age } = person;
+            
+            // Spread operator
+            const updatedPerson = { ...person, age: 31, city: 'New York' };
+            
+            // Object methods
+            const keys = Object.keys(person);
+            const values = Object.values(person);
+            const entries = Object.entries(person);
+            
+            output.innerHTML += `
+                <div class="status status-success">Original: ${JSON.stringify(person)}</div>
+                <div class="status status-success">Destructuring: name = ${name}, age = ${age}</div>
+                <div class="status status-success">Spread: ${JSON.stringify(updatedPerson)}</div>
+                <div class="status status-success">Object.keys(): [${keys.join(', ')}]</div>
+                <div class="status status-success">Method call: ${person.greet()}</div>
+            `;
+            
+            console.log("=== OBJECT MANIPULATION DEMO ===");
+            console.log("Original:", person);
+            console.log("Destructured:", { name, age });
+            console.log("With spread:", updatedPerson);
+            console.log("Keys:", keys);
+            console.log("Values:", values);
+            console.log("Entries:", entries);
+        }
+
+        // Promises Demo
+        function demoPromises() {
+            const output = document.getElementById('async-output');
+            output.innerHTML = '<div class="status status-warning">Fetching data (2 second delay)...</div>';
+            
+            function fetchData() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        Math.random() > 0.2 
+                            ? resolve('Data successfully fetched!') 
+                            : reject('Network error: Please try again');
+                    }, 2000);
+                });
+            }
+            
+            fetchData()
+                .then(result => {
+                    output.innerHTML = `<div class="status status-success">Promise resolved: ${result}</div>`;
+                    console.log("Promise resolved:", result);
+                })
+                .catch(error => {
+                    output.innerHTML = `<div class="status status-error">Promise rejected: ${error}</div>`;
+                    console.error("Promise rejected:", error);
+                });
+        }
+
+        // Async/Await Demo
+        async function demoAsyncAwait() {
+            const output = document.getElementById('async-output');
+            output.innerHTML = '<div class="status status-warning">Fetching data with async/await (2 second delay)...</div>';
+            
+            function fetchData() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        Math.random() > 0.2 
+                            ? resolve('Data successfully fetched with async/await!') 
+                            : reject('Network error with async/await: Please try again');
+                    }, 2000);
+                });
+            }
+            
+            try {
+                const result = await fetchData();
+                output.innerHTML = `<div class="status status-success">Async/Await success: ${result}</div>`;
+                console.log("Async/await resolved:", result);
+            } catch (error) {
+                output.innerHTML = `<div class="status status-error">Async/Await error: ${error}</div>`;
+                console.error("Async/await rejected:", error);
+            }
+        }
+
+        // DOM Manipulation Functions
+        function changeContent() {
+            const element = document.getElementById('demo-element');
+            element.textContent = 'Content changed at: ' + new Date().toLocaleTimeString();
+            element.style.backgroundColor = '#d1fae5';
+        }
+
+        function changeColor() {
+            const element = document.getElementById('demo-element');
+            const colors = ['#fef3c7', '#dbeafe', '#e9d5ff', '#bbf7d0', '#fecaca'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            element.style.backgroundColor = randomColor;
+        }
+
+        function toggleVisibility() {
+            const element = document.getElementById('demo-element');
+            if (element.style.display === 'none') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+
+        // ES6+ Features Demo
+        function demoES6() {
+            const output = document.getElementById('es6-output');
+            output.innerHTML = '';
+            
+            const name = 'Bob';
+            const age = 25;
+            
+            // Template literals
+            const message = `Hello, ${name}! You are ${age} years old.`;
+            
+            // Default parameters
+            function createUser(name, role = 'user') {
+                return { name, role };
+            }
+            
+            // Rest parameters
+            function sum(...numbers) {
+                return numbers.reduce((acc, n) => acc + n, 0);
+            }
+            
+            // Optional chaining simulation
+            const user = { profile: { name: 'Alice' } };
+            const street = user?.profile?.address?.street || 'No street provided';
+            
+            // Nullish coalescing
+            const username = null;
+            const displayName = username ?? 'Anonymous';
+            
+            output.innerHTML += `
+                <div class="status status-success">Template literal: ${message}</div>
+                <div class="status status-success">Default parameters: ${JSON.stringify(createUser('Charlie'))}</div>
+                <div class="status status-success">Rest parameters: sum(1,2,3,4,5) = ${sum(1,2,3,4,5)}</div>
+                <div class="status status-success">Optional chaining: ${street}</div>
+                <div class="status status-success">Nullish coalescing: ${displayName}</div>
+            `;
+            
+            console.log("=== ES6+ FEATURES DEMO ===");
+            console.log("Template literal:", message);
+            console.log("Default parameters:", createUser('Charlie'));
+            console.log("Rest parameters sum:", sum(1, 2, 3, 4, 5));
+            console.log("Optional chaining result:", street);
+            console.log("Nullish coalescing result:", displayName);
+        }
+
+        // Error Handling Demo
+        function demoErrorHandling() {
+            const output = document.getElementById('error-output');
+            output.innerHTML = '';
+            
+            // Basic error handling
+            try {
+                const invalidJson = '{ "name": "Alice", "age": }';
+                const data = JSON.parse(invalidJson);
+                output.innerHTML += `<div class="status status-success">Parsed: ${JSON.stringify(data)}</div>`;
+            } catch (error) {
+                output.innerHTML += `<div class="status status-error">JSON Parse Error: ${error.message}</div>`;
+            }
+            
+            // Custom error
+            class ValidationError extends Error {
+                constructor(message) {
+                    super(message);
+                    this.name = 'ValidationError';
+                }
+            }
+            
+            // Using custom error
+            function validateEmail(email) {
+                if (!email.includes('@')) {
+                    throw new ValidationError('Invalid email format');
+                }
+                return true;
+            }
+            
+            try {
+                validateEmail('invalid-email');
+            } catch (error) {
+                if (error instanceof ValidationError) {
+                    output.innerHTML += `<div class="status status-error">Custom Error: ${error.message}</div>`;
+                } else {
+                    output.innerHTML += `<div class="status status-error">Unexpected Error: ${error.message}</div>`;
+                }
+            }
+            
+            console.log("=== ERROR HANDLING DEMO ===");
+            console.log("Check the output above for error handling examples");
+        }
+
+        // Initialize with some console examples
+        console.log("=== PROFESSIONAL JAVASCRIPT CONCEPTS ===");
+        console.log("Open the examples and check the browser console for additional output");
+        console.log("Try interacting with the different concept cards to see JavaScript in action");
+    </script>
+</body>
+</html>

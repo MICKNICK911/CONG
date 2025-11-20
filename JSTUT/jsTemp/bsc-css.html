@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional CSS Concepts</title>
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --dark-bg: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            padding: 20px;
+        }
+
+        /* Typography System */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--dark-bg);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Layout System - Flexbox and Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Card Component with Transitions */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark-bg);
+        }
+
+        /* Button Component System */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Navigation Component */
+        .nav {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .p-1 { padding: 1rem; }
+        .p-2 { padding: 2rem; }
+
+        .bg-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .bg-dark {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        /* Animation and Transform Examples */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadein {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .rotate:hover {
+            transform: rotate(5deg);
+        }
+
+        .scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pseudo-elements and Advanced Selectors */
+        .featured::before {
+            content: "★";
+            color: gold;
+            margin-right: 0.5rem;
+        }
+
+        .card:nth-child(even) {
+            background-color: #f5f9ff;
+        }
+
+        /* Responsive Design with Media Queries */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 0 0.75rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+            }
+            
+            .nav-item {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* CSS Grid Layout Example */
+        .dashboard {
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main"
+                "footer footer";
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 20px;
+            min-height: 400px;
+            margin: 2rem 0;
+        }
+
+        .dashboard-header {
+            grid-area: header;
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+        }
+
+        .dashboard-sidebar {
+            grid-area: sidebar;
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-main {
+            grid-area: main;
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-footer {
+            grid-area: footer;
+            background-color: var(--light-bg);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        /* Flexbox Example */
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .flex-item {
+            flex: 1 1 200px;
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Professional CSS Concepts</h1>
+            <ul class="nav">
+                <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </header>
+
+        <section class="animate-fadein">
+            <h2>CSS Grid Layout</h2>
+            <div class="dashboard">
+                <header class="dashboard-header">
+                    <h3>Dashboard Header</h3>
+                </header>
+                <aside class="dashboard-sidebar">
+                    <h4>Sidebar</h4>
+                    <ul>
+                        <li>Navigation Item 1</li>
+                        <li>Navigation Item 2</li>
+                        <li>Navigation Item 3</li>
+                    </ul>
+                </aside>
+                <main class="dashboard-main">
+                    <h4>Main Content Area</h4>
+                    <p>This demonstrates CSS Grid layout with named grid areas.</p>
+                </main>
+                <footer class="dashboard-footer">
+                    <p>Dashboard Footer</p>
+                </footer>
+            </div>
+        </section>
+
+        <section class="mt-2">
+            <h2>Flexbox Example</h2>
+            <div class="flex-container">
+                <div class="flex-item">
+                    <h4>Flex Item 1</h4>
+                    <p>Flexbox allows for flexible responsive layouts.</p>
+                </div>
+                <div class="flex-item">
+                    <h4>Flex Item 2</h4>
+                    <p>Items can grow and shrink based on available space.</p>
+                </div>
+                <div class="flex-item">
+                    <h4>Flex Item 3</h4>
+                    <p>Perfect for component layouts and navigation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-2">
+            <h2>Card Components</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 class="card-header">Standard Card</h3>
+                    <p>This card demonstrates hover effects and transitions.</p>
+                    <button class="btn btn-primary mt-1">Learn More</button>
+                </div>
+                <div class="card">
+                    <h3 class="card-header featured">Featured Card</h3>
+                    <p>This card has a special indicator using pseudo-elements.</p>
+                    <button class="btn btn-secondary mt-1">Get Started</button>
+                </div>
+                <div class="card rotate">
+                    <h3 class="card-header">Interactive Card</h3>
+                    <p>This card has a rotation transform on hover.</p>
+                    <button class="btn btn-outline mt-1">View Details</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-2">
+            <h2>Form Styling</h2>
+            <div class="card p-2">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" placeholder="Enter your message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country">
+                            <option value="">Select a country</option>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="uk">United Kingdom</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Form</button>
+                    <button type="reset" class="btn btn-outline">Reset</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-2 bg-dark p-2 text-center">
+            <h2>Utility Classes in Action</h2>
+            <p>This section uses utility classes for background, padding, and text alignment.</p>
+            <button class="btn btn-primary mt-1">Primary Button</button>
+            <button class="btn btn-secondary mt-1">Secondary Button</button>
+        </section>
+    </div>
+</body>
+</html>
