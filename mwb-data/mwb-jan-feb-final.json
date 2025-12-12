@@ -1,4 +1,5 @@
-const NoticeData = {
+{
+  "months": {
     "month_1755087963009": {
       "id": "month_1755087963009",
       "name": "September 2025",
@@ -1567,4 +1568,414 @@ const NoticeData = {
       },
       "copiedFrom": "month_1760118260050"
     }
-  };
+  },
+  "categories": {
+    "1": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    },
+    "2": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    },
+    "3": {
+      "normal": [
+        "Jesse Yeboah",
+        "Raymond Sam",
+        "Frank Essah",
+        "Emmanuel Entsie",
+        "Francis Entsie",
+        "Foster Entsie",
+        "Sadick Mohammed",
+        "Augustine Appiah",
+        "Paul Asiedu",
+        "Stephen Essilfie",
+        "Reuben Soworlo",
+        "Ebenezer Normanyo",
+        "Isaac Arhin",
+        "Samuel Larbi",
+        "Boaz Yeboah",
+        "Joseph Eshun",
+        "Kwasi Amponsah",
+        "Jeromoth Arhin",
+        "Stanley Yamekpe",
+        "John Essel",
+        "Michael Obeng"
+      ],
+      "standby": []
+    },
+    "4": {
+      "normal": [
+        "Margaret Entsie",
+        "Mary Entsie",
+        "Joana Entsie",
+        "Naomi Entsie",
+        "Claudia Polley",
+        "Esther Takie",
+        "Adjoa Eshun",
+        "Gloria Adobea",
+        "Claudia Sam",
+        "Joan Sam",
+        "Joana Cynthia",
+        "Adwoa Onwona",
+        "Stephanie Onwona",
+        "Christina Amponsah",
+        "Nancy Baidoo",
+        "Elizabeth Yeboah",
+        "Abigail Asiedua",
+        "Winifred Appiah",
+        "Juliana Entsie",
+        "Joana Ekwama Entsie",
+        "Lois Ofosu",
+        "Mercy Entsie",
+        "Vivian Arhin",
+        "Perlita Gyafua",
+        "Alimatu Saadia",
+        "Augusta Appiah",
+        "Mawusi Appiah",
+        "Owusuwaa Appiah",
+        "Nhyira Appiah",
+        "Barbara Amponsah",
+        "Lilian Ankomah",
+        "Rosina Yankson",
+        "Jemimah Miezah",
+        "Lois Soworlo",
+        "Erica Soworlo",
+        "Dora Asare",
+        "Victoria Yeboah",
+        "Selina Gyamfi",
+        "Barbara Asamoah",
+        "Rebecca Abgenyo",
+        "Adelaide Allotey",
+        "Pricilla Essel",
+        "Hannah Adumoah",
+        "Clara Prempeh"
+      ],
+      "standby": []
+    },
+    "5": {
+      "normal": [
+        "Margaret Entsie",
+        "Mary Entsie",
+        "Joana Entsie",
+        "Naomi Entsie",
+        "Claudia Polley",
+        "Esther Takie",
+        "Adjoa Eshun",
+        "Gloria Adobea",
+        "Claudia Sam",
+        "Joan Sam",
+        "Joana Cynthia",
+        "Adwoa Onwona",
+        "Stephanie Onwona",
+        "Christina Amponsah",
+        "Nancy Baidoo",
+        "Elizabeth Yeboah",
+        "Abigail Asiedua",
+        "Winifred Appiah",
+        "Juliana Entsie",
+        "Joana Ekwama Entsie",
+        "Lois Ofosu",
+        "Mercy Entsie",
+        "Vivian Arhin",
+        "Perlita Gyafua",
+        "Alimatu Saadia",
+        "Augusta Appiah",
+        "Mawusi Appiah",
+        "Owusuwaa Appiah",
+        "Nhyira Appiah",
+        "Barbara Amponsah",
+        "Lilian Ankomah",
+        "Rosina Yankson",
+        "Jemimah Miezah",
+        "Lois Soworlo",
+        "Erica Soworlo",
+        "Dora Asare",
+        "Victoria Yeboah",
+        "Selina Gyamfi",
+        "Barbara Asamoah",
+        "Rebecca Abgenyo",
+        "Adelaide Allotey",
+        "Pricilla Essel",
+        "Hannah Adumoah",
+        "Clara Prempeh"
+      ],
+      "standby": []
+    },
+    "6": {
+      "normal": [
+        "Margaret Entsie",
+        "Mary Entsie",
+        "Joana Entsie",
+        "Naomi Entsie",
+        "Claudia Polley",
+        "Esther Takie",
+        "Adjoa Eshun",
+        "Gloria Adobea",
+        "Claudia Sam",
+        "Joan Sam",
+        "Joana Cynthia",
+        "Adwoa Onwona",
+        "Stephanie Onwona",
+        "Christina Amponsah",
+        "Nancy Baidoo",
+        "Elizabeth Yeboah",
+        "Abigail Asiedua",
+        "Winifred Appiah",
+        "Juliana Entsie",
+        "Joana Ekwama Entsie",
+        "Lois Ofosu",
+        "Mercy Entsie",
+        "Vivian Arhin",
+        "Perlita Gyafua",
+        "Alimatu Saadia",
+        "Augusta Appiah",
+        "Mawusi Appiah",
+        "Owusuwaa Appiah",
+        "Nhyira Appiah",
+        "Barbara Amponsah",
+        "Lilian Ankomah",
+        "Rosina Yankson",
+        "Jemimah Miezah",
+        "Lois Soworlo",
+        "Erica Soworlo",
+        "Dora Asare",
+        "Victoria Yeboah",
+        "Selina Gyamfi",
+        "Barbara Asamoah",
+        "Rebecca Abgenyo",
+        "Adelaide Allotey",
+        "Pricilla Essel",
+        "Hannah Adumoah",
+        "Clara Prempeh"
+      ],
+      "standby": []
+    },
+    "7": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    },
+    "8": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    },
+    "9": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Derrick Yankson",
+        "Dickson Onwona",
+        "Isaac Newton Sam",
+        "Wonder Soworlo",
+        "Michael Appiah"
+      ],
+      "standby": []
+    },
+    "10": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 1": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 2": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 3": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 4": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 5": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 6": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 7": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 8": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 9": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 10": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 11": {
+      "normal": [],
+      "standby": []
+    },
+    "Role 12": {
+      "normal": [],
+      "standby": []
+    },
+    "Chairman": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Derrick Yankson",
+        "Dickson Onwona",
+        "Isaac Newton Sam",
+        "Wonder Soworlo",
+        "Michael Appiah"
+      ],
+      "standby": []
+    },
+    "Opening Prayer": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    },
+    "Closing Prayer": {
+      "normal": [
+        "Mark Arhibald Entsie",
+        "Abel Ekow Eshun",
+        "Ephraim Sam",
+        "Hilkiah Entsie",
+        "Kingsley Arhin",
+        "Obed Gyamfi",
+        "Mark Anthony Entsie",
+        "Collins Yeboah",
+        "Isaac Ampomah",
+        "Alexander Ankomah",
+        "Derrick Yankson",
+        "Gideon Miezah",
+        "Dickson Onwona",
+        "Samuel Onwona",
+        "Isaac Newton Sam",
+        "Daniel Boakye",
+        "Wonder Soworlo",
+        "Emmanuel Asante",
+        "Michael Appiah",
+        "Shadrach Asare"
+      ],
+      "standby": []
+    }
+  }
+}
