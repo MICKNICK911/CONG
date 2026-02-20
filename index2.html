@@ -264,6 +264,12 @@
             overflow: hidden;
             transition: var(--transition);
             border: 1px solid #ecf3fa;
+            position: relative;
+        }
+
+        .role-card.active-week-card {
+            border-left: 5px solid #e67e22;
+            box-shadow: 0 12px 24px -8px rgba(230, 126, 34, 0.2);
         }
 
         .role-card:hover {
@@ -280,11 +286,32 @@
             display: flex;
             align-items: center;
             gap: 0.7rem;
+            flex-wrap: wrap;
         }
 
         .role-header i {
             color: #f7dc6f;
             font-size: 1.2rem;
+        }
+
+        .active-badge {
+            background-color: #e67e22;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .active-badge i {
+            color: white;
+            font-size: 0.7rem;
         }
 
         .role-content {
@@ -348,7 +375,7 @@
             border-top: 1px solid #e2eaf2;
         }
 
-        /* User Guide Styles */
+        /* User Guide Styles - fully visible content */
         .user-guide {
             position: fixed;
             bottom: 24px;
@@ -402,12 +429,15 @@
         .guide-content {
             background-color: white;
             width: 90%;
-            max-width: 620px;
+            max-width: 700px;
             border-radius: 32px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
             transform: translateY(30px);
             transition: 0.3s ease;
+            max-height: 85vh; /* ensures full visibility with scrolling */
+            display: flex;
+            flex-direction: column;
         }
 
         .guide-modal.active .guide-content {
@@ -421,6 +451,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .guide-header h2 {
@@ -429,6 +460,7 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            font-size: 1.6rem;
         }
 
         .guide-header h2 i {
@@ -455,10 +487,10 @@
         }
 
         .guide-body {
-            padding: 2rem 1.8rem;
-            max-height: 60vh;
+            padding: 2rem 2rem;
             overflow-y: auto;
             background: #f9fcff;
+            flex-grow: 1;
         }
 
         .guide-step {
@@ -476,20 +508,22 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 500;
         }
 
         .guide-step p {
             margin-bottom: 1.2rem;
             color: #2d3c4c;
+            font-size: 1.05rem;
+            line-height: 1.6;
         }
 
         .guide-step-image {
             background-color: white;
             border-radius: 20px;
-            padding: 1.2rem;
-            margin: 1.2rem 0;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
             text-align: center;
             border: 1px solid #e1eaf2;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
@@ -499,9 +533,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 1.8rem 1.8rem;
+            padding: 1.2rem 2rem 1.8rem;
             border-top: 1px solid #e6edf4;
             background: white;
+            flex-shrink: 0;
         }
 
         .guide-dots {
@@ -512,8 +547,8 @@
         }
 
         .guide-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background-color: #cbd5e0;
             cursor: pointer;
@@ -532,6 +567,7 @@
             border-radius: 12px;
             padding: 1rem;
             margin: 1rem 0;
+            font-size: 1.05rem;
         }
 
         /* Desktop styles */
@@ -633,7 +669,7 @@
         <button class="guide-toggle"><i class="fas fa-question"></i></button>
     </div>
 
-    <!-- Guide Modal -->
+    <!-- Guide Modal (fully visible content) -->
     <div class="guide-modal">
         <div class="guide-content">
             <div class="guide-header">
@@ -645,8 +681,8 @@
                     <h3><i class="fas fa-hand-peace"></i> Welcome!</h3>
                     <p>This app helps you view meeting assignments for each week. Let's take a quick tour of the features.</p>
                     <div class="guide-step-image">
-                        <i class="fas fa-calendar-alt fa-2x" style="color:#3498db;"></i>
-                        <p style="margin-top:0.5rem;"><strong>Meeting Assignment Schedule</strong></p>
+                        <i class="fas fa-calendar-alt fa-3x" style="color:#3498db;"></i>
+                        <p style="margin-top:0.8rem;"><strong>Meeting Assignment Schedule</strong></p>
                     </div>
                     <p>You can always access this guide by clicking the <strong><i class="fas fa-question-circle"></i> ? button</strong> in the bottom right corner.</p>
                 </div>
@@ -664,18 +700,19 @@
                     <h3><i class="fas fa-calendar-week"></i> Week Selection</h3>
                     <p>Use the <strong>Week dropdown</strong> to view assignments for specific weeks within the selected month.</p>
                     <div class="guide-feature-highlight">
-                        <i class="fas fa-tip"></i> <strong>Tip:</strong> Each month has 4-5 weeks of assignments
+                        <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Each month has 4-5 weeks of assignments
                     </div>
                     <p>You can also use the <strong><i class="fas fa-chevron-left"></i> <i class="fas fa-chevron-right"></i> navigation buttons</strong> to move between weeks quickly.</p>
                 </div>
                 
                 <div class="guide-step" id="step-4">
                     <h3><i class="fas fa-bell"></i> Current Week Indicator</h3>
-                    <p>When viewing the current week, you'll see a green indicator at the top.</p>
+                    <p>When viewing the current week, you'll see a green indicator at the top and each assignment card will display an <strong>ACTIVE</strong> badge.</p>
                     <div class="guide-step-image">
-                        <i class="fas fa-circle" style="color:#2ecc71;"></i> This is the current week
+                        <i class="fas fa-circle" style="color:#2ecc71;"></i> This is the current week<br>
+                        <span style="display:inline-block; background:#e67e22; color:white; padding:0.2rem 0.8rem; border-radius:20px; margin-top:0.5rem;"><i class="fas fa-bell"></i> ACTIVE</span>
                     </div>
-                    <p>This helps you quickly identify which assignments are for this week's meeting.</p>
+                    <p>This helps you quickly identify which assignments are due for this week's meeting.</p>
                 </div>
                 
                 <div class="guide-step" id="step-5">
@@ -1054,6 +1091,17 @@
             order.push(...numericRoles, "Closing Prayer");
             
             const sortedRoleNames = roleNames.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+            // Determine if current week is active
+            const currentDate = getCurrentDate();
+            const monthData = NoticeDataDB[currentMonth];
+            const week = monthData.weeks[currentWeekIndex];
+            const dateRange = parseWeekRange(week.range);
+            let isCurrentWeek = false;
+            if (dateRange) {
+                const { startDate, endDate } = dateRange;
+                isCurrentWeek = (currentDate >= startDate && currentDate <= endDate);
+            }
             
             sortedRoleNames.forEach(roleName => {
                 const assignment = roles[roleName][currentWeekIndex];
@@ -1062,10 +1110,21 @@
                 
                 const roleCard = document.createElement('div');
                 roleCard.className = 'role-card';
+                if (isCurrentWeek) {
+                    roleCard.classList.add('active-week-card');
+                }
                 
                 const roleHeader = document.createElement('div');
                 roleHeader.className = 'role-header';
                 roleHeader.innerHTML = `<i class="fas fa-tag"></i> ${getRoleDisplayName(roleName)}`;
+                
+                // Add active badge if current week
+                if (isCurrentWeek) {
+                    const badge = document.createElement('span');
+                    badge.className = 'active-badge';
+                    badge.innerHTML = '<i class="fas fa-bell"></i> ACTIVE';
+                    roleHeader.appendChild(badge);
+                }
                 
                 const roleContent = document.createElement('div');
                 roleContent.className = 'role-content';
