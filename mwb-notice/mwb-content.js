@@ -1364,7 +1364,7 @@ const NoticeData = {
             "edited": true
           },
           {
-            "text": "Vivian Arhin & Cynthia Sam",
+            "text": "Jemimah Miezah & Cynthia Sam",
             "edited": true
           }
         ],
