@@ -1,1904 +1,562 @@
 {
-  "months": {
-    "month_1760118057198": {
-      "id": "month_1760118057198",
-      "name": "November 2025",
-      "weeks": [
-        {
-          "range": "November 3 - 9",
-          "isCurrent": false
-        },
-        {
-          "range": "November 10 - 16",
-          "isCurrent": false
-        },
-        {
-          "range": "November 17 - 23",
-          "isCurrent": false
-        },
-        {
-          "range": "November 24 - 30",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "Jeromoth Arhin",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Kwakye",
-            "edited": true
-          },
-          {
-            "text": "Stanley Yamekpe",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "Barbara Asamoah & Joana Entsie",
-            "edited": true
-          },
-          {
-            "text": "Hannah Adumoah & Cynthia Sam",
-            "edited": true
-          },
-          {
-            "text": "Mariama Mohammed & Jemimah Miezah",
-            "edited": true
-          },
-          {
-            "text": "Lilian Bawuah & Juliana Entsie",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "Lois Ofosu & Owusuwaa Appiah",
-            "edited": true
-          },
-          {
-            "text": "Nhyira Appiah & Adwoa Onwona",
-            "edited": true
-          },
-          {
-            "text": "Abigail Asiedu & Dora Asare",
-            "edited": true
-          },
-          {
-            "text": "Mawusi Appiah & Mary Entsie",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "Mary Entsie & Adelaide Allotey",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye",
-            "edited": true
-          },
-          {
-            "text": "Margaret Entsie & Pricilla Essel",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Entsie",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Vivian Arhin & Claudia Sam",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "Emmanuel Asante",
-            "edited": true
-          },
-          {
-            "text": "Reuben Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Entsie",
-            "edited": true
-          },
-          {
-            "text": "Isaac Arhin",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Kwakye",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1755087963009"
-    },
-    "month_1760118260050": {
-      "id": "month_1760118260050",
-      "name": "December 2025",
-      "weeks": [
-        {
-          "range": "December 1 - 7",
-          "isCurrent": false
-        },
-        {
-          "range": "December 8 - 14",
-          "isCurrent": false
-        },
-        {
-          "range": "December 15 - 21",
-          "isCurrent": false
-        },
-        {
-          "range": "December 22 - 28",
-          "isCurrent": false
-        },
-        {
-          "range": "December 29 - January 4",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Asante",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Kwakye",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "Ebenezer Normanyo",
-            "edited": true
-          },
-          {
-            "text": "Jonathan Arthur",
-            "edited": true
-          },
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          },
-          {
-            "text": "Samuel Larbi",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "Gloria Adobea & Juliana Entsie",
-            "edited": true
-          },
-          {
-            "text": "Christiana Amponsah & Adwoa Onwona",
-            "edited": true
-          },
-          {
-            "text": "Alimatu Saadia & Lois Soworlo",
-            "edited": true
-          },
-          {
-            "text": "Mercy Entsie & Rebecca Abgenyo",
-            "edited": true
-          },
-          {
-            "text": "Erica Sowolo & Rosina Yankson",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "Naomi Entsie & Tracy Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Perlita Gyamfua & Joana Entsie",
-            "edited": true
-          },
-          {
-            "text": "Cynthia Sam & Stephanie Onwona",
-            "edited": true
-          },
-          {
-            "text": "Dorah Asare & Nancy Baidoo",
-            "edited": true
-          },
-          {
-            "text": "Claudia Sam & Sis Atobora",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "Esther Takie & Selina Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Adwoa Eshun & Victoria Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Joana E. Entsie & Elizabeth Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Augusta Appiah & Winifred Appiah",
-            "edited": true
-          },
-          {
-            "text": "Paul Asiedu",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "Ahiade - 15",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Ahiade - 15",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "Circuit Overseer First Talk",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Nea Asafo Aye",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "",
-            "edited": false
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          },
-          {
-            "text": "Paul Asiedu",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Reuben Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1755087993804"
-    },
-    "month_1765535890458": {
-      "id": "month_1765535890458",
-      "name": "January 2026",
-      "weeks": [
-        {
-          "range": "January 5 - 11",
-          "isCurrent": false
-        },
-        {
-          "range": "January 12 - 18",
-          "isCurrent": false
-        },
-        {
-          "range": "January 19 - 25",
-          "isCurrent": false
-        },
-        {
-          "range": "January 26 - February 1",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "Hilkiah Kwakye",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Asante",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "Francis Entsie",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Barack Ayisi",
-            "edited": true
-          },
-          {
-            "text": "Foster Entsie",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "Adwoa Eshun & Esther Takie",
-            "edited": true
-          },
-          {
-            "text": "Owusuwaa Appiah & Mary Entsie",
-            "edited": true
-          },
-          {
-            "text": "Clara Prempeh & Cynthia Sam",
-            "edited": true
-          },
-          {
-            "text": "Ryan Takie & Winifred Yeboah",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "Rebecca Abgenyo & Naomi Entsie",
-            "edited": true
-          },
-          {
-            "text": "Adelaide Allotey & Sis Atobrah",
-            "edited": true
-          },
-          {
-            "text": "Juliana Entsie & Hannah Adumoah",
-            "edited": true
-          },
-          {
-            "text": "Victoria Yeboah & Abigail Asiedua",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "Isaac Arhin",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye & Sadick Mohammed",
-            "edited": true
-          },
-          {
-            "text": "Ephraim Sam & Emmanuel Entsie",
-            "edited": true
-          },
-          {
-            "text": "Reuben Sowolo & Jesse Yeboah",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          },
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare & Paul Asiedu",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Ahiade",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "Ahiade",
-            "edited": true
-          }
-        ],
-        "10": [
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          },
-          {
-            "text": "Paul Asiedu",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Entsie",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Asante",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1760118057198"
-    },
-    "month_1765534410833": {
-      "id": "month_1765534410833",
-      "name": "February 2026",
-      "weeks": [
-        {
-          "range": "February 2 - 8",
-          "isCurrent": false
-        },
-        {
-          "range": "February 9 - 15",
-          "isCurrent": false
-        },
-        {
-          "range": "February 16 - 22",
-          "isCurrent": true
-        },
-        {
-          "range": "February 23 - March 1",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          },
-          {
-            "text": "Alexander Bawuah",
-            "edited": true
-          },
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Daniel Boakye",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "George Tenkorang",
-            "edited": true
-          },
-          {
-            "text": "Frank Essah",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Stephen Esselfie",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "Joana Entsie & Cynthia Sam",
-            "edited": true
-          },
-          {
-            "text": "Tracy Yeboah & Jemimah Miezah",
-            "edited": true
-          },
-          {
-            "text": "Selina Gyamfi & Victoria Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Pricilla Essel & Margaret Entsie",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "Sis Atobrah & Lois Ofosu",
-            "edited": true
-          },
-          {
-            "text": "Lois Sowolo & Joana Ekwama Entsie",
-            "edited": true
-          },
-          {
-            "text": "Elizabeth Yeboah & Winifred Appiah",
-            "edited": true
-          },
-          {
-            "text": "Stephanie Onwona & Esther Takie",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "Adwoa Onwona & Dora Asare",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Kwakye & Ebenezer Normanyo",
-            "edited": true
-          },
-          {
-            "text": "Nancy Baidoo & Mercy Entsie",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          },
-          {
-            "text": "Ahiade",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Asante & Samuel Larbi",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "Hilkiah Kwakye",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Reuben Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Isaac Arhin",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1760118260050"
-    },
-    "month_1770378930146": {
-      "id": "month_1770378930146",
-      "name": "March 2026",
-      "weeks": [
-        {
-          "range": "March 2 - 8",
-          "isCurrent": false
-        },
-        {
-          "range": "March 9 - 15",
-          "isCurrent": false
-        },
-        {
-          "range": "March 16 - 22",
-          "isCurrent": false
-        },
-        {
-          "range": "March 23 - 29",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          },
-          {
-            "text": "Emmanuel Asante",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Entsie",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "Jonathan Arthur",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Sadick Mohammed",
-            "edited": true
-          },
-          {
-            "text": "Ebenezer Normanyo",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "Emmanuel Asante & Stephen Essilfie",
-            "edited": true
-          },
-          {
-            "text": "Perlita Gyafua & Elizabeth Yeboah",
-            "edited": true
-          },
-          {
-            "text": "Naomi Entsie & Winifred Appiah",
-            "edited": true
-          },
-          {
-            "text": "Alimatu Saadia & Rebecca Abgenyo",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "Claudia Banson & Mercy Entsie",
-            "edited": true
-          },
-          {
-            "text": "Nhyira Appiah & Juliana Entsie",
-            "edited": true
-          },
-          {
-            "text": "Joana Ekwama & Esther Takie",
-            "edited": true
-          },
-          {
-            "text": "Mawusi Appiah & Joana Entsie",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "Isaac Arhin",
-            "edited": true
-          },
-          {
-            "text": "Samuel Larbi & Wonder Soworlo",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah & Francis Entsie",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare & Barack Ayisi",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona & Foster Entsie",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "Nea Asafo Atumi Aye",
-            "edited": true
-          },
-          {
-            "text": "Ahiade",
-            "edited": true
-          },
-          {
-            "text": "LDC Amaneabo",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          },
-          {
-            "text": "Reuben Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Entsie",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1765535890458"
-    },
-    "month_1770378997255": {
-      "id": "month_1770378997255",
-      "name": "April 2026",
-      "weeks": [
-        {
-          "range": "April 6 - 12",
-          "isCurrent": false
-        },
-        {
-          "range": "April 13 - 19",
-          "isCurrent": false
-        },
-        {
-          "range": "April 20 - 26",
-          "isCurrent": false
-        },
-        {
-          "range": "April 27 - May 3",
-          "isCurrent": false
-        }
-      ],
-      "roles": {
-        "1": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          },
-          {
-            "text": "Shadrach Asare",
-            "edited": true
-          },
-          {
-            "text": "Derrick Yankson",
-            "edited": true
-          }
-        ],
-        "2": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Isaac Ampomah",
-            "edited": true
-          },
-          {
-            "text": "Wonder Sowolo",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          }
-        ],
-        "3": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Jeromoth Arhin",
-            "edited": true
-          },
-          {
-            "text": "Stanley Yamekpe",
-            "edited": true
-          },
-          {
-            "text": "Michael Obeng",
-            "edited": true
-          }
-        ],
-        "4": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Reuben Soworlo & Paul Asiedu",
-            "edited": true
-          },
-          {
-            "text": "Jesse Yeboah & Frank Essah",
-            "edited": true
-          },
-          {
-            "text": "Jemimah Miezah & Cynthia Sam",
-            "edited": true
-          }
-        ],
-        "5": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Peace Yeboah & Selina Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Vivian Arhin & Stephanie Onwona",
-            "edited": true
-          },
-          {
-            "text": "Ephraim Sam",
-            "edited": true
-          }
-        ],
-        "6": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Margaret Entsie & Dora Asare",
-            "edited": true
-          },
-          {
-            "text": "Abigail Asiedu & Lois Soworlo",
-            "edited": true
-          },
-          {
-            "text": "Mary Entsie & Adwoa Onwona",
-            "edited": true
-          }
-        ],
-        "7": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          },
-          {
-            "text": "Hilkiah Entsie",
-            "edited": true
-          },
-          {
-            "text": "Isaac Newton",
-            "edited": true
-          }
-        ],
-        "8": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Abel Eshun",
-            "edited": true
-          },
-          {
-            "text": "Dickson Onwona",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          }
-        ],
-        "9": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": false
-          },
-          {
-            "text": "Collins Yeboah",
-            "edited": true
-          },
-          {
-            "text": "",
-            "edited": true
-          }
-        ],
-        "Chairman": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Obed Gyamfi",
-            "edited": true
-          },
-          {
-            "text": "Kingsley Arhin",
-            "edited": true
-          },
-          {
-            "text": "Archibald Entsie",
-            "edited": true
-          }
-        ],
-        "Opening Prayer": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Isaac Arhin",
-            "edited": true
-          },
-          {
-            "text": "Samuel Onwona",
-            "edited": true
-          },
-          {
-            "text": "Anthony Entsie",
-            "edited": true
-          }
-        ],
-        "Closing Prayer": [
-          {
-            "text": "CONVENTION",
-            "edited": true
-          },
-          {
-            "text": "Gideon Miezah",
-            "edited": true
-          },
-          {
-            "text": "Michael Appiah",
-            "edited": true
-          },
-          {
-            "text": "Paul Asiedu",
-            "edited": true
-          }
-        ]
-      },
-      "copiedFrom": "month_1765534410833"
-    }
+  "tables": {
+    "MALES": [
+      "Jesse Yeboah",
+      "Mark Arhibald Entsie",
+      "Abel Ekow Eshun",
+      "Raymond Sam",
+      "Frank Essah",
+      "Ephraim Sam",
+      "Hilkiah Entsie",
+      "Emmanuel Entsie",
+      "Francis Entsie",
+      "Foster Entsie",
+      "Kingsley Arhin",
+      "Obed Gyamfi",
+      "Collins Yeboah",
+      "Isaac Ampomah",
+      "Sadick Mohammed",
+      "Augustine Appiah",
+      "Alexander Ankomah",
+      "Derrick Yankson",
+      "Gideon Miezah",
+      "Dickson Onwona",
+      "Samuel Onwona",
+      "Paul Asiedu",
+      "Isaac Newton Sam",
+      "Daniel Boakye",
+      "Stephen Essilfie",
+      "Wonder Soworlo",
+      "Reuben Soworlo",
+      "Emmanuel Asante",
+      "Ebenezer Normanyo",
+      "Isaac Arhin",
+      "Samuel Larbi",
+      "Boaz Yeboah",
+      "Joseph Eshun",
+      "Kwasi Amponsah",
+      "Michael Appiah",
+      "Shadrach Asare",
+      "Jeromoth Arhin",
+      "Stanley Yamekpe",
+      "John Essel",
+      "Michael Obeng",
+      "Mark Anthony Entsie",
+      "Jonathan Arthur",
+      "George Tenkorang",
+      "Barack Ayisi"
+    ],
+    "FEMALES": [
+      "Tracy Yeboah",
+      "Margaret Entsie",
+      "Mary Entsie",
+      "Joana Entsie",
+      "Naomi Entsie",
+      "Claudia Polley",
+      "Esther Takie",
+      "Adjoa Eshun",
+      "Gloria Adobea",
+      "Claudia Sam",
+      "Joan Sam",
+      "Joana Sam",
+      "Adwoa Onwona",
+      "Stephanie Onwona",
+      "Christina Amponsah",
+      "Nancy Baidoo",
+      "Elizabeth Yeboah",
+      "Abigail Asiedua",
+      "Winifred Appiah",
+      "Juliana Entsie",
+      "Joana Ekwama Entsie",
+      "Lois Ofosu",
+      "Mercy Entsie",
+      "Vivian Arhin",
+      "Perlita Gyafua",
+      "Alimatu Saadia",
+      "Augusta Appiah",
+      "Mawusi Appiah",
+      "Owusuwaa Appiah",
+      "Nhyira Appiah",
+      "Barbara Amponsah",
+      "Lilian Ankomah",
+      "Rosina Yankson",
+      "Jemimah Miezah",
+      "Lois Soworlo",
+      "Erica Soworlo",
+      "Dora Asare",
+      "Victoria Yeboah",
+      "Selina Gyamfi",
+      "Barbara Asamoah",
+      "Rebecca Abgenyo",
+      "Adelaide Allotey",
+      "Pricilla Essel",
+      "Hannah Adumoah",
+      "Clara Prempeh",
+      "Cynthia Sam",
+      "Sis Atobora",
+      "Mariama Mohammed",
+      "Ryan Takie",
+      "Peace Yeboah"
+    ]
   },
-  "categories": {
-    "1": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Ephraim Sam",
-        "Hilkiah Entsie",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Isaac Ampomah",
-        "Alexander Ankomah",
-        "Derrick Yankson",
-        "Gideon Miezah",
-        "Dickson Onwona",
-        "Samuel Onwona",
-        "Isaac Newton Sam",
-        "Daniel Boakye",
-        "Wonder Soworlo",
-        "Emmanuel Asante",
-        "Michael Appiah",
-        "Shadrach Asare"
-      ],
-      "standby": []
-    },
-    "2": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Ephraim Sam",
-        "Hilkiah Entsie",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Isaac Ampomah",
-        "Alexander Ankomah",
-        "Derrick Yankson",
-        "Gideon Miezah",
-        "Dickson Onwona",
-        "Samuel Onwona",
-        "Isaac Newton Sam",
-        "Daniel Boakye",
-        "Wonder Soworlo",
-        "Emmanuel Asante",
-        "Michael Appiah",
-        "Shadrach Asare"
-      ],
-      "standby": []
-    },
-    "3": {
-      "normal": [
-        "Jesse Yeboah",
-        "Raymond Sam",
-        "Frank Essah",
-        "Emmanuel Entsie",
-        "Francis Entsie",
-        "Foster Entsie",
-        "Sadick Mohammed",
-        "Augustine Appiah",
-        "Paul Asiedu",
-        "Stephen Essilfie",
-        "Reuben Soworlo",
-        "Ebenezer Normanyo",
-        "Isaac Arhin",
-        "Samuel Larbi",
-        "Boaz Yeboah",
-        "Joseph Eshun",
-        "Kwasi Amponsah",
-        "Jeromoth Arhin",
-        "Stanley Yamekpe",
-        "John Essel",
-        "Michael Obeng"
-      ],
-      "standby": []
-    },
-    "4": {
-      "normal": [
-        "Margaret Entsie",
-        "Mary Entsie",
-        "Joana Entsie",
-        "Naomi Entsie",
-        "Claudia Polley",
-        "Esther Takie",
-        "Adjoa Eshun",
-        "Gloria Adobea",
-        "Claudia Sam",
-        "Joan Sam",
-        "Joana Cynthia",
-        "Adwoa Onwona",
-        "Stephanie Onwona",
-        "Christina Amponsah",
-        "Nancy Baidoo",
-        "Elizabeth Yeboah",
-        "Abigail Asiedua",
-        "Winifred Appiah",
-        "Juliana Entsie",
-        "Joana Ekwama Entsie",
-        "Lois Ofosu",
-        "Mercy Entsie",
-        "Vivian Arhin",
-        "Perlita Gyafua",
-        "Alimatu Saadia",
-        "Augusta Appiah",
-        "Mawusi Appiah",
-        "Owusuwaa Appiah",
-        "Nhyira Appiah",
-        "Barbara Amponsah",
-        "Lilian Ankomah",
-        "Rosina Yankson",
-        "Jemimah Miezah",
-        "Lois Soworlo",
-        "Erica Soworlo",
-        "Dora Asare",
-        "Victoria Yeboah",
-        "Selina Gyamfi",
-        "Barbara Asamoah",
-        "Rebecca Abgenyo",
-        "Adelaide Allotey",
-        "Pricilla Essel",
-        "Hannah Adumoah",
-        "Clara Prempeh"
-      ],
-      "standby": []
-    },
-    "5": {
-      "normal": [
-        "Margaret Entsie",
-        "Mary Entsie",
-        "Joana Entsie",
-        "Naomi Entsie",
-        "Claudia Polley",
-        "Esther Takie",
-        "Adjoa Eshun",
-        "Gloria Adobea",
-        "Claudia Sam",
-        "Joan Sam",
-        "Joana Cynthia",
-        "Adwoa Onwona",
-        "Stephanie Onwona",
-        "Christina Amponsah",
-        "Nancy Baidoo",
-        "Elizabeth Yeboah",
-        "Abigail Asiedua",
-        "Winifred Appiah",
-        "Juliana Entsie",
-        "Joana Ekwama Entsie",
-        "Lois Ofosu",
-        "Mercy Entsie",
-        "Vivian Arhin",
-        "Perlita Gyafua",
-        "Alimatu Saadia",
-        "Augusta Appiah",
-        "Mawusi Appiah",
-        "Owusuwaa Appiah",
-        "Nhyira Appiah",
-        "Barbara Amponsah",
-        "Lilian Ankomah",
-        "Rosina Yankson",
-        "Jemimah Miezah",
-        "Lois Soworlo",
-        "Erica Soworlo",
-        "Dora Asare",
-        "Victoria Yeboah",
-        "Selina Gyamfi",
-        "Barbara Asamoah",
-        "Rebecca Abgenyo",
-        "Adelaide Allotey",
-        "Pricilla Essel",
-        "Hannah Adumoah",
-        "Clara Prempeh"
-      ],
-      "standby": []
-    },
-    "6": {
-      "normal": [
-        "Margaret Entsie",
-        "Mary Entsie",
-        "Joana Entsie",
-        "Naomi Entsie",
-        "Claudia Polley",
-        "Esther Takie",
-        "Adjoa Eshun",
-        "Gloria Adobea",
-        "Claudia Sam",
-        "Joan Sam",
-        "Joana Cynthia",
-        "Adwoa Onwona",
-        "Stephanie Onwona",
-        "Christina Amponsah",
-        "Nancy Baidoo",
-        "Elizabeth Yeboah",
-        "Abigail Asiedua",
-        "Winifred Appiah",
-        "Juliana Entsie",
-        "Joana Ekwama Entsie",
-        "Lois Ofosu",
-        "Mercy Entsie",
-        "Vivian Arhin",
-        "Perlita Gyafua",
-        "Alimatu Saadia",
-        "Augusta Appiah",
-        "Mawusi Appiah",
-        "Owusuwaa Appiah",
-        "Nhyira Appiah",
-        "Barbara Amponsah",
-        "Lilian Ankomah",
-        "Rosina Yankson",
-        "Jemimah Miezah",
-        "Lois Soworlo",
-        "Erica Soworlo",
-        "Dora Asare",
-        "Victoria Yeboah",
-        "Selina Gyamfi",
-        "Barbara Asamoah",
-        "Rebecca Abgenyo",
-        "Adelaide Allotey",
-        "Pricilla Essel",
-        "Hannah Adumoah",
-        "Clara Prempeh"
-      ],
-      "standby": []
-    },
-    "7": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Ephraim Sam",
-        "Hilkiah Entsie",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Isaac Ampomah",
-        "Alexander Ankomah",
-        "Derrick Yankson",
-        "Gideon Miezah",
-        "Dickson Onwona",
-        "Samuel Onwona",
-        "Isaac Newton Sam",
-        "Daniel Boakye",
-        "Wonder Soworlo",
-        "Emmanuel Asante",
-        "Michael Appiah",
-        "Shadrach Asare"
-      ],
-      "standby": []
-    },
-    "8": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Ephraim Sam",
-        "Hilkiah Entsie",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Isaac Ampomah",
-        "Alexander Ankomah",
-        "Derrick Yankson",
-        "Gideon Miezah",
-        "Dickson Onwona",
-        "Samuel Onwona",
-        "Isaac Newton Sam",
-        "Daniel Boakye",
-        "Wonder Soworlo",
-        "Emmanuel Asante",
-        "Michael Appiah",
-        "Shadrach Asare"
-      ],
-      "standby": []
-    },
-    "9": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Derrick Yankson",
-        "Dickson Onwona",
-        "Isaac Newton Sam",
-        "Wonder Soworlo",
-        "Michael Appiah"
-      ],
-      "standby": []
-    },
-    "Role 1": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 2": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 3": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 4": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 5": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 6": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 7": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 8": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 9": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 10": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 11": {
-      "normal": [],
-      "standby": []
-    },
-    "Role 12": {
-      "normal": [],
-      "standby": []
-    },
-    "Chairman": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Derrick Yankson",
-        "Dickson Onwona",
-        "Isaac Newton Sam",
-        "Wonder Soworlo",
-        "Michael Appiah"
-      ],
-      "standby": []
-    },
-    "Opening Prayer": {
-      "normal": [
-        "Mark Arhibald Entsie",
-        "Abel Ekow Eshun",
-        "Ephraim Sam",
-        "Hilkiah Entsie",
-        "Kingsley Arhin",
-        "Obed Gyamfi",
-        "Mark Anthony Entsie",
-        "Collins Yeboah",
-        "Isaac Ampomah",
-        "Alexander Ankomah",
-        "Derrick Yankson",
-        "Gideon Miezah",
-        "Dickson Onwona",
-        "Samuel Onwona",
-        "Isaac Newton Sam",
-        "Daniel Boakye",
-        "Wonder Soworlo",
-        "Emmanuel Asante",
-        "Michael Appiah",
-        "Shadrach Asare"
-      ],
-      "standby": []
-    },
-    "Closing Prayer": {
-      "normal": [],
-      "standby": []
-    }
+  "cellColors": {
+    "FEMALES_4_13": "white",
+    "MALES_0_1": "#0000ff",
+    "MALES_0_2": "#0000ff",
+    "MALES_0_3": "#0000ff",
+    "MALES_1_1": "#0000ff",
+    "MALES_4_1": "#0000ff",
+    "MALES_4_2": "#0000ff",
+    "MALES_5_1": "#0000ff",
+    "MALES_6_1": "#0000ff",
+    "MALES_7_1": "#0000ff",
+    "MALES_7_2": "#0000ff",
+    "MALES_8_1": "#0000ff",
+    "MALES_8_2": "#0000ff",
+    "MALES_8_3": "#0000ff",
+    "MALES_9_1": "#0000ff",
+    "MALES_9_2": "#0000ff",
+    "MALES_9_3": "#0000ff",
+    "MALES_13_1": "#0000ff",
+    "MALES_14_1": "#0000ff",
+    "MALES_14_2": "#0000ff",
+    "MALES_16_1": "#0000ff",
+    "MALES_18_1": "#0000ff",
+    "MALES_21_1": "#0000ff",
+    "MALES_21_2": "#0000ff",
+    "MALES_21_3": "#0000ff",
+    "MALES_22_1": "#0000ff",
+    "MALES_23_1": "#0000ff",
+    "MALES_24_1": "#0000ff",
+    "MALES_24_2": "#0000ff",
+    "MALES_24_3": "#0000ff",
+    "MALES_25_1": "#0000ff",
+    "MALES_26_1": "#0000ff",
+    "MALES_27_1": "#0000ff",
+    "MALES_27_2": "#0000ff",
+    "MALES_28_1": "#0000ff",
+    "MALES_28_2": "#0000ff",
+    "MALES_29_1": "#0000ff",
+    "MALES_29_2": "#0000ff",
+    "MALES_29_3": "#0000ff",
+    "MALES_30_1": "#0000ff",
+    "MALES_30_2": "#0000ff",
+    "MALES_32_1": "#0000ff",
+    "MALES_32_2": "#0000ff",
+    "MALES_32_3": "#0000ff",
+    "MALES_33_1": "#0000ff",
+    "MALES_33_2": "#0000ff",
+    "MALES_33_3": "#0000ff",
+    "MALES_35_1": "#0000ff",
+    "MALES_35_2": "#0000ff",
+    "MALES_35_3": "#0000ff",
+    "MALES_36_1": "#0000ff",
+    "MALES_36_2": "#0000ff",
+    "MALES_37_1": "#0000ff",
+    "MALES_37_2": "#0000ff",
+    "MALES_38_1": "#0000ff",
+    "MALES_38_2": "#0000ff",
+    "MALES_39_1": "#0000ff",
+    "MALES_40_1": "#0000ff",
+    "FEMALES_0_1": "#0000ff",
+    "FEMALES_0_2": "#0000ff",
+    "FEMALES_0_3": "#0000ff",
+    "FEMALES_1_1": "#0000ff",
+    "FEMALES_1_2": "#0000ff",
+    "FEMALES_1_3": "#0000ff",
+    "FEMALES_2_1": "#0000ff",
+    "FEMALES_2_2": "#0000ff",
+    "FEMALES_2_3": "#0000ff",
+    "FEMALES_3_1": "#0000ff",
+    "FEMALES_3_2": "#0000ff",
+    "FEMALES_3_3": "#0000ff",
+    "FEMALES_4_1": "#0000ff",
+    "FEMALES_4_2": "#0000ff",
+    "FEMALES_4_3": "#0000ff",
+    "FEMALES_5_1": "#0000ff",
+    "FEMALES_5_2": "#0000ff",
+    "FEMALES_5_3": "#0000ff",
+    "FEMALES_6_1": "#0000ff",
+    "FEMALES_7_1": "#0000ff",
+    "FEMALES_7_2": "#0000ff",
+    "FEMALES_8_1": "#0000ff",
+    "FEMALES_8_2": "#0000ff",
+    "FEMALES_9_1": "#0000ff",
+    "FEMALES_10_1": "#0000ff",
+    "FEMALES_10_2": "#0000ff",
+    "FEMALES_11_1": "#0000ff",
+    "FEMALES_11_2": "#0000ff",
+    "FEMALES_11_3": "white",
+    "FEMALES_12_1": "#0000ff",
+    "FEMALES_12_2": "#0000ff",
+    "FEMALES_12_3": "#0000ff",
+    "FEMALES_13_1": "#0000ff",
+    "FEMALES_13_2": "#0000ff",
+    "FEMALES_14_1": "#0000ff",
+    "FEMALES_14_2": "#0000ff",
+    "FEMALES_14_3": "#0000ff",
+    "FEMALES_15_1": "#0000ff",
+    "FEMALES_15_2": "#0000ff",
+    "FEMALES_16_1": "#0000ff",
+    "FEMALES_16_2": "#0000ff",
+    "FEMALES_16_3": "#0000ff",
+    "FEMALES_17_1": "#0000ff",
+    "FEMALES_18_1": "#0000ff",
+    "FEMALES_18_2": "#0000ff",
+    "FEMALES_18_3": "#0000ff",
+    "FEMALES_19_1": "#0000ff",
+    "FEMALES_19_2": "#0000ff",
+    "FEMALES_19_3": "#0000ff",
+    "FEMALES_20_1": "#0000ff",
+    "FEMALES_20_2": "#0000ff",
+    "FEMALES_20_3": "#0000ff",
+    "FEMALES_21_1": "#0000ff",
+    "FEMALES_21_2": "#0000ff",
+    "FEMALES_22_1": "#0000ff",
+    "FEMALES_22_2": "#0000ff",
+    "FEMALES_23_1": "#0000ff",
+    "FEMALES_23_2": "#0000ff",
+    "FEMALES_24_1": "#0000ff",
+    "FEMALES_25_2": "#0000ff",
+    "FEMALES_24_2": "#0000ff",
+    "FEMALES_25_1": "#0000ff",
+    "FEMALES_25_3": "#0000ff",
+    "FEMALES_26_1": "#0000ff",
+    "FEMALES_26_2": "#0000ff",
+    "FEMALES_26_3": "#0000ff",
+    "FEMALES_27_1": "#0000ff",
+    "FEMALES_27_2": "#0000ff",
+    "FEMALES_27_3": "#0000ff",
+    "FEMALES_28_1": "#0000ff",
+    "FEMALES_28_2": "#0000ff",
+    "FEMALES_28_3": "#0000ff",
+    "FEMALES_29_1": "#0000ff",
+    "FEMALES_29_2": "#0000ff",
+    "FEMALES_30_1": "#0000ff",
+    "FEMALES_30_2": "#0000ff",
+    "FEMALES_31_1": "#0000ff",
+    "FEMALES_31_2": "#0000ff",
+    "FEMALES_31_3": "#0000ff",
+    "FEMALES_32_1": "#0000ff",
+    "FEMALES_32_2": "#0000ff",
+    "FEMALES_33_1": "#0000ff",
+    "FEMALES_33_2": "#0000ff",
+    "FEMALES_33_3": "#0000ff",
+    "FEMALES_34_1": "#0000ff",
+    "FEMALES_34_2": "#0000ff",
+    "FEMALES_34_3": "#0000ff",
+    "FEMALES_35_1": "#0000ff",
+    "FEMALES_35_2": "#0000ff",
+    "FEMALES_35_3": "#0000ff",
+    "FEMALES_36_1": "#0000ff",
+    "FEMALES_36_2": "#0000ff",
+    "FEMALES_37_1": "#0000ff",
+    "FEMALES_37_2": "#0000ff",
+    "FEMALES_38_1": "#0000ff",
+    "FEMALES_38_2": "#0000ff",
+    "FEMALES_39_1": "#0000ff",
+    "FEMALES_39_2": "#0000ff",
+    "FEMALES_39_3": "#0000ff",
+    "FEMALES_40_1": "#0000ff",
+    "FEMALES_40_2": "#0000ff",
+    "FEMALES_42_1": "#0000ff",
+    "FEMALES_42_2": "#0000ff",
+    "FEMALES_39_4": "#ff0000",
+    "FEMALES_13_4": "white",
+    "FEMALES_0_4": "#ffff00",
+    "FEMALES_21_4": "#ff0000",
+    "FEMALES_1_4": "#ff0000",
+    "FEMALES_40_4": "#ff0000",
+    "FEMALES_14_4": "white",
+    "FEMALES_34_4": "#ff0000",
+    "FEMALES_38_4": "#ff0000",
+    "FEMALES_30_4": "#ffff00",
+    "FEMALES_36_4": "#ff0000",
+    "FEMALES_37_4": "#ffff00",
+    "FEMALES_29_4": "#ff0000",
+    "FEMALES_33_4": "#ffff00",
+    "FEMALES_31_4": "#ff0000",
+    "FEMALES_32_4": "#ffff00",
+    "FEMALES_25_4": "#ffff00",
+    "FEMALES_23_4": "#ff0000",
+    "MALES_39_4": "#ff0000",
+    "MALES_37_4": "#ff0000",
+    "MALES_38_4": "#ff0000",
+    "MALES_4_4": "#ff0000",
+    "MALES_21_4": "#ff0000",
+    "MALES_29_4": "#ff0000",
+    "FEMALES_27_4": "#ff0000",
+    "FEMALES_4_4": "#ffff00",
+    "FEMALES_20_4": "#ff0000",
+    "MALES_35_4": "#ff0000",
+    "MALES_30_4": "#ff0000",
+    "MALES_24_4": "#ff0000",
+    "MALES_28_4": "#ff0000",
+    "MALES_14_4": "#ff0000",
+    "FEMALES_5_4": "#ff0000",
+    "FEMALES_9_4": "#ff0000",
+    "FEMALES_28_4": "#ffff00",
+    "FEMALES_2_4": "#ff0000",
+    "FEMALES_26_4": "#ff0000",
+    "MALES_9_4": "#ff0000",
+    "FEMALES_3_4": "#ff0000",
+    "FEMALES_8_4": "#ffff00",
+    "FEMALES_19_4": "#ff0000",
+    "FEMALES_41_4": "#ffff00",
+    "MALES_7_4": "#ff0000",
+    "FEMALES_12_4": "#ffff00",
+    "FEMALES_22_4": "#ff0000",
+    "FEMALES_45_1": "#0000ff",
+    "FEMALES_45_2": "#0000ff",
+    "FEMALES_45_4": "#ffff00",
+    "FEMALES_43_4": "#ff0000",
+    "FEMALES_17_4": "#ff0000",
+    "FEMALES_17_2": "#0000ff",
+    "FEMALES_17_3": "#0000ff",
+    "FEMALES_16_4": "#ffff00",
+    "FEMALES_15_4": "#ff0000",
+    "MALES_7_5": "#ff0000",
+    "MALES_29_5": "#ff0000",
+    "MALES_21_5": "#ff0000",
+    "MALES_0_5": "#ff0000",
+    "MALES_26_5": "#ff0000",
+    "MALES_8_5": "#ff0000",
+    "MALES_39_5": "#ff0000",
+    "MALES_4_5": "#ff0000",
+    "MALES_14_5": "#ff0000",
+    "MALES_36_5": "white",
+    "MALES_35_5": "#ff0000",
+    "MALES_27_5": "#ff0000",
+    "FEMALES_0_5": "#ff0000",
+    "FEMALES_4_5": "white",
+    "FEMALES_6_2": "#0000ff",
+    "FEMALES_6_3": "#0000ff",
+    "FEMALES_6_4": "#ff0000",
+    "FEMALES_12_5": "#ff0000",
+    "FEMALES_13_5": "#ff0000",
+    "FEMALES_8_5": "#ff0000",
+    "FEMALES_16_5": "#ff0000",
+    "FEMALES_18_5": "#ff0000",
+    "FEMALES_21_3": "#0000ff",
+    "FEMALES_22_3": "#ffff00",
+    "FEMALES_23_3": "#ffff00",
+    "FEMALES_24_3": "#ffff00",
+    "FEMALES_25_5": "#ff0000",
+    "FEMALES_28_5": "#ff0000",
+    "FEMALES_24_5": "#ff0000",
+    "FEMALES_32_5": "#ff0000",
+    "FEMALES_33_5": "#ff0000",
+    "FEMALES_35_5": "#ff0000",
+    "FEMALES_37_5": "#ff0000",
+    "FEMALES_44_5": "#ff0000",
+    "FEMALES_42_5": "#ff0000",
+    "FEMALES_45_5": "#ff0000",
+    "FEMALES_41_5": "#ff0000",
+    "FEMALES_30_5": "#ff0000",
+    "FEMALES_1_5": "#ffff00",
+    "FEMALES_40_5": "#ff0000",
+    "FEMALES_19_5": "#ff0000",
+    "FEMALES_38_5": "#ff0000",
+    "FEMALES_36_5": "#ff0000",
+    "FEMALES_34_5": "#ff0000",
+    "FEMALES_3_5": "#ff0000",
+    "FEMALES_15_5": "#ff0000",
+    "FEMALES_2_5": "#ffff00",
+    "FEMALES_5_5": "#ffff00",
+    "FEMALES_6_5": "#ffff00",
+    "FEMALES_7_5": "#ffff00",
+    "FEMALES_9_5": "#ffff00",
+    "FEMALES_17_5": "#ffff00",
+    "FEMALES_23_5": "#ffff00",
+    "FEMALES_46_5": "#ff0000",
+    "FEMALES_27_5": "#ffff00",
+    "FEMALES_20_5": "#ffff00",
+    "FEMALES_21_5": "#ffff00",
+    "FEMALES_26_5": "#ffff00",
+    "FEMALES_39_5": "#ffff00",
+    "FEMALES_43_5": "#ffff00",
+    "FEMALES_31_5": "#ffff00",
+    "FEMALES_22_5": "#ffff00",
+    "FEMALES_33_6": "#ff0000",
+    "FEMALES_32_6": "#ffff00",
+    "FEMALES_1_6": "#ff0000",
+    "FEMALES_34_6": "#ffff00",
+    "MALES_36_6": "#ff0000",
+    "MALES_35_6": "#ff0000",
+    "MALES_40_6": "white",
+    "MALES_5_6": "#ff0000",
+    "MALES_5_8": "white",
+    "MALES_9_5": "#ff0000",
+    "MALES_24_6": "white",
+    "MALES_28_6": "#ff0000",
+    "MALES_30_6": "#ff0000",
+    "MALES_37_6": "#ff0000",
+    "MALES_41_6": "#ff0000",
+    "MALES_19_6": "#ff0000",
+    "MALES_23_6": "#ff0000",
+    "FEMALES_47_6": "white",
+    "FEMALES_33_7": "#ffff00",
+    "FEMALES_39_6": "#ff0000",
+    "FEMALES_31_6": "#ff0000",
+    "FEMALES_29_6": "#ff0000",
+    "FEMALES_27_6": "#ff0000",
+    "FEMALES_23_6": "white",
+    "FEMALES_9_6": "#ff0000",
+    "FEMALES_21_6": "#ff0000",
+    "FEMALES_17_6": "#ff0000",
+    "FEMALES_2_6": "#ff0000",
+    "FEMALES_7_6": "white",
+    "FEMALES_9_7": "#ffff00",
+    "FEMALES_20_6": "#ff0000",
+    "FEMALES_26_6": "#ff0000",
+    "FEMALES_43_6": "#ff0000",
+    "FEMALES_22_6": "#ff0000",
+    "FEMALES_6_6": "#ff0000",
+    "FEMALES_8_6": "white",
+    "FEMALES_25_6": "#ff0000",
+    "FEMALES_36_6": "#ff0000",
+    "FEMALES_45_6": "#ff0000",
+    "FEMALES_4_6": "#ff0000",
+    "FEMALES_14_6": "white",
+    "FEMALES_24_6": "#ff0000",
+    "FEMALES_35_6": "#ff0000",
+    "MALES_20_6": "#ff0000",
+    "FEMALES_19_6": "#ffff00",
+    "FEMALES_0_6": "#ffff00",
+    "FEMALES_38_6": "#ffff00",
+    "FEMALES_3_6": "#ffff00",
+    "FEMALES_12_6": "#ffff00",
+    "FEMALES_13_6": "#ffff00",
+    "FEMALES_37_6": "#ffff00",
+    "FEMALES_34_7": "#ff0000",
+    "FEMALES_16_6": "#ffff00",
+    "FEMALES_18_6": "#ff0000",
+    "FEMALES_15_6": "#ffff00",
+    "FEMALES_40_6": "#ffff00",
+    "FEMALES_2_7": "#ffff00",
+    "FEMALES_3_7": "#ff0000",
+    "FEMALES_28_6": "#ffff00",
+    "FEMALES_41_6": "#ffff00",
+    "FEMALES_45_7": "#ffff00",
+    "FEMALES_46_6": "#ffff00",
+    "FEMALES_12_7": "#ff0000",
+    "FEMALES_36_7": "#ffff00",
+    "FEMALES_42_7": "#ff0000",
+    "FEMALES_19_7": "#ff0000",
+    "FEMALES_7_7": "#ff0000",
+    "FEMALES_48_7": "#ff0000",
+    "MALES_42_6": "white",
+    "MALES_42_7": "#ff0000",
+    "MALES_43_7": "#ff0000",
+    "MALES_23_7": "#ff0000",
+    "MALES_5_7": "#ff0000",
+    "MALES_35_7": "#ff0000",
+    "MALES_34_7": "#ff0000",
+    "MALES_10_6": "white",
+    "MALES_10_7": "#ff0000",
+    "MALES_29_7": "#ff0000",
+    "MALES_13_7": "#ff0000",
+    "MALES_20_7": "#ff0000",
+    "MALES_6_7": "#ff0000",
+    "MALES_27_7": "#ff0000",
+    "MALES_7_6": "#ff0000",
+    "MALES_4_7": "#ff0000",
+    "MALES_8_7": "#ff0000",
+    "MALES_26_8": "#ffff00",
+    "MALES_26_7": "#ff0000",
+    "MALES_9_7": "#ff0000",
+    "MALES_24_7": "#ff0000",
+    "MALES_0_7": "#ffff00",
+    "MALES_14_7": "#ffff00",
+    "MALES_14_6": "white",
+    "MALES_7_7": "#ffff00",
+    "MALES_11_15": "white",
+    "MALES_21_7": "#ffff00",
+    "MALES_30_7": "#ffff00",
+    "MALES_28_7": "#ffff00",
+    "FEMALES_46_7": "#ff0000",
+    "FEMALES_0_7": "#ff0000",
+    "FEMALES_13_7": "#ff0000",
+    "FEMALES_37_7": "#ff0000",
+    "FEMALES_16_7": "#ff0000",
+    "FEMALES_17_8": "#ff0000",
+    "FEMALES_15_7": "#ff0000",
+    "FEMALES_28_7": "#ff0000",
+    "FEMALES_38_7": "#ff0000",
+    "FEMALES_40_7": "#ff0000",
+    "FEMALES_41_7": "#ff0000",
+    "FEMALES_44_7": "#ff0000",
+    "FEMALES_18_7": "#ffff00",
+    "FEMALES_35_7": "#ff0000",
+    "FEMALES_38_11": "white",
+    "FEMALES_31_7": "#ffff00",
+    "FEMALES_22_7": "#ffff00",
+    "FEMALES_21_7": "#ffff00",
+    "FEMALES_20_7": "#ffff00",
+    "FEMALES_17_7": "#ffff00",
+    "FEMALES_4_7": "#ffff00",
+    "FEMALES_1_7": "#ffff00",
+    "FEMALES_6_7": "#ffff00",
+    "FEMALES_43_7": "#ffff00",
+    "FEMALES_44_11": "white",
+    "FEMALES_18_8": "#ffff00",
+    "FEMALES_20_8": "#ff0000",
+    "FEMALES_6_8": "#ffff00",
+    "FEMALES_46_8": "#ffff00",
+    "FEMALES_15_8": "#ffff00",
+    "FEMALES_22_8": "#ffff00",
+    "FEMALES_37_8": "#ffff00",
+    "FEMALES_3_8": "#ffff00",
+    "FEMALES_38_8": "#ffff00",
+    "FEMALES_21_8": "white",
+    "FEMALES_45_8": "#ffff00",
+    "FEMALES_46_3": "#ffff00",
+    "FEMALES_33_8": "#ff0000",
+    "MALES_30_8": "#ff0000",
+    "MALES_9_8": "#ffff00",
+    "MALES_20_8": "#ff0000",
+    "MALES_13_8": "#ff0000",
+    "MALES_8_8": "#ffff00",
+    "MALES_43_8": "#ffff00",
+    "MALES_35_8": "#ff0000",
+    "MALES_39_14": "white",
+    "MALES_29_8": "#ff0000",
+    "MALES_41_8": "#ff0000",
+    "MALES_12_8": "#ff0000",
+    "MALES_14_9": "#ff0000",
+    "MALES_14_8": "#ff0000",
+    "MALES_28_8": "#ff0000",
+    "MALES_36_8": "#ff0000",
+    "MALES_17_9": "#ff0000",
+    "MALES_39_8": "#ff0000",
+    "MALES_37_8": "#ff0000",
+    "MALES_0_8": "#ff0000",
+    "MALES_27_8": "#ff0000",
+    "FEMALES_1_8": "#ff0000",
+    "FEMALES_2_8": "#ff0000",
+    "FEMALES_49_8": "#ff0000",
+    "FEMALES_4_8": "#ff0000",
+    "FEMALES_9_8": "#ff0000",
+    "FEMALES_10_10": "white",
+    "FEMALES_10_8": "white",
+    "FEMALES_11_8": "white",
+    "FEMALES_11_7": "white",
+    "FEMALES_10_7": "white",
+    "FEMALES_23_8": "#ff0000",
+    "FEMALES_24_8": "#ff0000",
+    "FEMALES_25_8": "#ff0000",
+    "FEMALES_26_11": "white",
+    "FEMALES_26_8": "#ffff00",
+    "FEMALES_29_8": "#ff0000",
+    "FEMALES_36_8": "#ffff00",
+    "FEMALES_27_8": "#ff0000",
+    "FEMALES_43_8": "#ff0000",
+    "FEMALES_13_8": "#ffff00",
+    "FEMALES_19_8": "#ffff00",
+    "FEMALES_34_8": "#ffff00",
+    "FEMALES_35_8": "#ffff00",
+    "FEMALES_12_8": "#ffff00",
+    "FEMALES_40_8": "#ffff00",
+    "FEMALES_16_8": "#ffff00"
   }
 }
