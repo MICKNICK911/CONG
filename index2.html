@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mid-Week Meeting Assignment Schedule</title>
+    <!-- Font Awesome 6 (modern icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --border-radius: 14px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            color: var(--dark-color);
+            line-height: 1.5;
+        }
+
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #1f2e3f, #2b4a6e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            color: white;
+        }
+
+        #splash-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            padding: 0 1rem;
+            font-weight: 400;
+        }
+
+        #splash-screen h1 i {
+            margin-right: 0.7rem;
+            color: #f1c40f;
+        }
+
+        #splash-screen p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-top: 2rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+        }
+
+        header {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf2;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        header h1 i {
+            color: var(--secondary-color);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #5f7485;
+            margin-top: 0.25rem;
+        }
+
+        .current-date {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #e2e9f2;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .current-date i {
+            color: var(--secondary-color);
+            margin-right: 0.6rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid #eef3f8;
+        }
+
+        .month-selector, .week-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .month-selector label, .week-selector label {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 80px;
+        }
+
+        .month-selector select, .week-selector select {
+            flex: 2;
+            padding: 0.75rem 1.2rem;
+            border: 1px solid #d5e0eb;
+            border-radius: 40px;
+            font-size: 1rem;
+            background-color: white;
+            transition: var(--transition);
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%233498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 1rem;
+        }
+
+        .month-selector select:hover, .week-selector select:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.4rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+        }
+
+        button i {
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #cbd5e0;
+            box-shadow: none;
+            transform: none;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .current-week-indicator {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: none;
+            border: 1px solid #c3e6cb;
+        }
+
+        .current-week-indicator.active {
+            display: block;
+        }
+
+        .current-week-indicator i {
+            margin-right: 0.5rem;
+            color: #28a745;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid #ecf3fa;
+            position: relative;
+        }
+
+        .role-card.active-week-card {
+            border-left: 5px solid #e67e22;
+            box-shadow: 0 12px 24px -8px rgba(230, 126, 34, 0.2);
+        }
+
+        .role-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .role-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .role-header i {
+            color: #f7dc6f;
+            font-size: 1.2rem;
+        }
+
+        .active-badge {
+            background-color: #e67e22;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .active-badge i {
+            color: white;
+            font-size: 0.7rem;
+        }
+
+        .role-content {
+            padding: 1.5rem;
+        }
+
+        .person {
+            padding: 0.3rem 0;
+        }
+
+        .person-name {
+            white-space: pre-line;
+            font-size: 1.1rem;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .name-pair {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .name-label {
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #f0f8ff;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .name-label i {
+            color: var(--secondary-color);
+        }
+
+        .name-value {
+            color: #1e2b3a;
+            font-weight: 500;
+        }
+
+        .empty-slot {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: #6f8a9f;
+            font-size: 0.95rem;
+            border-top: 1px solid #e2eaf2;
+        }
+
+        /* User Guide Styles - fully visible content */
+        .user-guide {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+
+        .guide-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            font-size: 26px;
+            box-shadow: 0 6px 18px rgba(52, 152, 219, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #2980b9;
+        }
+
+        .guide-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s ease;
+        }
+
+        .guide-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .guide-content {
+            background-color: white;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px);
+            transition: 0.3s ease;
+            max-height: 85vh; /* ensures full visibility with scrolling */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-modal.active .guide-content {
+            transform: translateY(0);
+        }
+
+        .guide-header {
+            background: linear-gradient(145deg, var(--primary-color), #223b55);
+            color: white;
+            padding: 1.8rem 1.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .guide-header h2 {
+            margin: 0;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.6rem;
+        }
+
+        .guide-header h2 i {
+            color: #ffd966;
+        }
+
+        .guide-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .guide-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .guide-body {
+            padding: 2rem 2rem;
+            overflow-y: auto;
+            background: #f9fcff;
+            flex-grow: 1;
+        }
+
+        .guide-step {
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .guide-step.active {
+            display: block;
+        }
+
+        .guide-step h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .guide-step p {
+            margin-bottom: 1.2rem;
+            color: #2d3c4c;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .guide-step-image {
+            background-color: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid #e1eaf2;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .guide-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem 1.8rem;
+            border-top: 1px solid #e6edf4;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .guide-dots {
+            display: flex;
+            gap: 0.7rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .guide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e0;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .guide-dot.active {
+            background-color: var(--secondary-color);
+            transform: scale(1.3);
+        }
+
+        .guide-feature-highlight {
+            background-color: #eef9ff;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 1.05rem;
+        }
+
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            .controls {
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            
+            .month-selector, .week-selector {
+                flex: 1 1 200px;
+            }
+            
+            .nav-buttons {
+                flex: 0 0 auto;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .schedule-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <h1><i class="fas fa-book-open"></i> Meeting Work Book</h1>
+        <p>Loading assignments...</p>
+        <div class="loader"></div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" style="display: none;">
+        <header>
+            <div class="container">
+                <h1>
+                    <i class="fas fa-calendar-alt"></i>
+                    Mid-Week Meeting Schedule
+                </h1>
+                <div class="subtitle">Weekly assignments & responsibilities</div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div id="current-date" class="current-date">
+                <!-- Current date will be populated by JavaScript -->
+            </div>
+
+            <div class="controls">
+                <div class="month-selector">
+                    <label for="month-select"><i class="fas fa-calendar"></i> Month:</label>
+                    <select id="month-select">
+                        <!-- Months will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="week-selector">
+                    <label for="week-select"><i class="fas fa-calendar-week"></i> Week:</label>
+                    <select id="week-select">
+                        <!-- Weeks will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button id="prev-week" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="next-week">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="current-week-indicator" class="current-week-indicator">
+                <i class="fas fa-circle"></i> This is the current week
+            </div>
+
+            <div id="schedule-grid" class="schedule-grid">
+                <!-- Schedule will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p><i class="far fa-calendar-check"></i> Mid-Week Meeting Assignment Schedule &copy; 2025</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- User Guide -->
+    <div class="user-guide">
+        <button class="guide-toggle"><i class="fas fa-question"></i></button>
+    </div>
+
+    <!-- Guide Modal (fully visible content) -->
+    <div class="guide-modal">
+        <div class="guide-content">
+            <div class="guide-header">
+                <h2><i class="fas fa-compass"></i> How to Use This App</h2>
+                <button class="guide-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="guide-body">
+                <div class="guide-step active" id="step-1">
+                    <h3><i class="fas fa-hand-peace"></i> Welcome!</h3>
+                    <p>This app helps you view meeting assignments for each week. Let's take a quick tour of the features.</p>
+                    <div class="guide-step-image">
+                        <i class="fas fa-calendar-alt fa-3x" style="color:#3498db;"></i>
+                        <p style="margin-top:0.8rem;"><strong>Meeting Assignment Schedule</strong></p>
+                    </div>
+                    <p>You can always access this guide by clicking the <strong><i class="fas fa-question-circle"></i> ? button</strong> in the bottom right corner.</p>
+                </div>
+                
+                <div class="guide-step" id="step-2">
+                    <h3><i class="fas fa-calendar"></i> Month Selection</h3>
+                    <p>Use the <strong>Month dropdown</strong> to navigate between different months.</p>
+                    <div class="guide-feature-highlight">
+                        <i class="fas fa-lightbulb"></i> <strong>Try it:</strong> Select a different month to see assignments for that period
+                    </div>
+                    <p>The app contains schedules from July to December 2025.</p>
+                </div>
+                
+                <div class="guide-step" id="step-3">
+                    <h3><i class="fas fa-calendar-week"></i> Week Selection</h3>
+                    <p>Use the <strong>Week dropdown</strong> to view assignments for specific weeks within the selected month.</p>
+                    <div class="guide-feature-highlight">
+                        <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Each month has 4-5 weeks of assignments
+                    </div>
+                    <p>You can also use the <strong><i class="fas fa-chevron-left"></i> <i class="fas fa-chevron-right"></i> navigation buttons</strong> to move between weeks quickly.</p>
+                </div>
+                
+                <div class="guide-step" id="step-4">
+                    <h3><i class="fas fa-bell"></i> Current Week Indicator</h3>
+                    <p>When viewing the current week, you'll see a green indicator at the top and each assignment card will display an <strong>ACTIVE</strong> badge.</p>
+                    <div class="guide-step-image">
+                        <i class="fas fa-circle" style="color:#2ecc71;"></i> This is the current week<br>
+                        <span style="display:inline-block; background:#e67e22; color:white; padding:0.2rem 0.8rem; border-radius:20px; margin-top:0.5rem;"><i class="fas fa-bell"></i> ACTIVE</span>
+                    </div>
+                    <p>This helps you quickly identify which assignments are due for this week's meeting.</p>
+                </div>
+                
+                <div class="guide-step" id="step-5">
+                    <h3><i class="fas fa-users"></i> Assignment Cards</h3>
+                    <p>Each role is displayed in a separate card with the assigned person's name.</p>
+                    <div class="guide-step-image">
+                        <strong>Bible Reading:</strong><br>
+                        <i class="fas fa-user"></i> John Doe
+                    </div>
+                    <p>For assignments with two people, you'll see both <strong>Osuani</strong> (Main) and <strong>Boafo</strong> (Assistant) roles.</p>
+                </div>
+                
+                <div class="guide-step" id="step-6">
+                    <h3><i class="fas fa-check-circle"></i> You're All Set!</h3>
+                    <p>You now know how to use all the features of the Meeting Assignment Schedule.</p>
+                    <div class="guide-feature-highlight">
+                        <i class="fas fa-star"></i> <strong>Remember:</strong> The app automatically shows the current week's assignments when you first open it
+                    </div>
+                    <p>If you need help again, just click the <strong><i class="fas fa-question-circle"></i> ? button</strong> anytime!</p>
+                </div>
+            </div>
+            <div class="guide-navigation">
+                <button id="guide-prev" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                <div class="guide-dots">
+                    <div class="guide-dot active" data-step="1"></div>
+                    <div class="guide-dot" data-step="2"></div>
+                    <div class="guide-dot" data-step="3"></div>
+                    <div class="guide-dot" data-step="4"></div>
+                    <div class="guide-dot" data-step="5"></div>
+                    <div class="guide-dot" data-step="6"></div>
+                </div>
+                <button id="guide-next">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- External data source (kept exactly as original) -->
+    <script src="mwb-notice/mwb-content.js"></script>
+
+    <script>
+        // Using the exact data provided by external script
+        const NoticeDataDB = NoticeData;   // from mwb-content.js
+
+        // App state
+        let currentMonth = '';
+        let currentWeekIndex = 0;
+        let currentGuideStep = 1;
+        const totalGuideSteps = 6;
+
+        // DOM elements
+        const splashScreen = document.getElementById('splash-screen');
+        const app = document.getElementById('app');
+        const currentDateElement = document.getElementById('current-date');
+        const monthSelect = document.getElementById('month-select');
+        const weekSelect = document.getElementById('week-select');
+        const prevWeekBtn = document.getElementById('prev-week');
+        const nextWeekBtn = document.getElementById('next-week');
+        const currentWeekIndicator = document.getElementById('current-week-indicator');
+        const scheduleGrid = document.getElementById('schedule-grid');
+
+        // Guide elements
+        const guideToggle = document.querySelector('.guide-toggle');
+        const guideModal = document.querySelector('.guide-modal');
+        const guideClose = document.querySelector('.guide-close');
+        const guidePrev = document.getElementById('guide-prev');
+        const guideNext = document.getElementById('guide-next');
+        const guideDots = document.querySelectorAll('.guide-dot');
+
+        // Role name mapping
+        const roleNameMap = {
+            "1": "Bible Mu Akorade",
+            "2": "Tweetwee Bible Mu", 
+            "3": "Bible Akenkan",
+            "Chairman": "Chairman",
+            "Opening Prayer": "Opening Prayer",
+            "Closing Prayer": "Closing Prayer"
+        };
+
+        // Initialize the app
+        function init() {
+            // Show splash screen for 3 seconds (original behavior)
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    app.style.display = 'block';
+                    
+                    // Show guide for first-time users using localStorage (original feature)
+                    const hasSeenGuide = localStorage.getItem('hasSeenGuide');
+                    if (!hasSeenGuide) {
+                        setTimeout(() => {
+                            showGuide();
+                            localStorage.setItem('hasSeenGuide', 'true');
+                        }, 1000);
+                    }
+                }, 500);
+            }, 3000);
+
+            // Find current week based on 2025 date
+            findCurrentWeek();
+            
+            // Update current date
+            updateCurrentDate();
+            
+            // Initialize the rest of the app
+            populateMonthSelect();
+            updateWeekSelect();
+            renderSchedule();
+            setupEventListeners();
+            
+            // Update date every 60 minute
+            setInterval(updateCurrentDate, 3600000);
+        }
+
+        // Guide functions
+        function showGuide() {
+            guideModal.classList.add('active');
+            currentGuideStep = 1;
+            updateGuide();
+        }
+
+        function hideGuide() {
+            guideModal.classList.remove('active');
+        }
+
+        function updateGuide() {
+            document.querySelectorAll('.guide-step').forEach(step => step.classList.remove('active'));
+            document.getElementById(`step-${currentGuideStep}`).classList.add('active');
+            
+            guideDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (parseInt(dot.dataset.step) === currentGuideStep) dot.classList.add('active');
+            });
+            
+            guidePrev.disabled = currentGuideStep === 1;
+            guideNext.innerHTML = currentGuideStep === totalGuideSteps ? 'Finish <i class="fas fa-check"></i>' : 'Next <i class="fas fa-arrow-right"></i>';
+        }
+
+        function nextGuideStep() {
+            if (currentGuideStep < totalGuideSteps) {
+                currentGuideStep++;
+                updateGuide();
+            } else {
+                hideGuide();
+            }
+        }
+
+        function prevGuideStep() {
+            if (currentGuideStep > 1) {
+                currentGuideStep--;
+                updateGuide();
+            }
+        }
+
+        function goToGuideStep(step) {
+            currentGuideStep = step;
+            updateGuide();
+        }
+
+        // Get current date (using actual date for real-time updates)
+        function getCurrentDate() {
+            return new Date();
+        }
+
+        // Parse week range to extract start and end dates
+        function parseWeekRange(weekRange) {
+            const parts = weekRange.split(' - ');
+            if (parts.length !== 2) return null;
+            
+            const startStr = parts[0].trim();
+            const endStr = parts[1].trim();
+            
+            const startParts = startStr.split(' ');
+            const startMonth = startParts[0];
+            const startDay = parseInt(startParts[1]);
+            
+            const endParts = endStr.split(' ');
+            let endMonth, endDay;
+            
+            if (endParts.length === 2) {
+                endMonth = endParts[0];
+                endDay = parseInt(endParts[1]);
+            } else {
+                endMonth = startMonth;
+                endDay = parseInt(endParts[0]);
+            }
+            
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            
+            const startMonthIndex = monthNames.indexOf(startMonth);
+            const endMonthIndex = monthNames.indexOf(endMonth);
+            
+            if (startMonthIndex === -1 || endMonthIndex === -1) return null;
+            
+            const startDate = new Date(2025, startMonthIndex, startDay);
+            const endDate = new Date(2025, endMonthIndex, endDay);
+            
+            if (endDate < startDate) {
+                endDate.setFullYear(2026);
+            }
+            
+            return { startDate, endDate };
+        }
+
+        // Find current week based on current date
+        function findCurrentWeek() {
+            const currentDate = getCurrentDate();
+            
+            for (const monthId in NoticeDataDB) {
+                const month = NoticeDataDB[monthId];
+                
+                for (let weekIndex = 0; weekIndex < month.weeks.length; weekIndex++) {
+                    const week = month.weeks[weekIndex];
+                    const dateRange = parseWeekRange(week.range);
+                    
+                    if (!dateRange) continue;
+                    
+                    const { startDate, endDate } = dateRange;
+                    
+                    if (currentDate >= startDate && currentDate <= endDate) {
+                        currentMonth = monthId;
+                        currentWeekIndex = weekIndex;
+                        return;
+                    }
+                }
+            }
+            
+            // If no current week found, check for isCurrent flag
+            for (const monthId in NoticeDataDB) {
+                const month = NoticeDataDB[monthId];
+                const currentWeek = month.weeks.findIndex(week => week.isCurrent);
+                if (currentWeek !== -1) {
+                    currentMonth = monthId;
+                    currentWeekIndex = currentWeek;
+                    return;
+                }
+            }
+            
+            // Final fallback: use first month and first week
+            const firstMonth = Object.values(NoticeDataDB)[0];
+            currentMonth = firstMonth.id;
+            currentWeekIndex = 0;
+        }
+
+        // Update current date display
+        function updateCurrentDate() {
+            const currentDate = getCurrentDate();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            currentDateElement.innerHTML = `<i class="fas fa-clock"></i> ${currentDate.toLocaleDateString('en-US', options)}`;
+            
+            // Check if we need to update the current week
+            const previousMonth = currentMonth;
+            const previousWeekIndex = currentWeekIndex;
+            
+            findCurrentWeek();
+            
+            if (previousMonth !== currentMonth || previousWeekIndex !== currentWeekIndex) {
+                updateWeekSelect();
+                renderSchedule();
+            }
+        }
+
+        // Populate month dropdown
+        function populateMonthSelect() {
+            monthSelect.innerHTML = '';
+            
+            Object.values(NoticeDataDB).forEach(month => {
+                const option = document.createElement('option');
+                option.value = month.id;
+                option.textContent = month.name;
+                monthSelect.appendChild(option);
+            });
+            
+            monthSelect.value = currentMonth;
+        }
+
+        // Update week dropdown based on selected month
+        function updateWeekSelect() {
+            weekSelect.innerHTML = '';
+            const month = NoticeDataDB[currentMonth];
+            
+            month.weeks.forEach((week, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = week.range;
+                weekSelect.appendChild(option);
+            });
+            
+            weekSelect.value = currentWeekIndex;
+            
+            prevWeekBtn.disabled = currentWeekIndex === 0;
+            nextWeekBtn.disabled = currentWeekIndex === month.weeks.length - 1;
+            
+            const currentDate = getCurrentDate();
+            const monthData = NoticeDataDB[currentMonth];
+            const week = monthData.weeks[currentWeekIndex];
+            const dateRange = parseWeekRange(week.range);
+            
+            let isCurrentWeek = false;
+            if (dateRange) {
+                const { startDate, endDate } = dateRange;
+                isCurrentWeek = (currentDate >= startDate && currentDate <= endDate);
+            }
+            
+            currentWeekIndicator.classList.toggle('active', isCurrentWeek);
+        }
+
+        // Format names with "&" to use Osuani/Boafo format
+        function formatNames(text) {
+            if (text.includes('&')) {
+                const parts = text.split('&').map(part => part.trim());
+                if (parts.length === 2) {
+                    return {
+                        osuani: parts[0],
+                        boafo: parts[1]
+                    };
+                }
+            }
+            return text;
+        }
+
+        // Get display name for role
+        function getRoleDisplayName(roleName) {
+            if (roleNameMap[roleName]) {
+                return roleNameMap[roleName];
+            }
+            
+            if (!isNaN(roleName) && parseInt(roleName) > 3) {
+                const roleNum = parseInt(roleName);
+                const month = NoticeDataDB[currentMonth];
+                const numericRoles = Object.keys(month.roles)
+                    .filter(key => !isNaN(key) && month.roles[key][currentWeekIndex].text)
+                    .map(Number)
+                    .sort((a, b) => a - b);
+                
+                if (roleNum === numericRoles[numericRoles.length - 1]) {
+                    return "Asafo Bible Adesua";
+                } else {
+                    return `Dwumadi ${roleNum}`;
+                }
+            }
+            
+            return roleName;
+        }
+
+        // Render the schedule for the selected week
+        function renderSchedule() {
+            scheduleGrid.innerHTML = '';
+            const month = NoticeDataDB[currentMonth];
+            const roles = month.roles;
+            
+            const roleNames = Object.keys(roles);
+            
+            const order = [
+                "Chairman",
+                "Opening Prayer",
+                "1", "2", "3"
+            ];
+            
+            const numericRoles = roleNames
+                .filter(name => !isNaN(name) && parseInt(name) > 3 && roles[name][currentWeekIndex].text)
+                .map(Number)
+                .sort((a, b) => a - b)
+                .map(String);
+            
+            order.push(...numericRoles, "Closing Prayer");
+            
+            const sortedRoleNames = roleNames.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+            // Determine if current week is active
+            const currentDate = getCurrentDate();
+            const monthData = NoticeDataDB[currentMonth];
+            const week = monthData.weeks[currentWeekIndex];
+            const dateRange = parseWeekRange(week.range);
+            let isCurrentWeek = false;
+            if (dateRange) {
+                const { startDate, endDate } = dateRange;
+                isCurrentWeek = (currentDate >= startDate && currentDate <= endDate);
+            }
+            
+            sortedRoleNames.forEach(roleName => {
+                const assignment = roles[roleName][currentWeekIndex];
+                
+                if (!assignment || !assignment.text) return;
+                
+                const roleCard = document.createElement('div');
+                roleCard.className = 'role-card';
+                if (isCurrentWeek) {
+                    roleCard.classList.add('active-week-card');
+                }
+                
+                const roleHeader = document.createElement('div');
+                roleHeader.className = 'role-header';
+                roleHeader.innerHTML = `<i class="fas fa-tag"></i> ${getRoleDisplayName(roleName)}`;
+                
+                // Add active badge if current week
+                if (isCurrentWeek) {
+                    const badge = document.createElement('span');
+                    badge.className = 'active-badge';
+                    badge.innerHTML = '<i class="fas fa-bell"></i> ACTIVE';
+                    roleHeader.appendChild(badge);
+                }
+                
+                const roleContent = document.createElement('div');
+                roleContent.className = 'role-content';
+                
+                const person = document.createElement('div');
+                person.className = 'person';
+                
+                const formattedNames = formatNames(assignment.text);
+                
+                if (typeof formattedNames === 'object') {
+                    const osuaniElement = document.createElement('div');
+                    osuaniElement.className = 'name-pair';
+                    osuaniElement.innerHTML = `<span class="name-label"><i class="fas fa-user"></i> Osuani:</span> <span class="name-value">${formattedNames.osuani}</span>`;
+                    
+                    const boafoElement = document.createElement('div');
+                    boafoElement.className = 'name-pair';
+                    boafoElement.innerHTML = `<span class="name-label"><i class="fas fa-user-friends"></i> Boafo:</span> <span class="name-value">${formattedNames.boafo}</span>`;
+                    
+                    person.appendChild(osuaniElement);
+                    person.appendChild(boafoElement);
+                } else {
+                    const nameElement = document.createElement('div');
+                    nameElement.className = 'person-name';
+                    nameElement.innerHTML = `<i class="fas fa-user-circle" style="color:#3498db;"></i> ${formattedNames}`;
+                    person.appendChild(nameElement);
+                }
+                
+                roleContent.appendChild(person);
+                roleCard.appendChild(roleHeader);
+                roleCard.appendChild(roleContent);
+                scheduleGrid.appendChild(roleCard);
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            monthSelect.addEventListener('change', function() {
+                currentMonth = this.value;
+                currentWeekIndex = 0;
+                updateWeekSelect();
+                renderSchedule();
+            });
+            
+            weekSelect.addEventListener('change', function() {
+                currentWeekIndex = parseInt(this.value);
+                updateWeekSelect();
+                renderSchedule();
+            });
+            
+            prevWeekBtn.addEventListener('click', function() {
+                if (currentWeekIndex > 0) {
+                    currentWeekIndex--;
+                    updateWeekSelect();
+                    renderSchedule();
+                }
+            });
+            
+            nextWeekBtn.addEventListener('click', function() {
+                const month = NoticeDataDB[currentMonth];
+                if (currentWeekIndex < month.weeks.length - 1) {
+                    currentWeekIndex++;
+                    updateWeekSelect();
+                    renderSchedule();
+                }
+            });
+            
+            guideToggle.addEventListener('click', showGuide);
+            guideClose.addEventListener('click', hideGuide);
+            guidePrev.addEventListener('click', prevGuideStep);
+            guideNext.addEventListener('click', nextGuideStep);
+            
+            guideDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    goToGuideStep(parseInt(this.dataset.step));
+                });
+            });
+            
+            guideModal.addEventListener('click', function(e) {
+                if (e.target === guideModal) hideGuide();
+            });
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
