@@ -1697,6 +1697,8 @@
 
         // Helper: extract suffix from a name (e.g., "John Doe -E" => "E", "Jane -XYZ" => "XYZ")
 // Returns empty string if no suffix.
+// Helper: extract suffix from a name (e.g., "John Doe -E" => "E", "Jane -XYZ" => "XYZ")
+// Returns empty string if no suffix.
 function getSuffix(name) {
     const match = name.trim().match(/\s-([A-Za-z0-9]+)$/);
     return match ? match[1] : '';
@@ -1752,13 +1754,10 @@ function autoAssignRoles() {
         return;
     }
     
-    // Save state for undo
     previousState = structuredClone(allMonthsData);
-    
-    // Get all month IDs in chronological order
     const sortedMonthIds = getSortedMonthIds();
     
-    // Build a global pool of suffixed names grouped by suffix
+    // Build global suffix pools
     const globalNamesBySuffix = {};
     sortedMonthIds.forEach(monthId => {
         const month = allMonthsData[monthId];
@@ -1772,27 +1771,24 @@ function autoAssignRoles() {
             });
         });
     });
-    // Convert Sets to arrays
     for (const suffix in globalNamesBySuffix) {
         globalNamesBySuffix[suffix] = [...globalNamesBySuffix[suffix]];
     }
     
-    // Pre-calculate historical role counts (before any changes)
     const historicalCounts = getHistoricalRoleCounts(sortedMonthIds);
     
-    // Function to check usage limit: MAX 1 per role globally
     function isUnderLimit(name, role) {
         const key = `${name.toLowerCase()}|${role}`;
-        return (historicalCounts[key] || 0) < 1; // changed from 3 to 1
+        return (historicalCounts[key] || 0) < 1;
     }
     
-    // Process each month
+    // First pass: assign for each role across all weeks, respecting previous week only
     sortedMonthIds.forEach(monthId => {
         const month = allMonthsData[monthId];
         const numWeeks = month.weeks.length;
         const roles = Object.keys(month.roles);
         
-        // For each week, collect names used across all roles (for duplicate detection)
+        // Week usage across roles for this month
         const weekUsage = Array(numWeeks).fill().map(() => new Set());
         for (let w = 0; w < numWeeks; w++) {
             roles.forEach(role => {
@@ -1803,54 +1799,51 @@ function autoAssignRoles() {
             });
         }
         
-        // Process each role
         roles.forEach(role => {
+            let previousAssignedName = null; // Track previous week's assigned name for this role
+            
             for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
                 const assignment = month.roles[role][weekIndex];
                 const currentText = assignment.text.trim();
                 
-                // ONLY shuffle if cell contains a suffixed name
                 if (!currentText || !hasSuffix(currentText)) {
+                    previousAssignedName = currentText;
                     continue;
                 }
                 
                 const targetSuffix = getSuffix(currentText);
                 const candidates = globalNamesBySuffix[targetSuffix] || [];
-                if (candidates.length === 0) continue;
+                if (candidates.length === 0) {
+                    previousAssignedName = currentText;
+                    continue;
+                }
+                
+                // Build constraints
+                const currentWeekSet = new Set(weekUsage[weekIndex]);
+                // Remove current name from set
+                currentText.split(' & ').forEach(n => currentWeekSet.delete(n.trim().toLowerCase()));
                 
                 // Shuffle candidates
                 const shuffled = [...candidates].sort(() => Math.random() - 0.5);
                 
-                // Build adjacent constraints (prev and next week in same role)
-                const prevName = (weekIndex > 0) ? month.roles[role][weekIndex - 1].text : '';
-                const nextName = (weekIndex < numWeeks - 1) ? month.roles[role][weekIndex + 1].text : '';
-                const prevSet = new Set(prevName.split(' & ').map(n => n.trim().toLowerCase()));
-                const nextSet = new Set(nextName.split(' & ').map(n => n.trim().toLowerCase()));
-                
-                // Current week usage (excluding this cell's original name temporarily)
-                const currentWeekSet = new Set(weekUsage[weekIndex]);
-                // Remove current name from set to avoid blocking itself
-                currentText.split(' & ').forEach(n => currentWeekSet.delete(n.trim().toLowerCase()));
-                
-                // Find a suitable replacement
-                let selected = '';
+                let selected = null;
                 for (const candidate of shuffled) {
                     const candidateLower = candidate.toLowerCase();
                     
-                    // Check limit: max 1 per role globally
+                    // Global role limit
                     if (!isUnderLimit(candidate, role)) continue;
                     
-                    // Check duplicate in same week
+                    // Same week duplicate
                     if (currentWeekSet.has(candidateLower)) continue;
                     
-                    // Check adjacent (prev/next) in same role
-                    if (prevSet.has(candidateLower) || nextSet.has(candidateLower)) continue;
+                    // Adjacent: previous week in same role
+                    if (previousAssignedName && previousAssignedName.toLowerCase() === candidateLower) continue;
                     
                     selected = candidate;
                     break;
                 }
                 
-                // Fallback: ignore adjacent but still no duplicate in week
+                // If no strict match, try relaxing adjacent constraint but keep week duplicate
                 if (!selected) {
                     for (const candidate of shuffled) {
                         const candidateLower = candidate.toLowerCase();
@@ -1862,33 +1855,89 @@ function autoAssignRoles() {
                     }
                 }
                 
-                // If a replacement was found, apply it
                 if (selected) {
-                    // Update assignment
-                    month.roles[role][weekIndex] = {
-                        text: selected,
-                        edited: true
-                    };
+                    // Apply assignment
+                    month.roles[role][weekIndex] = { text: selected, edited: true };
                     
-                    // Update weekUsage for subsequent checks (in this month)
-                    // Remove old name, add new name
+                    // Update weekUsage
                     currentText.split(' & ').forEach(n => weekUsage[weekIndex].delete(n.trim().toLowerCase()));
                     selected.split(' & ').forEach(n => weekUsage[weekIndex].add(n.trim().toLowerCase()));
                     
-                    // Update historicalCounts for subsequent checks (increment new, decrement old)
+                    // Update historical counts
                     const oldKey = `${currentText.toLowerCase()}|${role}`;
                     const newKey = `${selected.toLowerCase()}|${role}`;
                     historicalCounts[oldKey] = Math.max(0, (historicalCounts[oldKey] || 0) - 1);
                     historicalCounts[newKey] = (historicalCounts[newKey] || 0) + 1;
+                    
+                    previousAssignedName = selected;
+                } else {
+                    previousAssignedName = currentText;
                 }
-                // If no replacement, keep original
+            }
+        });
+    });
+    
+    // Second pass: fix adjacent duplicates within each role across all months
+    sortedMonthIds.forEach(monthId => {
+        const month = allMonthsData[monthId];
+        const numWeeks = month.weeks.length;
+        const roles = Object.keys(month.roles);
+        
+        roles.forEach(role => {
+            for (let weekIndex = 1; weekIndex < numWeeks; weekIndex++) {
+                const prevAss = month.roles[role][weekIndex - 1];
+                const currAss = month.roles[role][weekIndex];
+                if (!prevAss.text || !currAss.text) continue;
+                if (prevAss.text.trim().toLowerCase() === currAss.text.trim().toLowerCase()) {
+                    // Adjacent duplicate found; try to change current week
+                    const currentText = currAss.text.trim();
+                    if (!hasSuffix(currentText)) continue;
+                    
+                    const targetSuffix = getSuffix(currentText);
+                    const candidates = globalNamesBySuffix[targetSuffix] || [];
+                    if (candidates.length === 0) continue;
+                    
+                    // Recompute constraints for this week
+                    const weekUsage = new Set();
+                    roles.forEach(r => {
+                        const ass = month.roles[r][weekIndex].text;
+                        if (ass) ass.split(' & ').forEach(n => weekUsage.add(n.trim().toLowerCase()));
+                    });
+                    weekUsage.delete(currentText.toLowerCase());
+                    
+                    const prevNameLower = prevAss.text.trim().toLowerCase();
+                    const nextName = (weekIndex < numWeeks - 1) ? month.roles[role][weekIndex + 1].text : '';
+                    const nextNameLower = nextName.trim().toLowerCase();
+                    
+                    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+                    let newSelected = null;
+                    for (const candidate of shuffled) {
+                        const candLower = candidate.toLowerCase();
+                        if (!isUnderLimit(candidate, role)) continue;
+                        if (weekUsage.has(candLower)) continue;
+                        if (candLower === prevNameLower) continue;
+                        if (nextName && candLower === nextNameLower) continue;
+                        newSelected = candidate;
+                        break;
+                    }
+                    
+                    if (newSelected) {
+                        // Update counts
+                        const oldKey = `${currentText.toLowerCase()}|${role}`;
+                        const newKey = `${newSelected.toLowerCase()}|${role}`;
+                        historicalCounts[oldKey] = Math.max(0, (historicalCounts[oldKey] || 0) - 1);
+                        historicalCounts[newKey] = (historicalCounts[newKey] || 0) + 1;
+                        
+                        month.roles[role][weekIndex] = { text: newSelected, edited: true };
+                    }
+                }
             }
         });
     });
     
     saveToLocalStorage();
     renderTable();
-    showNotification('Global auto-assignment completed (max 1 per role)');
+    showNotification('Global auto-assignment completed (max 1 per role, adjacency enforced)');
 }
         function getHistoricalAssignments(monthIds) {
             const assignments = {};
