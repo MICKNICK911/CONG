@@ -1695,7 +1695,6 @@
             addTableModal.style.display = 'none';
         }
 
-        // Auto-assign with suffix rules
         // Helper: extract suffix from a name (e.g., "John Doe -E" => "E", "Jane -XYZ" => "XYZ")
 // Returns empty string if no suffix.
 function getSuffix(name) {
@@ -1725,7 +1724,7 @@ function getSortedMonthIds() {
     return monthEntries.map(([id]) => id);
 }
 
-// Build historical assignment counts per role (for recent usage limit)
+// Build historical assignment counts per role (global)
 function getHistoricalRoleCounts(monthIds) {
     const counts = {}; // key: `${nameLower}|${role}` => count
     monthIds.forEach(monthId => {
@@ -1781,10 +1780,10 @@ function autoAssignRoles() {
     // Pre-calculate historical role counts (before any changes)
     const historicalCounts = getHistoricalRoleCounts(sortedMonthIds);
     
-    // Function to check recent usage limit (max 3 per role)
+    // Function to check usage limit: MAX 1 per role globally
     function isUnderLimit(name, role) {
         const key = `${name.toLowerCase()}|${role}`;
-        return (historicalCounts[key] || 0) < 3;
+        return (historicalCounts[key] || 0) < 1; // changed from 3 to 1
     }
     
     // Process each month
@@ -1838,7 +1837,7 @@ function autoAssignRoles() {
                 for (const candidate of shuffled) {
                     const candidateLower = candidate.toLowerCase();
                     
-                    // Check recent usage limit for this role
+                    // Check limit: max 1 per role globally
                     if (!isUnderLimit(candidate, role)) continue;
                     
                     // Check duplicate in same week
@@ -1889,7 +1888,7 @@ function autoAssignRoles() {
     
     saveToLocalStorage();
     renderTable();
-    showNotification('Global auto-assignment completed (only suffixed names shuffled)');
+    showNotification('Global auto-assignment completed (max 1 per role)');
 }
         function getHistoricalAssignments(monthIds) {
             const assignments = {};
