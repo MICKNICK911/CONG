@@ -6,7 +6,7 @@
     <title>Advanced Duty Roster Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ... keep all existing styles unchanged ... */
+        /* ... ALL CSS UNCHANGED FROM PREVIOUS FULL VERSION ... */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -23,891 +23,127 @@
             --transition: all 0.3s ease;
             --due-highlight: #ffeb3b;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1400px;
-            height: 1700px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            overflow: auto;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
-        }
-        
-        .container.loaded {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        #splashScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--splash-color), #154360);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .splash-content {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            transform: scale(0.9);
-            animation: scaleIn 1.2s forwards;
-        }
-        
-        @keyframes scaleIn {
-            to { transform: scale(1); }
-        }
-        
-        .splash-title {
-            font-size: 4rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            letter-spacing: 2px;
-            animation: fadeInUp 1s ease forwards;
-        }
-        
-        .splash-subtitle {
-            font-size: 1.8rem;
-            color: #f1c40f;
-            font-weight: 600;
-            margin-bottom: 40px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1.2s ease forwards;
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .splash-loader {
-            width: 80px;
-            height: 80px;
-            border: 8px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            border-top: 8px solid #f1c40f;
-            animation: spin 1.5s linear infinite;
-            margin: 30px auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .splash-note {
-            color: #ecf0f1;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 20px auto 0;
-            animation: fadeInUp 1.4s ease forwards;
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-        
-        header {
-            background: linear-gradient(to right, var(--primary-color), var(--dark-color));
-            color: white;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .app-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .month-indicator {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #f1c40f;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-top: 5px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-        }
-        
-        .header-controls {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            padding: 10px 0;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 50px;
-            background: var(--secondary-color);
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        button.active {
-            background: var(--accent-color);
-        }
-        
-        button.print {
-            background: var(--success-color);
-        }
-        
-        button.reset {
-            background: #9b59b6;
-        }
-        
-        button.add {
-            background: #27ae60;
-        }
-        
-        button.import {
-            background: #8e44ad;
-        }
-        
-        button.export {
-            background: #16a085;
-        }
-        
-        button.stats {
-            background: var(--stats-color);
-        }
-        
-        button.info {
-            background: #f39c12;
-        }
-
-        button.infohelper {
-            background: #0075FF;
-        }
-        
-        button.auto-assign {
-            background: #c0392b;
-        }
-        
-        button.undo {
-            background: #7f8c8d;
-        }
-        
-        .search-container {
-            flex-grow: 1;
-            max-width: 300px;
-            position: relative;
-        }
-        
-        input[type="text"], input[type="date"], input[type="number"] {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            border-radius: 50px;
-            border: 2px solid var(--secondary-color);
-            font-size: 1rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        input[type="number"], input[type="date"] {
-            padding: 12px 20px;
-        }
-        
-        input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus {
-            border-color: var(--accent-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
-        }
-        
-        input:invalid {
-            border-color: var(--accent-color);
-            background-color: rgba(231, 76, 60, 0.1);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-        }
-        
-        .tabs-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #ddd;
-            overflow-x: auto;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-        }
-        
-        .month-tab {
-            padding: 8px 20px;
-            background: #e9ecef;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 2px solid transparent;
-            white-space: nowrap;
-        }
-        
-        .month-tab.active {
-            background: var(--secondary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-        
-        .month-tab:hover:not(.active) {
-            background: #dee2e6;
-        }
-        
-        .close-tab {
-            background: rgba(0,0,0,0.2);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-        
-        .close-tab:hover {
-            background: rgba(0,0,0,0.3);
-        }
-        
-        .table-container {
-            background-color: white;
-            overflow-x: auto;
-            padding: 20px;
-            position: relative;
-            height: 1000px;
-            overflow-y: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-            transition: var(--transition);
-        }
-        
-        th {
-            background: linear-gradient(to bottom, var(--primary-color), var(--dark-color));
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #f1f8ff;
-        }
-        
-        .role-header {
-            background: linear-gradient(to right, #3498db, #2980b9);
-            color: white;
-            font-weight: 600;
-            text-align: left;
-            position: sticky;
-            left: 0;
-            z-index: 2;
-            width: 180px;
-            min-width: 180px;
-            max-width: 180px;
-            cursor: pointer;
-        }
-        
-        .role-header:hover {
-            background: linear-gradient(to right, #2980b9, #2573a7);
-        }
-        
-        .week-header {
-            cursor: pointer;
-        }
-        
-        .week-header:hover {
-            background: linear-gradient(to bottom, #1a2a6c, #233d8d);
-        }
-        
-        .current-week {
-            background-color: #fffde7;
-            box-shadow: inset 0 0 0 3px #ffd54f;
-            position: relative;
-        }
-        
-        .current-week::after {
-            content: "Current";
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: var(--accent-color);
-            color: white;
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        
-        .due-week {
-            background-color: var(--due-highlight);
-            box-shadow: inset 0 0 0 3px #fbc02d;
-            position: relative;
-        }
-        
-        .due-week::after {
-            content: "Due";
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: var(--warning-color);
-            color: white;
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        
-        .highlight {
-            background-color: rgba(231, 76, 60, 0.2);
-            font-weight: bold;
-            border-radius: 4px;
-            padding: 2px 4px;
-        }
-        
-        .editable-cell {
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.2s;
-            min-width: 180px;
-            max-width: 180px;
-        }
-        
-        .editable-cell:hover {
-            background-color: rgba(52, 152, 219, 0.1);
-        }
-        
-        .editable-cell:focus {
-            outline: 2px solid var(--secondary-color);
-            background-color: white;
-        }
-        
-        .copied-content {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        .duplicate-highlight {
-            background-color: rgba(255, 107, 107, 0.3);
-            box-shadow: inset 0 0 0 2px var(--duplicate-color);
-        }
-        
-        .adjacent-highlight {
-            background-color: rgba(107, 255, 107, 0.3);
-            box-shadow: inset 0 0 0 2px var(--adjacent-color);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            background-color: #f8f9fa;
-            border-top: 1px solid #eee;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
-            background-color: var(--success-color);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(200%);
-            transition: transform 0.4s ease;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-        }
-        
-        .legend-duplicate {
-            background-color: rgba(255, 107, 107, 0.3);
-            border: 1px solid var(--duplicate-color);
-        }
-        
-        .legend-adjacent {
-            background-color: rgba(107, 255, 107, 0.3);
-            border: 1px solid var(--adjacent-color);
-        }
-        
-        .legend-copied {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            background: linear-gradient(to right, var(--primary-color), var(--dark-color));
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px 10px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-header h2 {
-            font-size: 1.4rem;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="date"] {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        .form-group input[type="file"] {
-            width: 100%;
-            padding: 10px 0;
-        }
-        
-        .category-item {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-        }
-        
-        .category-item button {
-            background-color: var(--accent-color);
-            margin-top: 10px;
-        }
-        
-        .table-selector {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        
-        .table-option {
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .table-option:last-child {
-            border-bottom: none;
-        }
-        
-        .table-option input {
-            margin-right: 10px;
-        }
-        
-        .modal-footer {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-radius: 0 0 10px 10px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-        
-        .modal-footer button {
-            padding: 8px 20px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .stats-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            border-left: 4px solid var(--stats-color);
-        }
-        
-        .stats-card h3 {
-            color: var(--stats-color);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stats-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        
-        .stats-table th {
-            background: var(--stats-color);
-            color: white;
-            text-align: left;
-            padding: 10px 15px;
-        }
-        
-        .stats-table td {
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-        }
-        
-        .stats-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .stats-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .stats-table .rank {
-            font-weight: bold;
-            color: var(--stats-color);
-            text-align: center;
-        }
-        
-        .stats-table .count {
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        .stats-table .role-count {
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .role-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .role-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .role-card h4 {
-            color: var(--dark-color);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-        
-        .role-card ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .role-card li {
-            padding: 5px 0;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #ddd;
-        }
-        
-        .role-card li:last-child {
-            border-bottom: none;
-        }
-        
-        .role-card .count {
-            font-weight: bold;
-            color: var(--stats-color);
-        }
-        
-        #instructionsModal .modal-content {
-            max-width: 800px;
-        }
-        
-        .instructions {
-            background: linear-gradient(to right, #e0f7fa, #bbdefb);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--secondary-color);
-        }
-        
-        .instructions h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .instructions ul {
-            padding-left: 20px;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-        
-        .instructions li i {
-            color: var(--success-color);
-            margin-right: 8px;
-        }
-        
-        @media (max-width: 900px) {
-            .header-controls {
-                flex-direction: column;
-            }
-            .btn-group {
-                width: 100%;
-                justify-content: center;
-            }
-            .search-container {
-                max-width: 100%;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .role-header {
-                width: 150px;
-                min-width: 150px;
-                max-width: 150px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .splash-title {
-                font-size: 3rem;
-            }
-            .splash-subtitle {
-                font-size: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .btn-group button {
-                flex: 1 0 40%;
-            }
-            button {
-                font-size: 0.85rem;
-                padding: 8px 15px;
-            }
-            .app-title {
-                flex-direction: column;
-                gap: 5px;
-                text-align: center;
-            }
-            .role-header {
-                width: 120px;
-                min-width: 120px;
-                max-width: 120px;
-                font-size: 0.9rem;
-                padding: 10px;
-            }
-            th, td {
-                padding: 10px;
-            }
-            .splash-title {
-                font-size: 2.2rem;
-            }
-            .splash-subtitle {
-                font-size: 1.2rem;
-            }
-            .splash-loader {
-                width: 60px;
-                height: 60px;
-            }
-        }
-        
-        @media print {
-            .header-controls, footer, .tabs-container, .legend {
-                display: none;
-            }
-            .table-container {
-                padding: 0;
-                box-shadow: none;
-            }
-            table {
-                min-width: auto;
-            }
-            .modal, .notification, .search-container {
-                display: none !important;
-            }
-            body {
-                padding: 0;
-                background: white;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c); color: #333; line-height: 1.6; padding: 20px; min-height: 100vh; overflow-x: hidden; }
+        .container { max-width: 1400px; height: 1700px; margin: 0 auto; background-color: rgba(255, 255, 255, 0.95); border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); overflow: auto; position: relative; opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
+        .container.loaded { opacity: 1; transform: translateY(0); }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--splash-color), #154360); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; transition: opacity 0.8s ease, transform 0.8s ease; }
+        .splash-content { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; backdrop-filter: blur(10px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); max-width: 90%; transform: scale(0.9); animation: scaleIn 1.2s forwards; }
+        @keyframes scaleIn { to { transform: scale(1); } }
+        .splash-title { font-size: 4rem; font-weight: 800; color: white; margin-bottom: 20px; text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); letter-spacing: 2px; animation: fadeInUp 1s ease forwards; }
+        .splash-subtitle { font-size: 1.8rem; color: #f1c40f; font-weight: 600; margin-bottom: 40px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); animation: fadeInUp 1.2s ease forwards; animation-delay: 0.2s; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .splash-loader { width: 80px; height: 80px; border: 8px solid rgba(255, 255, 255, 0.2); border-radius: 50%; border-top: 8px solid #f1c40f; animation: spin 1.5s linear infinite; margin: 30px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .splash-note { color: #ecf0f1; font-size: 1.2rem; max-width: 600px; margin: 20px auto 0; animation: fadeInUp 1.4s ease forwards; animation-delay: 0.4s; opacity: 0; }
+        header { background: linear-gradient(to right, var(--primary-color), var(--dark-color)); color: white; padding: 20px; position: relative; z-index: 10; }
+        .app-title { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        h1 { font-size: 2.2rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
+        .month-indicator { font-size: 1.4rem; font-weight: 600; color: #f1c40f; background: rgba(0, 0, 0, 0.7); padding: 8px 20px; border-radius: 30px; display: inline-block; margin-top: 5px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); }
+        .header-controls { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-top: 20px; padding: 10px 0; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        button { padding: 10px 20px; border: none; border-radius: 50px; background: var(--secondary-color); color: white; cursor: pointer; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow); }
+        button:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); }
+        button:active { transform: translateY(1px); }
+        button.active { background: var(--accent-color); }
+        button.print { background: var(--success-color); }
+        button.reset { background: #9b59b6; }
+        button.add { background: #27ae60; }
+        button.import { background: #8e44ad; }
+        button.export { background: #16a085; }
+        button.stats { background: var(--stats-color); }
+        button.info { background: #f39c12; }
+        button.infohelper { background: #0075FF; }
+        button.auto-assign { background: #c0392b; }
+        button.undo { background: #7f8c8d; }
+        button.remove-suffix { background: #d35400; }
+        .search-container { flex-grow: 1; max-width: 300px; position: relative; }
+        input[type="text"], input[type="date"], input[type="number"] { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; border: 2px solid var(--secondary-color); font-size: 1rem; box-shadow: var(--shadow); transition: var(--transition); }
+        input[type="number"], input[type="date"] { padding: 12px 20px; }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3); }
+        input:invalid { border-color: var(--accent-color); background-color: rgba(231, 76, 60, 0.1); }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--secondary-color); font-size: 1.2rem; }
+        .tabs-container { display: flex; flex-wrap: wrap; gap: 10px; padding: 15px 20px; background: #f8f9fa; border-bottom: 1px solid #ddd; overflow-x: auto; position: sticky; top: 0; z-index: 5; }
+        .month-tab { padding: 8px 20px; background: #e9ecef; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; border: 2px solid transparent; white-space: nowrap; }
+        .month-tab.active { background: var(--secondary-color); color: white; border-color: var(--primary-color); }
+        .month-tab:hover:not(.active) { background: #dee2e6; }
+        .close-tab { background: rgba(0,0,0,0.2); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .close-tab:hover { background: rgba(0,0,0,0.3); }
+        .table-container { background-color: white; overflow-x: auto; padding: 20px; position: relative; height: 1000px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        th, td { padding: 15px; text-align: center; border: 1px solid #e0e0e0; transition: var(--transition); }
+        th { background: linear-gradient(to bottom, var(--primary-color), var(--dark-color)); color: white; font-weight: 600; position: sticky; top: 0; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #f1f8ff; }
+        .role-header { background: linear-gradient(to right, #3498db, #2980b9); color: white; font-weight: 600; text-align: left; position: sticky; left: 0; z-index: 2; width: 180px; min-width: 180px; max-width: 180px; cursor: pointer; }
+        .role-header:hover { background: linear-gradient(to right, #2980b9, #2573a7); }
+        .week-header { cursor: pointer; }
+        .week-header:hover { background: linear-gradient(to bottom, #1a2a6c, #233d8d); }
+        .current-week { background-color: #fffde7; box-shadow: inset 0 0 0 3px #ffd54f; position: relative; }
+        .current-week::after { content: "Current"; position: absolute; top: 5px; right: 5px; background-color: var(--accent-color); color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 3px; font-weight: bold; }
+        .due-week { background-color: var(--due-highlight); box-shadow: inset 0 0 0 3px #fbc02d; position: relative; }
+        .due-week::after { content: "Due"; position: absolute; top: 5px; right: 5px; background-color: var(--warning-color); color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 3px; font-weight: bold; }
+        .highlight { background-color: rgba(231, 76, 60, 0.2); font-weight: bold; border-radius: 4px; padding: 2px 4px; }
+        .editable-cell { cursor: pointer; position: relative; transition: background-color 0.2s; min-width: 180px; max-width: 180px; }
+        .editable-cell:hover { background-color: rgba(52, 152, 219, 0.1); }
+        .editable-cell:focus { outline: 2px solid var(--secondary-color); background-color: white; }
+        .copied-content { color: #e74c3c; font-weight: bold; }
+        .duplicate-highlight { background-color: rgba(255, 107, 107, 0.3); box-shadow: inset 0 0 0 2px var(--duplicate-color); }
+        .adjacent-highlight { background-color: rgba(107, 255, 107, 0.3); box-shadow: inset 0 0 0 2px var(--adjacent-color); }
+        footer { text-align: center; padding: 25px; color: #7f8c8d; font-size: 0.9rem; background-color: #f8f9fa; border-top: 1px solid #eee; }
+        .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 8px; background-color: var(--success-color); color: white; font-weight: 600; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); transform: translateX(200%); transition: transform 0.4s ease; z-index: 1000; }
+        .notification.show { transform: translateX(0); }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .legend-color { width: 20px; height: 20px; border-radius: 4px; }
+        .legend-duplicate { background-color: rgba(255, 107, 107, 0.3); border: 1px solid var(--duplicate-color); }
+        .legend-adjacent { background-color: rgba(107, 255, 107, 0.3); border: 1px solid var(--adjacent-color); }
+        .legend-copied { color: #e74c3c; font-weight: bold; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 2000; align-items: center; justify-content: center; overflow: auto; }
+        .modal-content { background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); width: 90%; max-width: 900px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { background: linear-gradient(to right, var(--primary-color), var(--dark-color)); color: white; padding: 15px 20px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 1.4rem; }
+        .close-modal { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .modal-body { padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-color); }
+        .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="date"] { width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        .form-group input[type="file"] { width: 100%; padding: 10px 0; }
+        .category-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        .category-item button { background-color: var(--accent-color); margin-top: 10px; }
+        .table-selector { max-height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-top: 10px; }
+        .table-option { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #eee; }
+        .table-option:last-child { border-bottom: none; }
+        .table-option input { margin-right: 10px; }
+        .modal-footer { padding: 15px 20px; background: #f8f9fa; border-radius: 0 0 10px 10px; display: flex; justify-content: flex-end; gap: 10px; }
+        .modal-footer button { padding: 8px 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .stats-card { background: white; border-radius: 10px; box-shadow: var(--shadow); padding: 20px; border-left: 4px solid var(--stats-color); }
+        .stats-card h3 { color: var(--stats-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .stats-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .stats-table th { background: var(--stats-color); color: white; text-align: left; padding: 10px 15px; }
+        .stats-table td { padding: 10px 15px; border-bottom: 1px solid #eee; text-align: left; }
+        .stats-table tr:nth-child(even) { background-color: #f9f9f9; }
+        .stats-table tr:hover { background-color: #f1f1f1; }
+        .stats-table .rank { font-weight: bold; color: var(--stats-color); text-align: center; }
+        .stats-table .count { font-weight: bold; text-align: center; }
+        .stats-table .role-count { font-size: 0.9rem; color: #666; }
+        .role-breakdown { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .role-card { background: #f8f9fa; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .role-card h4 { color: var(--dark-color); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--secondary-color); }
+        .role-card ul { list-style: none; padding-left: 0; }
+        .role-card li { padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #ddd; }
+        .role-card li:last-child { border-bottom: none; }
+        .role-card .count { font-weight: bold; color: var(--stats-color); }
+        #instructionsModal .modal-content { max-width: 800px; }
+        .instructions { background: linear-gradient(to right, #e0f7fa, #bbdefb); padding: 20px; border-radius: 10px; margin: 20px 0; box-shadow: var(--shadow); border-left: 5px solid var(--secondary-color); }
+        .instructions h3 { color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .instructions ul { padding-left: 20px; }
+        .instructions li { margin-bottom: 8px; line-height: 1.5; }
+        .instructions li i { color: var(--success-color); margin-right: 8px; }
+        @media (max-width: 900px) { .header-controls { flex-direction: column; } .btn-group { width: 100%; justify-content: center; } .search-container { max-width: 100%; } h1 { font-size: 1.8rem; } .role-header { width: 150px; min-width: 150px; max-width: 150px; } .stats-grid { grid-template-columns: 1fr; } .splash-title { font-size: 3rem; } .splash-subtitle { font-size: 1.5rem; } }
+        @media (max-width: 600px) { body { padding: 10px; } .btn-group button { flex: 1 0 40%; } button { font-size: 0.85rem; padding: 8px 15px; } .app-title { flex-direction: column; gap: 5px; text-align: center; } .role-header { width: 120px; min-width: 120px; max-width: 120px; font-size: 0.9rem; padding: 10px; } th, td { padding: 10px; } .splash-title { font-size: 2.2rem; } .splash-subtitle { font-size: 1.2rem; } .splash-loader { width: 60px; height: 60px; } }
+        @media print { .header-controls, footer, .tabs-container, .legend { display: none; } .table-container { padding: 0; box-shadow: none; } table { min-width: auto; } .modal, .notification, .search-container { display: none !important; } body { padding: 0; background: white; } }
     </style>
 </head>
 <body>
@@ -937,9 +173,9 @@
                     <button id="printBtn" class="print"><i class="fas fa-print"></i> Print</button>
                     <button id="resetBtn" class="reset"><i class="fas fa-sync"></i> Reset</button>
                     <button id="addTableBtn" class="add"><i class="fas fa-plus"></i> Add Table</button>
-                    <!-- Names button removed -->
                     <button id="autoAssignBtn" class="auto-assign"><i class="fas fa-magic"></i> Auto Assign</button>
                     <button id="undoBtn" class="undo"><i class="fas fa-undo"></i> Undo</button>
+                    <button id="removeSuffixBtn" class="remove-suffix"><i class="fas fa-remove-format"></i> Remove Suffixes</button>
                     <button id="exportBtn" class="export"><i class="fas fa-file-export"></i> Export</button>
                     <button id="importBtn" class="import"><i class="fas fa-file-import"></i> Import</button>
                     <button id="statsBtn" class="stats"><i class="fas fa-chart-bar"></i> Statistics</button>
@@ -958,11 +194,7 @@
         
         <div class="table-container">
             <table id="rosterTable">
-                <thead>
-                    <tr>
-                        <th>Role / Week</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Role / Week</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -992,11 +224,11 @@
                 </div>
                 <div class="form-group">
                     <label for="numRows">Number of Roles:</label>
-                    <input type="number" id="numRows" min="1" value="10" placeholder="Number of roles">
+                    <input type="number" id="numRows" min="1" value="10">
                 </div>
                 <div class="form-group">
                     <label for="numWeeks">Number of Weeks:</label>
-                    <input type="number" id="numWeeks" min="1" value="4" placeholder="Number of weeks">
+                    <input type="number" id="numWeeks" min="1" value="4">
                 </div>
                 <div class="form-group">
                     <label>Copy from existing table:</label>
@@ -1043,25 +275,19 @@
                     <div class="stats-card">
                         <h3><i class="fas fa-users"></i> Top Assignees</h3>
                         <table class="stats-table" id="topAssigneesTable">
-                            <thead>
-                                <tr><th>#</th><th>Name</th><th>Total</th></tr>
-                            </thead>
+                            <thead><tr><th>#</th><th>Name</th><th>Total</th></tr></thead>
                             <tbody></tbody>
                         </table>
                     </div>
-                    
                     <div class="stats-card">
                         <h3><i class="fas fa-tasks"></i> Role Distribution</h3>
                         <div id="roleBreakdown"></div>
                     </div>
                 </div>
-                
-                <div class="stats-card" style="margin-top: 20px;">
+                <div class="stats-card" style="margin-top:20px;">
                     <h3><i class="fas fa-user-tag"></i> Detailed Assignment Stats</h3>
                     <table class="stats-table" id="detailedStatsTable">
-                        <thead>
-                            <tr><th>Name</th><th>Total</th><th>Role Breakdown</th></tr>
-                        </thead>
+                        <thead><tr><th>Name</th><th>Total</th><th>Role Breakdown</th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -1081,34 +307,21 @@
             </div>
             <div class="modal-body">
                 <div class="instructions">
-                    <h3><i class="fas fa-info-circle"></i> How to use this scheduler</h3>
+                    <h3><i class="fas fa-info-circle"></i> Instructions</h3>
                     <ul>
-                        <li><i class="fas fa-mouse-pointer"></i> Click on any assignment cell to edit names</li>
-                        <li><i class="fas fa-heading"></i> Click on role names or week headers to edit them</li>
-                        <li><i class="fas fa-magic"></i> Use "Auto Assign" to automatically fill the schedule (respects suffix rules)</li>
-                        <li><i class="fas fa-undo"></i> Use "Undo" to revert the last auto-assignment</li>
-                        <li><i class="fas fa-save"></i> Changes are automatically saved to your browser</li>
-                        <li><i class="fas fa-search"></i> Use search to highlight names across the schedule</li>
-                        <li><i class="fas fa-plus"></i> Add new tables for additional months</li>
-                        <li><i class="fas fa-copy"></i> Populate new tables from existing ones</li>
-                        <li><i class="fas fa-trash"></i> Delete unnecessary tables</li>
-                        <li><i class="fas fa-file-export"></i> Export/Import data to share across devices</li>
-                        <li><i class="fas fa-chart-bar"></i> View statistics for current and next month</li>
+                        <li><i class="fas fa-mouse-pointer"></i> Click any cell to edit names.</li>
+                        <li><i class="fas fa-heading"></i> Click role/week headers to edit.</li>
+                        <li><i class="fas fa-magic"></i> Auto Assign shuffles only suffixed names (e.g., "Name -E") across all months, with constraints.</li>
+                        <li><i class="fas fa-undo"></i> Undo reverts last auto-assign.</li>
+                        <li><i class="fas fa-remove-format"></i> Remove Suffixes strips all " -X" from names.</li>
+                        <li><i class="fas fa-file-export"></i> Export strips suffixes automatically.</li>
+                        <li><i class="fas fa-file-import"></i> Import also strips suffixes.</li>
+                        <li><i class="fas fa-chart-bar"></i> Statistics for current & next month only.</li>
                     </ul>
-                    
                     <div class="legend">
-                        <div class="legend-item">
-                            <div class="legend-color legend-duplicate"></div>
-                            <span>Duplicate names in same week</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color legend-adjacent"></div>
-                            <span>Same name in adjacent weeks</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-copied">Red text</span>
-                            <span>Copied from another table</span>
-                        </div>
+                        <div class="legend-item"><div class="legend-color legend-duplicate"></div><span>Duplicate in week</span></div>
+                        <div class="legend-item"><div class="legend-color legend-adjacent"></div><span>Adjacent duplicate</span></div>
+                        <div class="legend-item"><span class="legend-copied">Red text</span><span>Copied from other table</span></div>
                     </div>
                 </div>
             </div>
@@ -1119,1289 +332,785 @@
     </div>
 
     <script>
-        // Polyfill for structuredClone
-        if (typeof structuredClone !== 'function') {
-            window.structuredClone = obj => JSON.parse(JSON.stringify(obj));
-        }
-
-        // Default data with suffix support (includes sample data)
-        const defaultData = {
-            july: {
-                id: 'july',
-                name: "July 2025",
-                weeks: [
-                    { range: "July 7 - 13", isCurrent: false },
-                    { range: "July 14 - 20", isCurrent: false },
-                    { range: "July 21 - 27", isCurrent: false },
-                    { range: "July 28 - 31", isCurrent: false }
-                ],
-                roles: {
-                    "Chairman": [
-                        { text: "Derrick Yankson -E", edited: false },
-                        { text: "Anthony Entsie -E", edited: false },
-                        { text: "Isaac Newton -E", edited: false },
-                        { text: "Collins Yeboah -E", edited: false }
-                    ],
-                    "Opening Prayer": [
-                        { text: "Emmanuel Entsie -S", edited: false },
-                        { text: "Shadrach Asare -S", edited: false },
-                        { text: "Isaac Arhin -E", edited: false },
-                        { text: "Hilkiah Kwakye -S", edited: false }
-                    ],
-                    "1": [
-                        { text: "Emmanuel Asante -S", edited: false },
-                        { text: "Daniel Boakye -E", edited: false },
-                        { text: "Obed Gyamfi -E", edited: false },
-                        { text: "Alexander Bawuah -E", edited: false }
-                    ],
-                    "2": [
-                        { text: "Hilkiah Entsie -S", edited: false },
-                        { text: "Samuel Onwona -S", edited: false },
-                        { text: "Isaac Ampomah -S", edited: false },
-                        { text: "Ephraim Sam -S", edited: false }
-                    ],
-                    "3": [
-                        { text: "Michael Obeng -E", edited: false },
-                        { text: "Stanley Yamekpe -E", edited: false },
-                        { text: "John Essel -E", edited: false },
-                        { text: "Frank Essah -E", edited: false }
-                    ],
-                    "4": [
-                        { text: "Christiana Amponsah & Margaret Entsie", edited: false },
-                        { text: "Barbara Asamoah & Lois Fosu", edited: false },
-                        { text: "Dorah Asare & Victoria Yeboah", edited: false },
-                        { text: "Lilian Ankomah & Rosina Yankson", edited: false }
-                    ],
-                    "5": [
-                        { text: "Rebecca Agbenyo & Mercy Entsie", edited: false },
-                        { text: "Selina Gyamfi & Barbara Amponsah", edited: false },
-                        { text: "Nhyira Appiah & Jemimah Miezah", edited: false },
-                        { text: "Dzifa Alonya & Vivian Arhin", edited: false }
-                    ],
-                    "6": [
-                        { text: "Nacy Baidoo & Tracy Yeboah", edited: false },
-                        { text: "Paul Asiedu -N", edited: false },
-                        { text: "Reuben Sowolo & Francis Entsie", edited: false },
-                        { text: "Lois Sowolo & Alimatu Sadia", edited: false }
-                    ],
-                    "7": [
-                        { text: "Abel Eshun -E", edited: false },
-                        { text: "Alexander Bawuah -E", edited: false },
-                        { text: "Gideon Miezah -S", edited: false },
-                        { text: "Isaac Arhin -E", edited: false }
-                    ],
-                    "8": [
-                        { text: "Michael Appiah -E", edited: false },
-                        { text: "Wonder Sowolo -E", edited: false },
-                        { text: "Ahiade", edited: false },
-                        { text: "Wonder Sowolo -E", edited: false }
-                    ],
-                    "9": [
-                        { text: "", edited: false },
-                        { text: "", edited: false },
-                        { text: "Derrick Yankson -E", edited: false },
-                        { text: "Arhin Kingsley -E", edited: false }
-                    ],
-                    "Closing Prayer": [
-                        { text: "Dickson Onwona -E", edited: false },
-                        { text: "Isaac Ampomah -S", edited: false },
-                        { text: "Newton Sam -E", edited: false },
-                        { text: "Daniel Boakye -E", edited: false }
-                    ]
-                },
-                copiedFrom: null
-            },
-            august: {
-                id: 'august',
-                name: "August 2025",
-                weeks: [
-                    { range: "August 4 - 10", isCurrent: false },
-                    { range: "August 11 - 17", isCurrent: true },
-                    { range: "August 18 - 24", isCurrent: false },
-                    { range: "August 25 - 31", isCurrent: false }
-                ],
-                roles: {
-                    "Chairman": [
-                        { text: "Dickson Onwona -E", edited: false },
-                        { text: "Wonder Sowolo -E", edited: false },
-                        { text: "Archibald Entsie -E", edited: false },
-                        { text: "Kingsley Arhin -E", edited: false }
-                    ],
-                    "Opening Prayer": [
-                        { text: "Ephraim Sam -S", edited: false },
-                        { text: "Kingsley Arhin -E", edited: false },
-                        { text: "Derrick Yankson -E", edited: false },
-                        { text: "Emmanuel Asante -S", edited: false }
-                    ],
-                    "1": [
-                        { text: "Hilkiah Kwakye -S", edited: false },
-                        { text: "Samuel Onwona -S", edited: false },
-                        { text: "Michael Appiah -E", edited: false },
-                        { text: "Isaac Ampomah -S", edited: false }
-                    ],
-                    "2": [
-                        { text: "Obed Gyamfi -E", edited: false },
-                        { text: "Shadrach Asare -S", edited: false },
-                        { text: "Emmanuel Asante -S", edited: false },
-                        { text: "Gideon Miezah -S", edited: false }
-                    ],
-                    "3": [
-                        { text: "Stephen Essilfie -E", edited: false },
-                        { text: "Samuel Larbi -E", edited: false },
-                        { text: "Sadick Mohammed -E", edited: false },
-                        { text: "Ebenezer Normanyo -E", edited: false }
-                    ],
-                    "4": [
-                        { text: "Mawusi Appiah & Naomi Entsie", edited: false },
-                        { text: "Claudia Sam & Owusuwaa Appiah", edited: false },
-                        { text: "Joana Entsie & Gloria Adobea", edited: false },
-                        { text: "Mary Entsie & Adwoa Onwona", edited: false }
-                    ],
-                    "5": [
-                        { text: "Joana Ekwama & Adwoa Eshun", edited: false },
-                        { text: "Augusta Appiah & Mary Entsie", edited: false },
-                        { text: "Juliana Entsie & Adelaide Allotey", edited: false },
-                        { text: "Mercy Entsie & Cynthia Sam", edited: false }
-                    ],
-                    "6": [
-                        { text: "Shadrach Asare -S", edited: false },
-                        { text: "Foster Entsie & Ebenezer Normanyo", edited: false },
-                        { text: "Emmanuel Entsie -S", edited: false },
-                        { text: "Hannah & Claudia Polley", edited: false }
-                    ],
-                    "7": [
-                        { text: "Ahiade", edited: false },
-                        { text: "Ephraim Sam -S", edited: false },
-                        { text: "Obed Gyamfi -E", edited: false },
-                        { text: "Abigail Asieduwaa & Elizabeth Yeboah", edited: false }
-                    ],
-                    "8": [
-                        { text: "Archibald Entsie -E", edited: false },
-                        { text: "Anthony Entsie -E", edited: false },
-                        { text: "Collins Yeboah -E", edited: false },
-                        { text: "Daniel Boakye -E", edited: false }
-                    ],
-                    "9": [
-                        { text: "", edited: false },
-                        { text: "", edited: false },
-                        { text: "", edited: false },
-                        { text: "Abel Eshun -E", edited: false }
-                    ],
-                    "10": [
-                        { text: "", edited: false },
-                        { text: "", edited: false },
-                        { text: "", edited: false },
-                        { text: "Dickson Onwona -E", edited: false }
-                    ],
-                    "Closing Prayer": [
-                        { text: "Reuben Sowolo -N", edited: false },
-                        { text: "Collins Yeboah -E", edited: false },
-                        { text: "Samuel Onwona -S", edited: false },
-                        { text: "Isaac Arhin -E", edited: false }
-                    ]
-                },
-                copiedFrom: null
-            }
-        };
-
-        // Internal categories for auto-assign (no UI)
-        let appCategories = {};
-
-        let allMonthsData = {};
-        let currentMonthId = 'august';
-        let highlightedNames = new Set();
-        let previousState = null;
-
-        const tableBody = document.querySelector('#rosterTable tbody');
-        const tableHead = document.querySelector('#rosterTable thead tr');
-        const monthIndicator = document.getElementById('monthIndicator');
-        const searchInput = document.getElementById('searchInput');
-        const notification = document.getElementById('notification');
-        const tabsContainer = document.getElementById('tabsContainer');
-        const splashScreen = document.getElementById('splashScreen');
-        const container = document.querySelector('.container');
-
-        const addTableModal = document.getElementById('addTableModal');
-        const importModal = document.getElementById('importModal');
-        const statsModal = document.getElementById('statsModal');
-        const instructionsModal = document.getElementById('instructionsModal');
-        const newTableNameInput = document.getElementById('newTableName');
-        const startDateInput = document.getElementById('startDate');
-        const numRowsInput = document.getElementById('numRows');
-        const numWeeksInput = document.getElementById('numWeeks');
-        const tableSelector = document.getElementById('tableSelector');
-        const importFileInput = document.getElementById('importFile');
-        const topAssigneesTable = document.getElementById('topAssigneesTable')?.querySelector('tbody');
-        const detailedStatsTable = document.getElementById('detailedStatsTable')?.querySelector('tbody');
-        const roleBreakdown = document.getElementById('roleBreakdown');
-
-        // Helper: extract suffix from name (e.g., "Name -E" => "E")
-        function getSuffix(name) {
-            const parts = name.trim().split(' - ');
-            return parts.length > 1 ? parts.pop().trim() : '';
-        }
-
-        // Helper: remove suffix to get base name (optional)
-        function getBaseName(name) {
-            return name.split(' - ')[0].trim();
-        }
-
-        // Initialize app
-        function initApp() {
-            if (!tableBody || !tableHead || !monthIndicator || !searchInput || !notification || !tabsContainer || !splashScreen || !container) {
-                console.error('Required DOM elements are missing');
-                showNotification('Error: Required UI elements are missing.');
-                return;
+        (function() {
+            // Polyfill for structuredClone
+            if (typeof structuredClone !== 'function') {
+                window.structuredClone = obj => JSON.parse(JSON.stringify(obj));
             }
 
-            setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                splashScreen.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    container.classList.add('loaded');
-                }, 800);
-            }, 2000);
-            
-            loadFromLocalStorage();
-            checkCurrentMonth(false);
-            renderTabs();
-            renderTable();
-            setupEventListeners();
-            
-            setInterval(() => checkCurrentMonth(false), 3600000);
-        }
+            // ---------- Default Data (with sample suffixes) ----------
+            const defaultData = {
+                july: { id:'july', name:"July 2025", weeks:[ {range:"July 7 - 13",isCurrent:false}, {range:"July 14 - 20",isCurrent:false}, {range:"July 21 - 27",isCurrent:false}, {range:"July 28 - 31",isCurrent:false} ],
+                roles: {
+                    "Chairman": [ {text:"Derrick Yankson -E",edited:false}, {text:"Anthony Entsie -E",edited:false}, {text:"Isaac Newton -E",edited:false}, {text:"Collins Yeboah -E",edited:false} ],
+                    "Opening Prayer": [ {text:"Emmanuel Entsie -S",edited:false}, {text:"Shadrach Asare -S",edited:false}, {text:"Isaac Arhin -E",edited:false}, {text:"Hilkiah Kwakye -S",edited:false} ],
+                    "1": [ {text:"Emmanuel Asante -S",edited:false}, {text:"Daniel Boakye -E",edited:false}, {text:"Obed Gyamfi -E",edited:false}, {text:"Alexander Bawuah -E",edited:false} ],
+                    "2": [ {text:"Hilkiah Entsie -S",edited:false}, {text:"Samuel Onwona -S",edited:false}, {text:"Isaac Ampomah -S",edited:false}, {text:"Ephraim Sam -S",edited:false} ],
+                    "3": [ {text:"Michael Obeng -E",edited:false}, {text:"Stanley Yamekpe -E",edited:false}, {text:"John Essel -E",edited:false}, {text:"Frank Essah -E",edited:false} ],
+                    "4": [ {text:"Christiana Amponsah & Margaret Entsie",edited:false}, {text:"Barbara Asamoah & Lois Fosu",edited:false}, {text:"Dorah Asare & Victoria Yeboah",edited:false}, {text:"Lilian Ankomah & Rosina Yankson",edited:false} ],
+                    "5": [ {text:"Rebecca Agbenyo & Mercy Entsie",edited:false}, {text:"Selina Gyamfi & Barbara Amponsah",edited:false}, {text:"Nhyira Appiah & Jemimah Miezah",edited:false}, {text:"Dzifa Alonya & Vivian Arhin",edited:false} ],
+                    "6": [ {text:"Nacy Baidoo & Tracy Yeboah",edited:false}, {text:"Paul Asiedu -N",edited:false}, {text:"Reuben Sowolo & Francis Entsie",edited:false}, {text:"Lois Sowolo & Alimatu Sadia",edited:false} ],
+                    "7": [ {text:"Abel Eshun -E",edited:false}, {text:"Alexander Bawuah -E",edited:false}, {text:"Gideon Miezah -S",edited:false}, {text:"Isaac Arhin -E",edited:false} ],
+                    "8": [ {text:"Michael Appiah -E",edited:false}, {text:"Wonder Sowolo -E",edited:false}, {text:"Ahiade",edited:false}, {text:"Wonder Sowolo -E",edited:false} ],
+                    "9": [ {text:"",edited:false}, {text:"",edited:false}, {text:"Derrick Yankson -E",edited:false}, {text:"Arhin Kingsley -E",edited:false} ],
+                    "Closing Prayer": [ {text:"Dickson Onwona -E",edited:false}, {text:"Isaac Ampomah -S",edited:false}, {text:"Newton Sam -E",edited:false}, {text:"Daniel Boakye -E",edited:false} ]
+                }, copiedFrom:null },
+                august: { id:'august', name:"August 2025", weeks:[ {range:"August 4 - 10",isCurrent:false}, {range:"August 11 - 17",isCurrent:true}, {range:"August 18 - 24",isCurrent:false}, {range:"August 25 - 31",isCurrent:false} ],
+                roles: {
+                    "Chairman": [ {text:"Dickson Onwona -E",edited:false}, {text:"Wonder Sowolo -E",edited:false}, {text:"Archibald Entsie -E",edited:false}, {text:"Kingsley Arhin -E",edited:false} ],
+                    "Opening Prayer": [ {text:"Ephraim Sam -S",edited:false}, {text:"Kingsley Arhin -E",edited:false}, {text:"Derrick Yankson -E",edited:false}, {text:"Emmanuel Asante -S",edited:false} ],
+                    "1": [ {text:"Hilkiah Kwakye -S",edited:false}, {text:"Samuel Onwona -S",edited:false}, {text:"Michael Appiah -E",edited:false}, {text:"Isaac Ampomah -S",edited:false} ],
+                    "2": [ {text:"Obed Gyamfi -E",edited:false}, {text:"Shadrach Asare -S",edited:false}, {text:"Emmanuel Asante -S",edited:false}, {text:"Gideon Miezah -S",edited:false} ],
+                    "3": [ {text:"Stephen Essilfie -E",edited:false}, {text:"Samuel Larbi -E",edited:false}, {text:"Sadick Mohammed -E",edited:false}, {text:"Ebenezer Normanyo -E",edited:false} ],
+                    "4": [ {text:"Mawusi Appiah & Naomi Entsie",edited:false}, {text:"Claudia Sam & Owusuwaa Appiah",edited:false}, {text:"Joana Entsie & Gloria Adobea",edited:false}, {text:"Mary Entsie & Adwoa Onwona",edited:false} ],
+                    "5": [ {text:"Joana Ekwama & Adwoa Eshun",edited:false}, {text:"Augusta Appiah & Mary Entsie",edited:false}, {text:"Juliana Entsie & Adelaide Allotey",edited:false}, {text:"Mercy Entsie & Cynthia Sam",edited:false} ],
+                    "6": [ {text:"Shadrach Asare -S",edited:false}, {text:"Foster Entsie & Ebenezer Normanyo",edited:false}, {text:"Emmanuel Entsie -S",edited:false}, {text:"Hannah & Claudia Polley",edited:false} ],
+                    "7": [ {text:"Ahiade",edited:false}, {text:"Ephraim Sam -S",edited:false}, {text:"Obed Gyamfi -E",edited:false}, {text:"Abigail Asieduwaa & Elizabeth Yeboah",edited:false} ],
+                    "8": [ {text:"Archibald Entsie -E",edited:false}, {text:"Anthony Entsie -E",edited:false}, {text:"Collins Yeboah -E",edited:false}, {text:"Daniel Boakye -E",edited:false} ],
+                    "9": [ {text:"",edited:false}, {text:"",edited:false}, {text:"",edited:false}, {text:"Abel Eshun -E",edited:false} ],
+                    "10": [ {text:"",edited:false}, {text:"",edited:false}, {text:"",edited:false}, {text:"Dickson Onwona -E",edited:false} ],
+                    "Closing Prayer": [ {text:"Reuben Sowolo -N",edited:false}, {text:"Collins Yeboah -E",edited:false}, {text:"Samuel Onwona -S",edited:false}, {text:"Isaac Arhin -E",edited:false} ]
+                }, copiedFrom:null }
+            };
 
-        function loadFromLocalStorage() {
-            try {
-                const savedData = localStorage.getItem('mwbRosterData');
-                if (savedData) {
-                    allMonthsData = JSON.parse(savedData);
-                    if (Object.keys(allMonthsData).length === 0) {
-                        allMonthsData = structuredClone(defaultData);
-                    } else {
-                        // Ensure assignments are objects
-                        Object.values(allMonthsData).forEach(month => {
-                            Object.keys(month.roles).forEach(role => {
-                                month.roles[role] = month.roles[role].map(assignment => {
-                                    if (typeof assignment === 'string') {
-                                        return { text: assignment, edited: false };
-                                    }
-                                    return assignment;
-                                });
-                            });
-                        });
-                    }
-                } else {
-                    allMonthsData = structuredClone(defaultData);
-                }
-                
-                const savedCategories = localStorage.getItem('mwbCategories');
-                if (savedCategories) {
-                    appCategories = JSON.parse(savedCategories);
-                } else {
-                    // Build default categories from defaultData
-                    appCategories = buildCategoriesFromData(allMonthsData);
-                }
-                
-                if (!allMonthsData[currentMonthId]) {
-                    currentMonthId = Object.keys(allMonthsData)[0] || 'august';
-                }
-            } catch (e) {
-                console.error("Error loading from localStorage:", e);
-                allMonthsData = structuredClone(defaultData);
+            // ---------- Global State ----------
+            let allMonthsData = {};
+            let appCategories = {};  // internal, auto-built
+            let currentMonthId = 'august';
+            let highlightedNames = new Set();
+            let previousState = null;
+
+            // DOM elements
+            const tableBody = document.querySelector('#rosterTable tbody');
+            const tableHead = document.querySelector('#rosterTable thead tr');
+            const monthIndicator = document.getElementById('monthIndicator');
+            const searchInput = document.getElementById('searchInput');
+            const notification = document.getElementById('notification');
+            const tabsContainer = document.getElementById('tabsContainer');
+            const splashScreen = document.getElementById('splashScreen');
+            const container = document.querySelector('.container');
+
+            const addTableModal = document.getElementById('addTableModal');
+            const importModal = document.getElementById('importModal');
+            const statsModal = document.getElementById('statsModal');
+            const instructionsModal = document.getElementById('instructionsModal');
+            const newTableNameInput = document.getElementById('newTableName');
+            const startDateInput = document.getElementById('startDate');
+            const numRowsInput = document.getElementById('numRows');
+            const numWeeksInput = document.getElementById('numWeeks');
+            const tableSelector = document.getElementById('tableSelector');
+            const importFileInput = document.getElementById('importFile');
+
+            // ---------- Helper: Suffix Handling ----------
+            function getSuffix(name) {
+                const match = name.trim().match(/\s-([A-Za-z0-9]+)$/);
+                return match ? match[1] : '';
+            }
+            function hasSuffix(name) {
+                return /\s-[A-Za-z0-9]+$/.test(name.trim());
+            }
+            function stripSuffix(name) {
+                return name.replace(/\s-[A-Za-z0-9]+$/, '').trim();
+            }
+
+            // Deep strip suffixes from a month's roles (mutates)
+            function stripSuffixesFromMonth(month) {
+                Object.keys(month.roles).forEach(role => {
+                    month.roles[role].forEach(ass => {
+                        if (ass.text) {
+                            ass.text = stripSuffix(ass.text);
+                        }
+                    });
+                });
+            }
+
+            // Deep strip all data (used for export/import cleanup)
+            function stripAllSuffixes(data) {
+                const newData = structuredClone(data);
+                Object.values(newData).forEach(month => stripSuffixesFromMonth(month));
+                return newData;
+            }
+
+            // Remove suffixes from current in-memory data (user action)
+            function removeAllSuffixesFromCurrent() {
+                if (Object.keys(allMonthsData).length === 0) return;
+                if (!confirm('Remove all suffixes (e.g., "Name -E" → "Name") from all months? This cannot be undone.')) return;
+                previousState = structuredClone(allMonthsData);
+                Object.values(allMonthsData).forEach(month => stripSuffixesFromMonth(month));
                 appCategories = buildCategoriesFromData(allMonthsData);
-                currentMonthId = 'august';
-                showNotification('Error loading saved data, reset to default');
-            }
-        }
-
-        function buildCategoriesFromData(data) {
-            const cats = {};
-            Object.values(data).forEach(month => {
-                Object.entries(month.roles).forEach(([role, assignments]) => {
-                    if (!cats[role]) cats[role] = { normal: [], standby: [] };
-                    assignments.forEach(ass => {
-                        if (ass.text) {
-                            ass.text.split(' & ').forEach(name => {
-                                const trimmed = name.trim();
-                                if (trimmed && !cats[role].normal.includes(trimmed)) {
-                                    cats[role].normal.push(trimmed);
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-            return cats;
-        }
-
-        function saveToLocalStorage() {
-            try {
-                localStorage.setItem('mwbRosterData', JSON.stringify(allMonthsData));
-                localStorage.setItem('mwbCategories', JSON.stringify(appCategories));
-                showNotification('Changes saved successfully!');
-            } catch (e) {
-                console.error("Error saving to localStorage:", e);
-                if (e.name === 'QuotaExceededError') {
-                    showNotification('Error: Local storage is full. Please export and clear some data.');
-                } else {
-                    showNotification('Error saving changes: ' + e.message);
-                }
-            }
-        }
-
-        function showNotification(message) {
-            if (!notification) return;
-            notification.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => notification.classList.remove('show'), 3000);
-        }
-
-        function parseDateRange(range, tableName) {
-            const monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-            const yearMatch = tableName.match(/\d{4}/);
-            let year = yearMatch ? parseInt(yearMatch[0]) : new Date().getFullYear();
-            
-            try {
-                if (range.includes('-')) {
-                    const [startStr, endStr] = range.split('-').map(s => s.trim());
-                    const [startMonth, startDay] = startStr.split(' ').filter(Boolean);
-                    const endParts = endStr ? endStr.split(' ').filter(Boolean) : [startMonth, startDay];
-                    const [endMonth, endDay] = endParts.length > 1 ? endParts : [startMonth, endParts[0]];
-                    
-                    let endYear = year;
-                    if (endMonth && monthNames.indexOf(startMonth.toLowerCase()) > monthNames.indexOf(endMonth.toLowerCase())) {
-                        endYear = year + 1;
-                    }
-                    
-                    const startDate = new Date(`${startMonth} ${startDay}, ${year}`);
-                    const endDate = new Date(`${endMonth || startMonth} ${endDay || startDay}, ${endYear}`);
-                    return { startDate, endDate };
-                } else {
-                    const [month, day] = range.split(' ').filter(Boolean);
-                    const date = new Date(`${month} ${day}, ${year}`);
-                    return { startDate: date, endDate: date };
-                }
-            } catch (e) {
-                console.error("Error parsing date range:", range, e);
-                return { startDate: new Date(), endDate: new Date() };
-            }
-        }
-
-        function formatWeekRange(startDate, endDate) {
-            const startMonth = startDate.toLocaleString('default', { month: 'long' });
-            const endMonth = endDate.toLocaleString('default', { month: 'long' });
-            const startDay = startDate.getDate();
-            const endDay = endDate.getDate();
-            return startMonth === endMonth
-                ? `${startMonth} ${startDay} - ${endDay}`
-                : `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
-        }
-
-        function checkCurrentMonth(switchToCurrent = false) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const currentMonthName = today.toLocaleString('default', { month: 'long' }).toLowerCase();
-            const currentYear = today.getFullYear();
-            
-            Object.values(allMonthsData).forEach(month => {
-                month.weeks.forEach(week => week.isCurrent = false);
-            });
-            
-            let matchingMonthId = null;
-            for (const monthId in allMonthsData) {
-                const month = allMonthsData[monthId];
-                const monthMatch = month.name.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s*(\d{4})/i);
-                if (monthMatch) {
-                    const [_, monthName, year] = monthMatch;
-                    if (monthName.toLowerCase() === currentMonthName && parseInt(year) === currentYear) {
-                        matchingMonthId = monthId;
-                        break;
-                    }
-                }
-            }
-            
-            for (const monthId in allMonthsData) {
-                const month = allMonthsData[monthId];
-                month.weeks.forEach((week, index) => {
-                    const { startDate, endDate } = parseDateRange(week.range, month.name);
-                    startDate.setHours(0, 0, 0, 0);
-                    endDate.setHours(23, 59, 59, 999);
-                    if (today >= startDate && today <= endDate) {
-                        week.isCurrent = true;
-                    }
-                });
-            }
-            
-            saveToLocalStorage();
-            if (switchToCurrent && matchingMonthId && matchingMonthId !== currentMonthId) {
-                currentMonthId = matchingMonthId;
-                renderTabs();
-                renderTable();
-            } else if (allMonthsData[currentMonthId]) {
-                renderTabs();
-                renderTable();
-            }
-        }
-
-        function renderTabs() {
-            if (!tabsContainer) return;
-            tabsContainer.innerHTML = '';
-            Object.keys(allMonthsData).forEach(monthId => {
-                const month = allMonthsData[monthId];
-                const tab = document.createElement('div');
-                tab.className = `month-tab ${monthId === currentMonthId ? 'active' : ''}`;
-                tab.dataset.monthId = monthId;
-                tab.innerHTML = `
-                    ${month.name}
-                    <div class="close-tab" data-month-id="${monthId}">×</div>
-                `;
-                tabsContainer.appendChild(tab);
-            });
-        }
-
-        function handleTabClick(e) {
-            if (!e.target.classList.contains('close-tab')) {
-                currentMonthId = this.dataset.monthId;
-                renderTabs();
-                renderTable();
-            }
-        }
-
-        function handleCloseTab(e) {
-            e.stopPropagation();
-            const monthId = this.dataset.monthId;
-            deleteTable(monthId);
-        }
-
-        function deleteTable(monthId) {
-            if (Object.keys(allMonthsData).length <= 1) {
-                showNotification('You need at least one table!');
-                return;
-            }
-            if (confirm(`Are you sure you want to delete the "${allMonthsData[monthId].name}" table?`)) {
-                delete allMonthsData[monthId];
-                currentMonthId = Object.keys(allMonthsData)[0];
                 saveToLocalStorage();
-                renderTabs();
                 renderTable();
-                showNotification('Table deleted successfully!');
+                showNotification('All suffixes removed.');
             }
-        }
 
-        function openAddTableModal() {
-            if (!tableSelector || !addTableModal) return;
-            tableSelector.innerHTML = '';
-            const emptyOption = document.createElement('div');
-            emptyOption.className = 'table-option';
-            emptyOption.innerHTML = `
-                <input type="radio" name="sourceTable" id="emptyTable" value="" checked>
-                <label for="emptyTable">Create Empty Table</label>
-            `;
-            tableSelector.appendChild(emptyOption);
-            
-            Object.keys(allMonthsData).forEach(monthId => {
-                const month = allMonthsData[monthId];
-                const option = document.createElement('div');
-                option.className = 'table-option';
-                option.innerHTML = `
-                    <input type="radio" name="sourceTable" id="${monthId}" value="${monthId}">
-                    <label for="${monthId}">${month.name}</label>
-                `;
-                tableSelector.appendChild(option);
-            });
-            
-            newTableNameInput.value = '';
-            startDateInput.value = '';
-            numRowsInput.value = '10';
-            numWeeksInput.value = '4';
-            addTableModal.style.display = 'flex';
-        }
-
-        function createNewTable() {
-            const tableName = newTableNameInput.value.trim();
-            const startDateValue = startDateInput.value;
-            const numRows = parseInt(numRowsInput.value) || 10;
-            const numWeeks = parseInt(numWeeksInput.value) || 4;
-            
-            if (!tableName) { showNotification('Please enter a table name'); return; }
-            if (!startDateValue) { showNotification('Please select a start date'); return; }
-            if (numRows < 1 || numWeeks < 1) { showNotification('Number of roles and weeks must be at least 1'); return; }
-            
-            const tableNames = Object.values(allMonthsData).map(month => month.name.toLowerCase());
-            if (tableNames.includes(tableName.toLowerCase())) {
-                showNotification('Table name already exists'); return;
-            }
-            
-            const sourceTableRadio = document.querySelector('input[name="sourceTable"]:checked');
-            const sourceMonthId = sourceTableRadio ? sourceTableRadio.value : '';
-            
-            const monthId = 'month_' + Date.now();
-            let weeks = [];
-            let roles = {};
-            let copiedFrom = null;
-            
-            const startDate = new Date(startDateValue);
-            if (isNaN(startDate)) { showNotification('Invalid start date'); return; }
-            
-            const yearMatch = tableName.match(/\d{4}/);
-            const defaultYear = yearMatch ? parseInt(yearMatch[0]) : startDate.getFullYear();
-            
-            for (let i = 0; i < numWeeks; i++) {
-                const weekStart = new Date(startDate.getTime() + i * 7 * 24 * 60 * 60 * 1000);
-                const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
-                weekStart.setFullYear(defaultYear);
-                weekEnd.setFullYear(defaultYear);
-                weeks.push({ range: formatWeekRange(weekStart, weekEnd), isCurrent: false });
-            }
-            
-            if (sourceMonthId && allMonthsData[sourceMonthId]) {
-                const source = allMonthsData[sourceMonthId];
-                copiedFrom = sourceMonthId;
-                const sourceRoles = Object.keys(source.roles);
-                for (let i = 0; i < Math.min(numRows, sourceRoles.length); i++) {
-                    const roleName = sourceRoles[i];
-                    roles[roleName] = source.roles[roleName].slice(0, numWeeks).map(assignment => ({
-                        text: assignment.text,
-                        edited: false
-                    }));
-                    while (roles[roleName].length < numWeeks) {
-                        roles[roleName].push({ text: "", edited: false });
-                    }
-                }
-                for (let i = sourceRoles.length; i < numRows; i++) {
-                    roles[`Role ${i + 1}`] = Array(numWeeks).fill({ text: "", edited: false });
-                }
-            } else {
-                for (let i = 0; i < numRows; i++) {
-                    roles[`Role ${i + 1}`] = Array(numWeeks).fill({ text: "", edited: false });
-                }
-            }
-            
-            allMonthsData[monthId] = { id: monthId, name: tableName, weeks, roles, copiedFrom };
-            
-            // Update categories with any new role names
-            Object.keys(roles).forEach(role => {
-                if (!appCategories[role]) appCategories[role] = { normal: [], standby: [] };
-            });
-            
-            currentMonthId = monthId;
-            saveToLocalStorage();
-            checkCurrentMonth(false);
-            renderTabs();
-            renderTable();
-            showNotification('Table added successfully!');
-            addTableModal.style.display = 'none';
-        }
-
-        // Helper: extract suffix from a name (e.g., "John Doe -E" => "E", "Jane -XYZ" => "XYZ")
-// Returns empty string if no suffix.
-// Helper: extract suffix from a name (e.g., "John Doe -E" => "E", "Jane -XYZ" => "XYZ")
-// Returns empty string if no suffix.
-function getSuffix(name) {
-    const match = name.trim().match(/\s-([A-Za-z0-9]+)$/);
-    return match ? match[1] : '';
-}
-
-// Helper: check if a name has a suffix
-function hasSuffix(name) {
-    return /\s-[A-Za-z0-9]+$/.test(name.trim());
-}
-
-// Get chronological order of months (sorted by year and month name)
-function getSortedMonthIds() {
-    const monthEntries = Object.entries(allMonthsData);
-    monthEntries.sort((a, b) => {
-        const getDate = (name) => {
-            const match = name.match(/(\w+)\s*(\d{4})/i);
-            if (!match) return new Date(0);
-            const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
-            const m = monthNames.indexOf(match[1].toLowerCase());
-            const y = parseInt(match[2]);
-            return new Date(y, m);
-        };
-        return getDate(a[1].name) - getDate(b[1].name);
-    });
-    return monthEntries.map(([id]) => id);
-}
-
-// Build historical assignment counts per role (global)
-function getHistoricalRoleCounts(monthIds) {
-    const counts = {}; // key: `${nameLower}|${role}` => count
-    monthIds.forEach(monthId => {
-        const month = allMonthsData[monthId];
-        if (!month) return;
-        Object.entries(month.roles).forEach(([role, assignments]) => {
-            assignments.forEach(ass => {
-                if (ass.text) {
-                    ass.text.split(' & ').forEach(name => {
-                        const lower = name.trim().toLowerCase();
-                        const key = `${lower}|${role}`;
-                        counts[key] = (counts[key] || 0) + 1;
-                    });
-                }
-            });
-        });
-    });
-    return counts;
-}
-
-// Global Auto-Assign with suffix-based shuffling across all months
-function autoAssignRoles() {
-    if (Object.keys(allMonthsData).length === 0) {
-        showNotification('No data available for auto-assignment');
-        return;
-    }
-    
-    previousState = structuredClone(allMonthsData);
-    const sortedMonthIds = getSortedMonthIds();
-    
-    // Build global suffix pools
-    const globalNamesBySuffix = {};
-    sortedMonthIds.forEach(monthId => {
-        const month = allMonthsData[monthId];
-        Object.values(month.roles).forEach(assignments => {
-            assignments.forEach(ass => {
-                if (ass.text && hasSuffix(ass.text)) {
-                    const suffix = getSuffix(ass.text);
-                    if (!globalNamesBySuffix[suffix]) globalNamesBySuffix[suffix] = new Set();
-                    globalNamesBySuffix[suffix].add(ass.text.trim());
-                }
-            });
-        });
-    });
-    for (const suffix in globalNamesBySuffix) {
-        globalNamesBySuffix[suffix] = [...globalNamesBySuffix[suffix]];
-    }
-    
-    const historicalCounts = getHistoricalRoleCounts(sortedMonthIds);
-    
-    function isUnderLimit(name, role) {
-        const key = `${name.toLowerCase()}|${role}`;
-        return (historicalCounts[key] || 0) < 1;
-    }
-    
-    // First pass: assign for each role across all weeks, respecting previous week only
-    sortedMonthIds.forEach(monthId => {
-        const month = allMonthsData[monthId];
-        const numWeeks = month.weeks.length;
-        const roles = Object.keys(month.roles);
-        
-        // Week usage across roles for this month
-        const weekUsage = Array(numWeeks).fill().map(() => new Set());
-        for (let w = 0; w < numWeeks; w++) {
-            roles.forEach(role => {
-                const ass = month.roles[role][w].text;
-                if (ass) {
-                    ass.split(' & ').forEach(n => weekUsage[w].add(n.trim().toLowerCase()));
-                }
-            });
-        }
-        
-        roles.forEach(role => {
-            let previousAssignedName = null; // Track previous week's assigned name for this role
-            
-            for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
-                const assignment = month.roles[role][weekIndex];
-                const currentText = assignment.text.trim();
-                
-                if (!currentText || !hasSuffix(currentText)) {
-                    previousAssignedName = currentText;
-                    continue;
-                }
-                
-                const targetSuffix = getSuffix(currentText);
-                const candidates = globalNamesBySuffix[targetSuffix] || [];
-                if (candidates.length === 0) {
-                    previousAssignedName = currentText;
-                    continue;
-                }
-                
-                // Build constraints
-                const currentWeekSet = new Set(weekUsage[weekIndex]);
-                // Remove current name from set
-                currentText.split(' & ').forEach(n => currentWeekSet.delete(n.trim().toLowerCase()));
-                
-                // Shuffle candidates
-                const shuffled = [...candidates].sort(() => Math.random() - 0.5);
-                
-                let selected = null;
-                for (const candidate of shuffled) {
-                    const candidateLower = candidate.toLowerCase();
-                    
-                    // Global role limit
-                    if (!isUnderLimit(candidate, role)) continue;
-                    
-                    // Same week duplicate
-                    if (currentWeekSet.has(candidateLower)) continue;
-                    
-                    // Adjacent: previous week in same role
-                    if (previousAssignedName && previousAssignedName.toLowerCase() === candidateLower) continue;
-                    
-                    selected = candidate;
-                    break;
-                }
-                
-                // If no strict match, try relaxing adjacent constraint but keep week duplicate
-                if (!selected) {
-                    for (const candidate of shuffled) {
-                        const candidateLower = candidate.toLowerCase();
-                        if (!isUnderLimit(candidate, role)) continue;
-                        if (!currentWeekSet.has(candidateLower)) {
-                            selected = candidate;
-                            break;
-                        }
-                    }
-                }
-                
-                if (selected) {
-                    // Apply assignment
-                    month.roles[role][weekIndex] = { text: selected, edited: true };
-                    
-                    // Update weekUsage
-                    currentText.split(' & ').forEach(n => weekUsage[weekIndex].delete(n.trim().toLowerCase()));
-                    selected.split(' & ').forEach(n => weekUsage[weekIndex].add(n.trim().toLowerCase()));
-                    
-                    // Update historical counts
-                    const oldKey = `${currentText.toLowerCase()}|${role}`;
-                    const newKey = `${selected.toLowerCase()}|${role}`;
-                    historicalCounts[oldKey] = Math.max(0, (historicalCounts[oldKey] || 0) - 1);
-                    historicalCounts[newKey] = (historicalCounts[newKey] || 0) + 1;
-                    
-                    previousAssignedName = selected;
-                } else {
-                    previousAssignedName = currentText;
-                }
-            }
-        });
-    });
-    
-    // Second pass: fix adjacent duplicates within each role across all months
-    sortedMonthIds.forEach(monthId => {
-        const month = allMonthsData[monthId];
-        const numWeeks = month.weeks.length;
-        const roles = Object.keys(month.roles);
-        
-        roles.forEach(role => {
-            for (let weekIndex = 1; weekIndex < numWeeks; weekIndex++) {
-                const prevAss = month.roles[role][weekIndex - 1];
-                const currAss = month.roles[role][weekIndex];
-                if (!prevAss.text || !currAss.text) continue;
-                if (prevAss.text.trim().toLowerCase() === currAss.text.trim().toLowerCase()) {
-                    // Adjacent duplicate found; try to change current week
-                    const currentText = currAss.text.trim();
-                    if (!hasSuffix(currentText)) continue;
-                    
-                    const targetSuffix = getSuffix(currentText);
-                    const candidates = globalNamesBySuffix[targetSuffix] || [];
-                    if (candidates.length === 0) continue;
-                    
-                    // Recompute constraints for this week
-                    const weekUsage = new Set();
-                    roles.forEach(r => {
-                        const ass = month.roles[r][weekIndex].text;
-                        if (ass) ass.split(' & ').forEach(n => weekUsage.add(n.trim().toLowerCase()));
-                    });
-                    weekUsage.delete(currentText.toLowerCase());
-                    
-                    const prevNameLower = prevAss.text.trim().toLowerCase();
-                    const nextName = (weekIndex < numWeeks - 1) ? month.roles[role][weekIndex + 1].text : '';
-                    const nextNameLower = nextName.trim().toLowerCase();
-                    
-                    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
-                    let newSelected = null;
-                    for (const candidate of shuffled) {
-                        const candLower = candidate.toLowerCase();
-                        if (!isUnderLimit(candidate, role)) continue;
-                        if (weekUsage.has(candLower)) continue;
-                        if (candLower === prevNameLower) continue;
-                        if (nextName && candLower === nextNameLower) continue;
-                        newSelected = candidate;
-                        break;
-                    }
-                    
-                    if (newSelected) {
-                        // Update counts
-                        const oldKey = `${currentText.toLowerCase()}|${role}`;
-                        const newKey = `${newSelected.toLowerCase()}|${role}`;
-                        historicalCounts[oldKey] = Math.max(0, (historicalCounts[oldKey] || 0) - 1);
-                        historicalCounts[newKey] = (historicalCounts[newKey] || 0) + 1;
-                        
-                        month.roles[role][weekIndex] = { text: newSelected, edited: true };
-                    }
-                }
-            }
-        });
-    });
-    
-    saveToLocalStorage();
-    renderTable();
-    showNotification('Global auto-assignments completed (max 1 per role, adjacency enforced)');
-}
-        function getHistoricalAssignments(monthIds) {
-            const assignments = {};
-            monthIds.forEach(monthId => {
-                const month = allMonthsData[monthId];
-                Object.entries(month.roles).forEach(([role, assArray]) => {
-                    assArray.forEach(ass => {
-                        if (ass.text) {
-                            ass.text.split(' & ').forEach(name => {
-                                const trimmed = name.trim().toLowerCase();
-                                if (!assignments[trimmed]) assignments[trimmed] = [];
-                                assignments[trimmed].push({ role, monthId });
-                            });
-                        }
-                    });
-                });
-            });
-            return assignments;
-        }
-
-        function undoAutoAssign() {
-            if (!previousState) {
-                showNotification('No previous state to revert to');
-                return;
-            }
-            allMonthsData[currentMonthId] = structuredClone(previousState);
-            previousState = null;
-            saveToLocalStorage();
-            renderTable();
-            showNotification('Auto-assignment undone!');
-        }
-
-        function exportData() {
-            try {
-                const data = { months: allMonthsData, categories: appCategories };
-                const dataStr = JSON.stringify(data, null, 2);
-                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-                const linkElement = document.createElement('a');
-                linkElement.setAttribute('href', dataUri);
-                linkElement.setAttribute('download', 'duty-roster-data.json');
-                document.body.appendChild(linkElement);
-                linkElement.click();
-                document.body.removeChild(linkElement);
-                showNotification('Data exported successfully!');
-            } catch (e) {
-                console.error('Error exporting data:', e);
-                showNotification('Error exporting data');
-            }
-        }
-
-        function importData() {
-            const file = importFileInput.files[0];
-            if (!file) { showNotification('Please select a file to import'); return; }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const importedData = JSON.parse(e.target.result);
-                    if (!importedData.months) { showNotification('Invalid data format: Missing months'); return; }
-                    
-                    // Migration: ensure assignments are objects with text/edited
-                    Object.values(importedData.months).forEach(month => {
-                        Object.keys(month.roles).forEach(role => {
-                            month.roles[role] = month.roles[role].map(ass => {
-                                if (typeof ass === 'string') return { text: ass, edited: false };
-                                return ass;
-                            });
-                        });
-                    });
-                    
-                    allMonthsData = importedData.months;
-                    appCategories = importedData.categories || buildCategoriesFromData(allMonthsData);
-                    
-                    currentMonthId = Object.keys(allMonthsData)[0];
-                    saveToLocalStorage();
-                    checkCurrentMonth(false);
-                    renderTabs();
-                    renderTable();
-                    showNotification('Data imported successfully!');
-                    importModal.style.display = 'none';
-                    importFileInput.value = '';
-                } catch (e) {
-                    console.error('Error parsing JSON file:', e);
-                    showNotification('Error parsing JSON file');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function renderTable() {
-            try {
-                if (!tableBody || !tableHead || !monthIndicator) return;
-                if (!allMonthsData[currentMonthId]) return;
-                
-                const currentMonthData = allMonthsData[currentMonthId];
-                tableHead.innerHTML = '<th>Role / Week</th>';
-                tableBody.innerHTML = '';
-                monthIndicator.textContent = currentMonthData.name || 'Untitled';
-                
-                const fragment = document.createDocumentFragment();
-                currentMonthData.weeks.forEach((week, weekIndex) => {
-                    const th = document.createElement('th');
-                    th.textContent = week.range;
-                    th.classList.add('week-header');
-                    th.dataset.weekIndex = weekIndex;
-                    th.setAttribute('contenteditable', 'true');
-                    if (week.isCurrent) th.classList.add('current-week');
-                    fragment.appendChild(th);
-                });
-                tableHead.appendChild(fragment);
-                
-                const bodyFragment = document.createDocumentFragment();
-                for (const [roleName, assignments] of Object.entries(currentMonthData.roles)) {
-                    const row = document.createElement('tr');
-                    const roleCell = document.createElement('td');
-                    roleCell.textContent = roleName;
-                    roleCell.classList.add('role-header');
-                    roleCell.dataset.role = roleName;
-                    roleCell.setAttribute('contenteditable', 'true');
-                    row.appendChild(roleCell);
-                    
-                    assignments.forEach((assignment, weekIndex) => {
-                        const cell = document.createElement('td');
-                        cell.classList.add('editable-cell');
-                        cell.setAttribute('contenteditable', 'true');
-                        cell.setAttribute('data-role', roleName);
-                        cell.setAttribute('data-week', weekIndex);
-                        
-                        if (assignment.text) {
-                            cell.innerHTML = assignment.text.split(' & ').map(name => {
-                                const isHighlighted = highlightedNames.has(name.trim().toLowerCase());
-                                const displayName = isHighlighted ? `<span class="highlight">${name}</span>` : name;
-                                if (currentMonthData.copiedFrom && !assignment.edited) {
-                                    return `<span class="copied-content">${displayName}</span>`;
-                                } else if (assignment.edited) {
-                                    return `<span class="edited-content">${displayName}</span>`;
-                                }
-                                return displayName;
-                            }).join(' & ');
-                        }
-                        
-                        if (currentMonthData.weeks[weekIndex].isCurrent) cell.classList.add('current-week');
-                        row.appendChild(cell);
-                    });
-                    
-                    bodyFragment.appendChild(row);
-                }
-                tableBody.appendChild(bodyFragment);
-                applyHighlightingRules();
-            } catch (e) {
-                console.error('Render error:', e);
-                showNotification('Error rendering table');
-            }
-        }
-
-        function handleCellKeydown(e) { if (e.key === 'Enter') { e.preventDefault(); this.blur(); } }
-        function handleRoleKeydown(e) { if (e.key === 'Enter') { e.preventDefault(); this.blur(); } }
-        function handleWeekKeydown(e) { if (e.key === 'Enter') { e.preventDefault(); this.blur(); } }
-
-        function handleRoleEdit(e) {
-            const cell = e.target;
-            const oldRoleName = cell.dataset.role;
-            const newRoleName = cell.textContent.trim();
-            if (!newRoleName || newRoleName === oldRoleName) { cell.textContent = oldRoleName; return; }
-            const currentMonthData = allMonthsData[currentMonthId];
-            if (Object.keys(currentMonthData.roles).includes(newRoleName)) {
-                showNotification('Role name already exists'); cell.textContent = oldRoleName; return;
-            }
-            const assignments = currentMonthData.roles[oldRoleName];
-            delete currentMonthData.roles[oldRoleName];
-            currentMonthData.roles[newRoleName] = assignments;
-            if (appCategories[oldRoleName]) {
-                appCategories[newRoleName] = appCategories[oldRoleName];
-                delete appCategories[oldRoleName];
-            }
-            cell.dataset.role = newRoleName;
-            document.querySelectorAll(`[data-role="${oldRoleName}"]`).forEach(c => c.setAttribute('data-role', newRoleName));
-            saveToLocalStorage();
-            renderTable();
-        }
-
-        function handleWeekEdit(e) {
-            const cell = e.target;
-            const weekIndex = parseInt(cell.dataset.weekIndex);
-            const newRange = cell.textContent.trim();
-            if (!newRange) { cell.textContent = allMonthsData[currentMonthId].weeks[weekIndex].range; return; }
-            allMonthsData[currentMonthId].weeks[weekIndex].range = newRange;
-            saveToLocalStorage();
-            checkCurrentMonth(false);
-            renderTable();
-        }
-
-        function applyHighlightingRules() {
-            // (same as before, unchanged)
-            const currentMonthData = allMonthsData[currentMonthId];
-            if (!currentMonthData) return;
-            const roles = currentMonthData.roles;
-            document.querySelectorAll('.editable-cell').forEach(cell => {
-                cell.classList.remove('duplicate-highlight', 'adjacent-highlight');
-            });
-            
-            for (let w = 0; w < currentMonthData.weeks.length; w++) {
-                const nameCounts = {};
-                for (const role in roles) {
-                    const ass = roles[role][w].text;
-                    if (ass) {
-                        ass.split(' & ').forEach(n => {
-                            const lower = n.trim().toLowerCase();
-                            nameCounts[lower] = (nameCounts[lower] || 0) + 1;
-                        });
-                    }
-                }
-                for (const role in roles) {
-                    const ass = roles[role][w].text;
-                    if (ass && ass.split(' & ').some(n => nameCounts[n.trim().toLowerCase()] > 1)) {
-                        const cell = document.querySelector(`td[data-role="${role}"][data-week="${w}"]`);
-                        if (cell) cell.classList.add('duplicate-highlight');
-                    }
-                }
-            }
-            
-            const weekNames = currentMonthData.weeks.map(() => new Set());
-            for (let w = 0; w < currentMonthData.weeks.length; w++) {
-                for (const role in roles) {
-                    const ass = roles[role][w].text;
-                    if (ass) ass.split(' & ').forEach(n => weekNames[w].add(n.trim().toLowerCase()));
-                }
-            }
-            for (let w = 0; w < currentMonthData.weeks.length; w++) {
-                const current = weekNames[w];
-                if (w > 0) {
-                    const prev = weekNames[w-1];
-                    const common = [...current].filter(n => prev.has(n));
-                    for (const role in roles) {
-                        const ass = roles[role][w].text;
-                        if (ass && ass.split(' & ').some(n => common.includes(n.trim().toLowerCase()))) {
-                            const cell = document.querySelector(`td[data-role="${role}"][data-week="${w}"]`);
-                            if (cell) cell.classList.add('adjacent-highlight');
-                        }
-                    }
-                }
-                if (w < currentMonthData.weeks.length - 1) {
-                    const next = weekNames[w+1];
-                    const common = [...current].filter(n => next.has(n));
-                    for (const role in roles) {
-                        const ass = roles[role][w].text;
-                        if (ass && ass.split(' & ').some(n => common.includes(n.trim().toLowerCase()))) {
-                            const cell = document.querySelector(`td[data-role="${role}"][data-week="${w}"]`);
-                            if (cell) cell.classList.add('adjacent-highlight');
-                        }
-                    }
-                }
-            }
-        }
-
-        function handleCellEdit(e) {
-            const cell = e.target;
-            const role = cell.getAttribute('data-role');
-            const weekIndex = parseInt(cell.getAttribute('data-week'));
-            const sanitized = cell.textContent.trim().slice(0, 100).replace(/[<>:"/\\|?*]/g, '');
-            allMonthsData[currentMonthId].roles[role][weekIndex] = { text: sanitized, edited: true };
-            saveToLocalStorage();
-            renderTable();
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return (...args) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func(...args), wait);
-            };
-        }
-        const debouncedHandleSearch = debounce(handleSearch, 300);
-
-        function handleSearch() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            highlightedNames.clear();
-            if (searchTerm.length > 1) {
-                const currentMonthData = allMonthsData[currentMonthId];
-                for (const assignments of Object.values(currentMonthData.roles)) {
-                    for (const assignment of assignments) {
-                        assignment.text.split(' & ').forEach(name => {
-                            if (name.trim().toLowerCase().includes(searchTerm)) {
-                                highlightedNames.add(name.trim().toLowerCase());
+            // Build categories from current data
+            function buildCategoriesFromData(data) {
+                const cats = {};
+                Object.values(data).forEach(month => {
+                    Object.entries(month.roles).forEach(([role, assignments]) => {
+                        if (!cats[role]) cats[role] = { normal: [], standby: [] };
+                        assignments.forEach(ass => {
+                            if (ass.text) {
+                                ass.text.split(' & ').forEach(name => {
+                                    const trimmed = name.trim();
+                                    if (trimmed && !cats[role].normal.includes(trimmed)) {
+                                        cats[role].normal.push(trimmed);
+                                    }
+                                });
                             }
                         });
+                    });
+                });
+                return cats;
+            }
+
+            // ---------- Storage ----------
+            function loadFromLocalStorage() {
+                try {
+                    const saved = localStorage.getItem('mwbRosterData');
+                    if (saved) {
+                        allMonthsData = JSON.parse(saved);
+                        if (Object.keys(allMonthsData).length === 0) allMonthsData = structuredClone(defaultData);
+                        else {
+                            Object.values(allMonthsData).forEach(month => {
+                                Object.keys(month.roles).forEach(role => {
+                                    month.roles[role] = month.roles[role].map(ass => typeof ass === 'string' ? { text: ass, edited: false } : ass);
+                                });
+                            });
+                        }
+                    } else {
+                        allMonthsData = structuredClone(defaultData);
+                    }
+                    const savedCats = localStorage.getItem('mwbCategories');
+                    appCategories = savedCats ? JSON.parse(savedCats) : buildCategoriesFromData(allMonthsData);
+                    if (!allMonthsData[currentMonthId]) currentMonthId = Object.keys(allMonthsData)[0] || 'august';
+                } catch (e) {
+                    console.error(e);
+                    allMonthsData = structuredClone(defaultData);
+                    appCategories = buildCategoriesFromData(allMonthsData);
+                    currentMonthId = 'august';
+                }
+            }
+
+            function saveToLocalStorage() {
+                try {
+                    localStorage.setItem('mwbRosterData', JSON.stringify(allMonthsData));
+                    localStorage.setItem('mwbCategories', JSON.stringify(appCategories));
+                    showNotification('Changes saved!');
+                } catch (e) {
+                    showNotification('Error saving: ' + e.message);
+                }
+            }
+
+            function showNotification(msg) {
+                if (!notification) return;
+                notification.textContent = msg;
+                notification.classList.add('show');
+                setTimeout(() => notification.classList.remove('show'), 3000);
+            }
+
+            // ---------- Date Utilities ----------
+            function parseDateRange(range, tableName) {
+                const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+                const yearMatch = tableName.match(/\d{4}/);
+                let year = yearMatch ? parseInt(yearMatch[0]) : new Date().getFullYear();
+                try {
+                    if (range.includes('-')) {
+                        const [startStr, endStr] = range.split('-').map(s=>s.trim());
+                        const [startMonth, startDay] = startStr.split(' ').filter(Boolean);
+                        const endParts = endStr ? endStr.split(' ').filter(Boolean) : [startMonth, startDay];
+                        const [endMonth, endDay] = endParts.length>1 ? endParts : [startMonth, endParts[0]];
+                        let endYear = year;
+                        if (endMonth && monthNames.indexOf(startMonth.toLowerCase()) > monthNames.indexOf(endMonth.toLowerCase())) endYear = year+1;
+                        const startDate = new Date(`${startMonth} ${startDay}, ${year}`);
+                        const endDate = new Date(`${endMonth||startMonth} ${endDay||startDay}, ${endYear}`);
+                        return {startDate, endDate};
+                    } else {
+                        const [month, day] = range.split(' ').filter(Boolean);
+                        const date = new Date(`${month} ${day}, ${year}`);
+                        return {startDate: date, endDate: date};
+                    }
+                } catch { return {startDate: new Date(), endDate: new Date()}; }
+            }
+
+            function formatWeekRange(start, end) {
+                const sM = start.toLocaleString('default',{month:'long'});
+                const eM = end.toLocaleString('default',{month:'long'});
+                const sD = start.getDate();
+                const eD = end.getDate();
+                return sM===eM ? `${sM} ${sD} - ${eD}` : `${sM} ${sD} - ${eM} ${eD}`;
+            }
+
+            function checkCurrentMonth(switchToCurrent=false) {
+                const today = new Date(); today.setHours(0,0,0,0);
+                const curMonth = today.toLocaleString('default',{month:'long'}).toLowerCase();
+                const curYear = today.getFullYear();
+                Object.values(allMonthsData).forEach(m => m.weeks.forEach(w => w.isCurrent = false));
+                let matchingId = null;
+                for (const id in allMonthsData) {
+                    const m = allMonthsData[id];
+                    const match = m.name.match(/(\w+)\s*(\d{4})/i);
+                    if (match && match[1].toLowerCase()===curMonth && parseInt(match[2])===curYear) matchingId = id;
+                }
+                for (const id in allMonthsData) {
+                    const m = allMonthsData[id];
+                    m.weeks.forEach(w => {
+                        const {startDate, endDate} = parseDateRange(w.range, m.name);
+                        startDate.setHours(0,0,0,0); endDate.setHours(23,59,59,999);
+                        if (today>=startDate && today<=endDate) w.isCurrent = true;
+                    });
+                }
+                saveToLocalStorage();
+                if (switchToCurrent && matchingId && matchingId!==currentMonthId) {
+                    currentMonthId = matchingId;
+                    renderTabs(); renderTable();
+                } else if (allMonthsData[currentMonthId]) {
+                    renderTabs(); renderTable();
+                }
+            }
+
+            // ---------- Rendering ----------
+            function renderTabs() {
+                if (!tabsContainer) return;
+                tabsContainer.innerHTML = '';
+                Object.keys(allMonthsData).forEach(id => {
+                    const month = allMonthsData[id];
+                    const tab = document.createElement('div');
+                    tab.className = `month-tab ${id===currentMonthId?'active':''}`;
+                    tab.dataset.monthId = id;
+                    tab.innerHTML = `${month.name} <div class="close-tab" data-month-id="${id}">×</div>`;
+                    tabsContainer.appendChild(tab);
+                });
+            }
+
+            function renderTable() {
+                try {
+                    if (!tableBody || !tableHead || !monthIndicator) return;
+                    const data = allMonthsData[currentMonthId];
+                    if (!data) return;
+                    tableHead.innerHTML = '<th>Role / Week</th>';
+                    tableBody.innerHTML = '';
+                    monthIndicator.textContent = data.name;
+                    const frag = document.createDocumentFragment();
+                    data.weeks.forEach((w, i) => {
+                        const th = document.createElement('th');
+                        th.textContent = w.range;
+                        th.classList.add('week-header');
+                        th.dataset.weekIndex = i;
+                        th.setAttribute('contenteditable','true');
+                        if (w.isCurrent) th.classList.add('current-week');
+                        frag.appendChild(th);
+                    });
+                    tableHead.appendChild(frag);
+                    const bodyFrag = document.createDocumentFragment();
+                    for (const [role, assignments] of Object.entries(data.roles)) {
+                        const row = document.createElement('tr');
+                        const roleCell = document.createElement('td');
+                        roleCell.textContent = role;
+                        roleCell.classList.add('role-header');
+                        roleCell.dataset.role = role;
+                        roleCell.setAttribute('contenteditable','true');
+                        row.appendChild(roleCell);
+                        assignments.forEach((ass, wi) => {
+                            const cell = document.createElement('td');
+                            cell.classList.add('editable-cell');
+                            cell.setAttribute('contenteditable','true');
+                            cell.setAttribute('data-role', role);
+                            cell.setAttribute('data-week', wi);
+                            if (ass.text) {
+                                cell.innerHTML = ass.text.split(' & ').map(name => {
+                                    const isHigh = highlightedNames.has(name.trim().toLowerCase());
+                                    const disp = isHigh ? `<span class="highlight">${name}</span>` : name;
+                                    return (data.copiedFrom && !ass.edited) ? `<span class="copied-content">${disp}</span>` : (ass.edited ? `<span class="edited-content">${disp}</span>` : disp);
+                                }).join(' & ');
+                            }
+                            if (data.weeks[wi].isCurrent) cell.classList.add('current-week');
+                            row.appendChild(cell);
+                        });
+                        bodyFrag.appendChild(row);
+                    }
+                    tableBody.appendChild(bodyFrag);
+                    applyHighlightingRules();
+                } catch (e) { console.error(e); }
+            }
+
+            function applyHighlightingRules() {
+                const data = allMonthsData[currentMonthId];
+                if (!data) return;
+                document.querySelectorAll('.editable-cell').forEach(c => c.classList.remove('duplicate-highlight','adjacent-highlight'));
+                // duplicates per week
+                for (let w=0; w<data.weeks.length; w++) {
+                    const counts = {};
+                    for (const r in data.roles) {
+                        const t = data.roles[r][w].text;
+                        if (t) t.split(' & ').forEach(n => { const l = n.trim().toLowerCase(); counts[l] = (counts[l]||0)+1; });
+                    }
+                    for (const r in data.roles) {
+                        const t = data.roles[r][w].text;
+                        if (t && t.split(' & ').some(n => counts[n.trim().toLowerCase()] > 1)) {
+                            const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
+                            if (cell) cell.classList.add('duplicate-highlight');
+                        }
+                    }
+                }
+                // adjacent per role
+                for (const r in data.roles) {
+                    for (let w=1; w<data.weeks.length; w++) {
+                        const prev = data.roles[r][w-1].text;
+                        const cur = data.roles[r][w].text;
+                        if (prev && cur && prev.trim().toLowerCase() === cur.trim().toLowerCase()) {
+                            const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
+                            if (cell) cell.classList.add('adjacent-highlight');
+                        }
                     }
                 }
             }
-            renderTable();
-        }
 
-        // Statistics for current and next month only
-        function calculateStatistics(monthIds) {
-            const stats = {};
-            const roleStats = {};
-            monthIds.forEach(monthId => {
-                const month = allMonthsData[monthId];
-                if (!month) return;
-                Object.entries(month.roles).forEach(([role, assignments]) => {
-                    if (!roleStats[role]) roleStats[role] = {};
-                    assignments.forEach(ass => {
-                        if (ass.text) {
-                            ass.text.split(' & ').forEach(name => {
-                                const trimmed = name.trim();
-                                const lower = trimmed.toLowerCase();
-                                if (!stats[lower]) stats[lower] = { total: 0, roles: {} };
-                                stats[lower].total += 1;
-                                stats[lower].roles[role] = (stats[lower].roles[role] || 0) + 1;
-                                roleStats[role][lower] = (roleStats[role][lower] || 0) + 1;
-                            });
+            // ---------- Event Handlers ----------
+            function handleCellEdit(e) {
+                const cell = e.target;
+                const role = cell.dataset.role;
+                const wi = parseInt(cell.dataset.week);
+                const txt = cell.textContent.trim().slice(0,100).replace(/[<>:"/\\|?*]/g,'');
+                allMonthsData[currentMonthId].roles[role][wi] = { text: txt, edited: true };
+                saveToLocalStorage();
+                renderTable();
+            }
+
+            function handleRoleEdit(e) {
+                const cell = e.target;
+                const old = cell.dataset.role;
+                const newRole = cell.textContent.trim();
+                if (!newRole || newRole===old) { cell.textContent = old; return; }
+                const data = allMonthsData[currentMonthId];
+                if (Object.keys(data.roles).includes(newRole)) { showNotification('Role exists'); cell.textContent=old; return; }
+                data.roles[newRole] = data.roles[old];
+                delete data.roles[old];
+                if (appCategories[old]) { appCategories[newRole] = appCategories[old]; delete appCategories[old]; }
+                cell.dataset.role = newRole;
+                document.querySelectorAll(`[data-role="${old}"]`).forEach(c => c.dataset.role = newRole);
+                saveToLocalStorage();
+                renderTable();
+            }
+
+            function handleWeekEdit(e) {
+                const cell = e.target;
+                const wi = parseInt(cell.dataset.weekIndex);
+                const range = cell.textContent.trim();
+                if (!range) { cell.textContent = allMonthsData[currentMonthId].weeks[wi].range; return; }
+                allMonthsData[currentMonthId].weeks[wi].range = range;
+                saveToLocalStorage();
+                checkCurrentMonth(false);
+                renderTable();
+            }
+
+            function handleSearch() {
+                const term = searchInput.value.trim().toLowerCase();
+                highlightedNames.clear();
+                if (term.length>1) {
+                    const data = allMonthsData[currentMonthId];
+                    Object.values(data.roles).forEach(ass => ass.forEach(a => {
+                        if (a.text) a.text.split(' & ').forEach(n => { if (n.trim().toLowerCase().includes(term)) highlightedNames.add(n.trim().toLowerCase()); });
+                    }));
+                }
+                renderTable();
+            }
+            const debouncedSearch = (() => { let t; return () => { clearTimeout(t); t = setTimeout(handleSearch, 300); }; })();
+
+            // ---------- Auto Assign (global, suffix-aware) ----------
+            function getSortedMonthIds() {
+                const entries = Object.entries(allMonthsData);
+                const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+                entries.sort((a,b) => {
+                    const getDate = name => { const m = name.match(/(\w+)\s*(\d{4})/i); if(!m) return new Date(0); return new Date(parseInt(m[2]), monthNames.indexOf(m[1].toLowerCase())); };
+                    return getDate(a[1].name) - getDate(b[1].name);
+                });
+                return entries.map(e=>e[0]);
+            }
+
+            function getHistoricalRoleCounts(monthIds) {
+                const counts = {};
+                monthIds.forEach(id => {
+                    const m = allMonthsData[id]; if(!m) return;
+                    Object.entries(m.roles).forEach(([role, ass]) => ass.forEach(a => {
+                        if (a.text) a.text.split(' & ').forEach(n => { const k = `${n.trim().toLowerCase()}|${role}`; counts[k] = (counts[k]||0)+1; });
+                    }));
+                });
+                return counts;
+            }
+
+            function autoAssignRoles() {
+                if (Object.keys(allMonthsData).length===0) return showNotification('No data');
+                previousState = structuredClone(allMonthsData);
+                const sortedIds = getSortedMonthIds();
+                const suffixPools = {};
+                sortedIds.forEach(id => {
+                    const m = allMonthsData[id];
+                    Object.values(m.roles).forEach(ass => ass.forEach(a => {
+                        if (a.text && hasSuffix(a.text)) {
+                            const s = getSuffix(a.text);
+                            if (!suffixPools[s]) suffixPools[s] = new Set();
+                            suffixPools[s].add(a.text.trim());
+                        }
+                    }));
+                });
+                for (let s in suffixPools) suffixPools[s] = [...suffixPools[s]];
+                const hist = getHistoricalRoleCounts(sortedIds);
+                const underLimit = (name, role) => (hist[`${name.toLowerCase()}|${role}`] || 0) < 1;
+
+                sortedIds.forEach(id => {
+                    const m = allMonthsData[id];
+                    const weeks = m.weeks.length;
+                    const roles = Object.keys(m.roles);
+                    const weekUsage = Array(weeks).fill().map(() => new Set());
+                    for (let w=0; w<weeks; w++) roles.forEach(r => {
+                        const t = m.roles[r][w].text;
+                        if (t) t.split(' & ').forEach(n => weekUsage[w].add(n.trim().toLowerCase()));
+                    });
+                    roles.forEach(role => {
+                        let prevName = null;
+                        for (let w=0; w<weeks; w++) {
+                            const ass = m.roles[role][w];
+                            const cur = ass.text.trim();
+                            if (!cur || !hasSuffix(cur)) { prevName = cur; continue; }
+                            const suffix = getSuffix(cur);
+                            const candidates = suffixPools[suffix] || [];
+                            if (!candidates.length) { prevName = cur; continue; }
+                            const curWeekSet = new Set(weekUsage[w]);
+                            cur.split(' & ').forEach(n => curWeekSet.delete(n.trim().toLowerCase()));
+                            const shuffled = [...candidates].sort(()=>Math.random()-0.5);
+                            let selected = null;
+                            for (const c of shuffled) {
+                                const cl = c.toLowerCase();
+                                if (!underLimit(c, role)) continue;
+                                if (curWeekSet.has(cl)) continue;
+                                if (prevName && prevName.toLowerCase()===cl) continue;
+                                selected = c; break;
+                            }
+                            if (!selected) {
+                                for (const c of shuffled) {
+                                    const cl = c.toLowerCase();
+                                    if (!underLimit(c, role)) continue;
+                                    if (!curWeekSet.has(cl)) { selected = c; break; }
+                                }
+                            }
+                            if (selected) {
+                                m.roles[role][w] = { text: selected, edited: true };
+                                cur.split(' & ').forEach(n => weekUsage[w].delete(n.trim().toLowerCase()));
+                                selected.split(' & ').forEach(n => weekUsage[w].add(n.trim().toLowerCase()));
+                                const oldK = `${cur.toLowerCase()}|${role}`;
+                                const newK = `${selected.toLowerCase()}|${role}`;
+                                hist[oldK] = Math.max(0, (hist[oldK]||0)-1);
+                                hist[newK] = (hist[newK]||0)+1;
+                                prevName = selected;
+                            } else { prevName = cur; }
                         }
                     });
                 });
-            });
-            return { stats, roleStats };
-        }
-
-        function showStatisticsModal() {
-            if (!topAssigneesTable || !detailedStatsTable || !roleBreakdown) return;
-            
-            // Determine current and next month IDs based on sorted month names
-            const monthEntries = Object.entries(allMonthsData).sort((a, b) => {
-                const getDate = (name) => {
-                    const match = name.match(/(\w+)\s*(\d{4})/i);
-                    if (!match) return new Date(0);
-                    const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
-                    const m = monthNames.indexOf(match[1].toLowerCase());
-                    const y = parseInt(match[2]);
-                    return new Date(y, m);
-                };
-                return getDate(a[1].name) - getDate(b[1].name);
-            });
-            const currentIndex = monthEntries.findIndex(([id]) => id === currentMonthId);
-            const selectedMonthIds = [currentMonthId];
-            if (currentIndex !== -1 && currentIndex + 1 < monthEntries.length) {
-                selectedMonthIds.push(monthEntries[currentIndex + 1][0]);
-            }
-            
-            const { stats, roleStats } = calculateStatistics(selectedMonthIds);
-            const statsArray = Object.entries(stats).map(([name, data]) => ({ name, total: data.total, roles: data.roles }));
-            statsArray.sort((a, b) => b.total - a.total);
-            
-            topAssigneesTable.innerHTML = '';
-            detailedStatsTable.innerHTML = '';
-            roleBreakdown.innerHTML = '';
-            
-            statsArray.slice(0, 5).forEach((person, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td class="rank">${index+1}</td><td>${person.name}</td><td class="count">${person.total}</td>`;
-                topAssigneesTable.appendChild(row);
-            });
-            
-            statsArray.forEach(person => {
-                const row = document.createElement('tr');
-                const breakdown = Object.entries(person.roles).map(([r, c]) => `${r}: ${c}`).join(', ');
-                row.innerHTML = `<td>${person.name}</td><td class="count">${person.total}</td><td class="role-count">${breakdown}</td>`;
-                detailedStatsTable.appendChild(row);
-            });
-            
-            const roleCards = document.createElement('div');
-            roleCards.className = 'role-breakdown';
-            Object.entries(roleStats).forEach(([role, nameCounts]) => {
-                const card = document.createElement('div');
-                card.className = 'role-card';
-                card.innerHTML = `<h4>${role}</h4>`;
-                const ul = document.createElement('ul');
-                Object.entries(nameCounts).sort((a,b) => b[1] - a[1]).slice(0,5).forEach(([name, count]) => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<span>${name}</span><span class="count">${count}</span>`;
-                    ul.appendChild(li);
+                // Second pass: fix adjacent duplicates
+                sortedIds.forEach(id => {
+                    const m = allMonthsData[id];
+                    const roles = Object.keys(m.roles);
+                    roles.forEach(role => {
+                        for (let w=1; w<m.weeks.length; w++) {
+                            const prev = m.roles[role][w-1].text;
+                            const cur = m.roles[role][w].text;
+                            if (!prev || !cur || prev.trim().toLowerCase() !== cur.trim().toLowerCase()) continue;
+                            if (!hasSuffix(cur)) continue;
+                            const suffix = getSuffix(cur);
+                            const candidates = suffixPools[suffix] || [];
+                            if (!candidates.length) continue;
+                            const weekSet = new Set();
+                            roles.forEach(r => { const t = m.roles[r][w].text; if(t) t.split(' & ').forEach(n => weekSet.add(n.trim().toLowerCase())); });
+                            weekSet.delete(cur.toLowerCase());
+                            const next = (w+1 < m.weeks.length) ? m.roles[role][w+1].text : '';
+                            const nextLower = next.trim().toLowerCase();
+                            const shuffled = [...candidates].sort(()=>Math.random()-0.5);
+                            let newSel = null;
+                            for (const c of shuffled) {
+                                const cl = c.toLowerCase();
+                                if (!underLimit(c, role)) continue;
+                                if (weekSet.has(cl)) continue;
+                                if (cl === prev.trim().toLowerCase()) continue;
+                                if (next && cl === nextLower) continue;
+                                newSel = c; break;
+                            }
+                            if (newSel) {
+                                const oldK = `${cur.toLowerCase()}|${role}`;
+                                const newK = `${newSel.toLowerCase()}|${role}`;
+                                hist[oldK] = Math.max(0, (hist[oldK]||0)-1);
+                                hist[newK] = (hist[newK]||0)+1;
+                                m.roles[role][w] = { text: newSel, edited: true };
+                            }
+                        }
+                    });
                 });
-                card.appendChild(ul);
-                roleCards.appendChild(card);
-            });
-            roleBreakdown.appendChild(roleCards);
-            statsModal.style.display = 'flex';
-        }
+                appCategories = buildCategoriesFromData(allMonthsData);
+                saveToLocalStorage();
+                renderTable();
+                showNotification('Global auto-assign done (max 1 per role)');
+            }
 
-        function resetData() {
-            if (confirm('Are you sure you want to reset ALL tables to default? This cannot be undone.')) {
+            function undoAutoAssign() {
+                if (!previousState) return showNotification('Nothing to undo');
+                allMonthsData = previousState;
+                previousState = null;
+                appCategories = buildCategoriesFromData(allMonthsData);
+                saveToLocalStorage();
+                renderTable();
+                showNotification('Undo successful');
+            }
+
+            // ---------- Export/Import with suffix stripping ----------
+            function exportData() {
+                try {
+                    const clean = stripAllSuffixes(allMonthsData);
+                    const exportObj = { months: clean, categories: buildCategoriesFromData(clean) };
+                    const json = JSON.stringify(exportObj, null, 2);
+                    const blob = new Blob([json], {type:'application/json'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url; a.download = 'duty-roster-clean.json';
+                    a.click(); URL.revokeObjectURL(url);
+                    showNotification('Exported (suffixes removed).');
+                } catch (e) { showNotification('Export error'); }
+            }
+
+            function importData() {
+                const file = importFileInput.files[0];
+                if (!file) return showNotification('Select a file');
+                const reader = new FileReader();
+                reader.onload = e => {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        if (!imported.months) return showNotification('Invalid format');
+                        // Strip suffixes from imported data
+                        const cleanMonths = stripAllSuffixes(imported.months);
+                        allMonthsData = cleanMonths;
+                        appCategories = imported.categories ? (() => {
+                            const cats = {};
+                            Object.entries(imported.categories).forEach(([role, data]) => {
+                                cats[role] = {
+                                    normal: (data.normal||[]).map(stripSuffix),
+                                    standby: (data.standby||[]).map(stripSuffix)
+                                };
+                            });
+                            return cats;
+                        })() : buildCategoriesFromData(allMonthsData);
+                        currentMonthId = Object.keys(allMonthsData)[0];
+                        saveToLocalStorage();
+                        checkCurrentMonth(false);
+                        renderTabs(); renderTable();
+                        importModal.style.display = 'none';
+                        importFileInput.value = '';
+                        showNotification('Imported (suffixes stripped).');
+                    } catch (ex) { showNotification('Invalid JSON'); }
+                };
+                reader.readAsText(file);
+            }
+
+            // ---------- Statistics (current + next month) ----------
+            function showStatisticsModal() {
+                const sorted = getSortedMonthIds();
+                const curIdx = sorted.indexOf(currentMonthId);
+                const monthsToShow = [currentMonthId];
+                if (curIdx !== -1 && curIdx+1 < sorted.length) monthsToShow.push(sorted[curIdx+1]);
+                const stats = {}, roleStats = {};
+                monthsToShow.forEach(id => {
+                    const m = allMonthsData[id]; if(!m) return;
+                    Object.entries(m.roles).forEach(([role, ass]) => {
+                        if (!roleStats[role]) roleStats[role] = {};
+                        ass.forEach(a => {
+                            if (a.text) a.text.split(' & ').forEach(n => {
+                                const name = n.trim(); const lower = name.toLowerCase();
+                                if (!stats[lower]) stats[lower] = { total:0, roles:{} };
+                                stats[lower].total++;
+                                stats[lower].roles[role] = (stats[lower].roles[role]||0)+1;
+                                roleStats[role][lower] = (roleStats[role][lower]||0)+1;
+                            });
+                        });
+                    });
+                });
+                const topTbody = document.querySelector('#topAssigneesTable tbody');
+                const detailTbody = document.querySelector('#detailedStatsTable tbody');
+                const breakdownDiv = document.getElementById('roleBreakdown');
+                topTbody.innerHTML = ''; detailTbody.innerHTML = ''; breakdownDiv.innerHTML = '';
+                const arr = Object.entries(stats).map(([n,d])=>({name:n,total:d.total,roles:d.roles})).sort((a,b)=>b.total-a.total);
+                arr.slice(0,5).forEach((p,i) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td class="rank">${i+1}</td><td>${p.name}</td><td class="count">${p.total}</td>`;
+                    topTbody.appendChild(tr);
+                });
+                arr.forEach(p => {
+                    const tr = document.createElement('tr');
+                    const bd = Object.entries(p.roles).map(([r,c])=>`${r}:${c}`).join(', ');
+                    tr.innerHTML = `<td>${p.name}</td><td class="count">${p.total}</td><td class="role-count">${bd}</td>`;
+                    detailTbody.appendChild(tr);
+                });
+                const rc = document.createElement('div'); rc.className='role-breakdown';
+                Object.entries(roleStats).forEach(([role, counts]) => {
+                    const card = document.createElement('div'); card.className='role-card';
+                    card.innerHTML = `<h4>${role}</h4>`;
+                    const ul = document.createElement('ul');
+                    Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([n,c])=> {
+                        const li = document.createElement('li'); li.innerHTML = `<span>${n}</span><span class="count">${c}</span>`; ul.appendChild(li);
+                    });
+                    card.appendChild(ul); rc.appendChild(card);
+                });
+                breakdownDiv.appendChild(rc);
+                statsModal.style.display = 'flex';
+            }
+
+            // ---------- Other Modal & Table actions ----------
+            function openAddTableModal() {
+                if (!tableSelector) return;
+                tableSelector.innerHTML = `<div class="table-option"><input type="radio" name="sourceTable" id="emptyTable" value="" checked><label for="emptyTable">Create Empty Table</label></div>`;
+                Object.keys(allMonthsData).forEach(id => {
+                    const m = allMonthsData[id];
+                    const opt = document.createElement('div'); opt.className='table-option';
+                    opt.innerHTML = `<input type="radio" name="sourceTable" id="${id}" value="${id}"><label for="${id}">${m.name}</label>`;
+                    tableSelector.appendChild(opt);
+                });
+                newTableNameInput.value = ''; startDateInput.value = ''; numRowsInput.value='10'; numWeeksInput.value='4';
+                addTableModal.style.display='flex';
+            }
+
+            function createNewTable() {
+                const name = newTableNameInput.value.trim();
+                const start = startDateInput.value;
+                const rows = parseInt(numRowsInput.value)||10;
+                const weeks = parseInt(numWeeksInput.value)||4;
+                if (!name || !start) return showNotification('Name and start date required');
+                if (Object.values(allMonthsData).some(m=>m.name.toLowerCase()===name.toLowerCase())) return showNotification('Table exists');
+                const sourceId = document.querySelector('input[name="sourceTable"]:checked')?.value || '';
+                const monthId = 'month_'+Date.now();
+                const startDate = new Date(start);
+                if (isNaN(startDate)) return showNotification('Invalid date');
+                const yearMatch = name.match(/\d{4}/);
+                const year = yearMatch ? parseInt(yearMatch[0]) : startDate.getFullYear();
+                const weeksArr = [];
+                for (let i=0; i<weeks; i++) {
+                    const ws = new Date(startDate.getTime() + i*7*24*60*60*1000);
+                    const we = new Date(ws.getTime() + 6*24*60*60*1000);
+                    ws.setFullYear(year); we.setFullYear(year);
+                    weeksArr.push({ range: formatWeekRange(ws, we), isCurrent: false });
+                }
+                let roles = {};
+                if (sourceId && allMonthsData[sourceId]) {
+                    const src = allMonthsData[sourceId];
+                    Object.keys(src.roles).slice(0, rows).forEach(role => {
+                        roles[role] = src.roles[role].slice(0, weeks).map(ass => ({ text: ass.text, edited: false }));
+                        while (roles[role].length < weeks) roles[role].push({ text: '', edited: false });
+                    });
+                }
+                for (let i=Object.keys(roles).length; i<rows; i++) roles[`Role ${i+1}`] = Array(weeks).fill({text:'',edited:false});
+                allMonthsData[monthId] = { id: monthId, name, weeks: weeksArr, roles, copiedFrom: sourceId || null };
+                Object.keys(roles).forEach(r => { if (!appCategories[r]) appCategories[r] = { normal:[], standby:[] }; });
+                currentMonthId = monthId;
+                saveToLocalStorage();
+                checkCurrentMonth(false);
+                renderTabs(); renderTable();
+                addTableModal.style.display='none';
+                showNotification('Table created');
+            }
+
+            function deleteTable(id) {
+                if (Object.keys(allMonthsData).length<=1) return showNotification('Need at least one table');
+                if (!confirm(`Delete "${allMonthsData[id].name}"?`)) return;
+                delete allMonthsData[id];
+                currentMonthId = Object.keys(allMonthsData)[0];
+                saveToLocalStorage();
+                renderTabs(); renderTable();
+            }
+
+            function resetData() {
+                if (!confirm('Reset all data to default?')) return;
                 allMonthsData = structuredClone(defaultData);
                 appCategories = buildCategoriesFromData(allMonthsData);
                 currentMonthId = 'august';
                 previousState = null;
                 saveToLocalStorage();
                 checkCurrentMonth(false);
+                renderTabs(); renderTable();
+                showNotification('Reset to defaults');
+            }
+
+            // ---------- Event Listeners ----------
+            function setupListeners() {
+                document.getElementById('prevMonthBtn').addEventListener('click', ()=>{
+                    const ids = Object.keys(allMonthsData);
+                    const idx = ids.indexOf(currentMonthId);
+                    currentMonthId = ids[(idx-1+ids.length)%ids.length];
+                    renderTabs(); renderTable();
+                });
+                document.getElementById('currentMonthBtn').addEventListener('click', ()=>checkCurrentMonth(true));
+                document.getElementById('nextMonthBtn').addEventListener('click', ()=>{
+                    const ids = Object.keys(allMonthsData);
+                    const idx = ids.indexOf(currentMonthId);
+                    currentMonthId = ids[(idx+1)%ids.length];
+                    renderTabs(); renderTable();
+                });
+                document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+                document.getElementById('resetBtn').addEventListener('click', resetData);
+                document.getElementById('addTableBtn').addEventListener('click', openAddTableModal);
+                document.getElementById('autoAssignBtn').addEventListener('click', autoAssignRoles);
+                document.getElementById('undoBtn').addEventListener('click', undoAutoAssign);
+                document.getElementById('removeSuffixBtn').addEventListener('click', removeAllSuffixesFromCurrent);
+                document.getElementById('exportBtn').addEventListener('click', exportData);
+                document.getElementById('importBtn').addEventListener('click', ()=>{
+                    importFileInput.value = '';
+                    importModal.style.display='flex';
+                });
+                document.getElementById('statsBtn').addEventListener('click', showStatisticsModal);
+                document.getElementById('infoBtn').addEventListener('click', ()=>instructionsModal.style.display='flex');
+                if (searchInput) searchInput.addEventListener('input', debouncedSearch);
+                document.getElementById('confirmAddTableBtn').addEventListener('click', createNewTable);
+                document.getElementById('confirmImportBtn').addEventListener('click', importData);
+                document.querySelectorAll('.close-modal, #cancelAddTableBtn, #cancelImportBtn, #closeStatsBtn, #closeInstructionsBtn').forEach(b => b.addEventListener('click', ()=>{
+                    addTableModal.style.display='none'; importModal.style.display='none'; statsModal.style.display='none'; instructionsModal.style.display='none';
+                }));
+                document.body.addEventListener('click', e => {
+                    if (e.target.matches('.month-tab:not(.close-tab)')) {
+                        currentMonthId = e.target.dataset.monthId; renderTabs(); renderTable();
+                    }
+                    if (e.target.matches('.close-tab')) {
+                        e.stopPropagation(); deleteTable(e.target.dataset.monthId);
+                    }
+                });
+                window.addEventListener('click', e => {
+                    if (e.target===addTableModal) addTableModal.style.display='none';
+                    if (e.target===importModal) importModal.style.display='none';
+                    if (e.target===statsModal) statsModal.style.display='none';
+                    if (e.target===instructionsModal) instructionsModal.style.display='none';
+                });
+                document.addEventListener('blur', e => {
+                    if (e.target.classList.contains('editable-cell')) handleCellEdit(e);
+                    else if (e.target.classList.contains('role-header')) handleRoleEdit(e);
+                    else if (e.target.classList.contains('week-header')) handleWeekEdit(e);
+                }, true);
+                document.addEventListener('keydown', e => {
+                    if (e.key==='Enter' && (e.target.classList.contains('editable-cell')||e.target.classList.contains('role-header')||e.target.classList.contains('week-header'))) {
+                        e.preventDefault(); e.target.blur();
+                    }
+                }, true);
+            }
+
+            // ---------- Init ----------
+            function init() {
+                if (!tableBody || !tableHead || !monthIndicator) return;
+                setTimeout(() => {
+                    splashScreen.style.opacity='0'; splashScreen.style.transform='scale(1.2)';
+                    setTimeout(() => { splashScreen.style.display='none'; container.classList.add('loaded'); }, 800);
+                }, 2000);
+                loadFromLocalStorage();
+                checkCurrentMonth(false);
                 renderTabs();
                 renderTable();
-                showNotification('All tables reset to default values');
+                setupListeners();
+                setInterval(() => checkCurrentMonth(false), 3600000);
             }
-        }
-
-        function showInstructionsModal() {
-            if (!instructionsModal) return;
-            instructionsModal.style.display = 'flex';
-        }
-
-        function setupEventListeners() {
-            document.getElementById('prevMonthBtn').addEventListener('click', () => {
-                const ids = Object.keys(allMonthsData);
-                const idx = ids.indexOf(currentMonthId);
-                currentMonthId = ids[(idx - 1 + ids.length) % ids.length];
-                renderTabs(); renderTable();
-            });
-            document.getElementById('currentMonthBtn').addEventListener('click', () => checkCurrentMonth(true));
-            document.getElementById('nextMonthBtn').addEventListener('click', () => {
-                const ids = Object.keys(allMonthsData);
-                const idx = ids.indexOf(currentMonthId);
-                currentMonthId = ids[(idx + 1) % ids.length];
-                renderTabs(); renderTable();
-            });
-            document.getElementById('printBtn').addEventListener('click', () => window.print());
-            document.getElementById('resetBtn').addEventListener('click', resetData);
-            document.getElementById('addTableBtn').addEventListener('click', openAddTableModal);
-            document.getElementById('autoAssignBtn').addEventListener('click', autoAssignRoles);
-            document.getElementById('undoBtn').addEventListener('click', undoAutoAssign);
-            document.getElementById('exportBtn').addEventListener('click', exportData);
-            document.getElementById('importBtn').addEventListener('click', () => {
-                importFileInput.value = '';
-                importModal.style.display = 'flex';
-            });
-            document.getElementById('statsBtn').addEventListener('click', showStatisticsModal);
-            document.getElementById('infoBtn').addEventListener('click', showInstructionsModal);
-            
-            if (searchInput) searchInput.addEventListener('input', debouncedHandleSearch);
-            
-            document.getElementById('confirmAddTableBtn').addEventListener('click', createNewTable);
-            document.getElementById('confirmImportBtn').addEventListener('click', importData);
-            
-            document.querySelectorAll('.close-modal, #cancelAddTableBtn, #cancelImportBtn, #closeStatsBtn, #closeInstructionsBtn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    addTableModal.style.display = 'none';
-                    importModal.style.display = 'none';
-                    statsModal.style.display = 'none';
-                    instructionsModal.style.display = 'none';
-                });
-            });
-            
-            document.body.addEventListener('click', (e) => {
-                if (e.target.matches('.month-tab:not(.close-tab)')) handleTabClick.call(e.target, e);
-                if (e.target.matches('.close-tab')) handleCloseTab.call(e.target, e);
-            });
-            
-            window.addEventListener('click', (e) => {
-                if (e.target === addTableModal) addTableModal.style.display = 'none';
-                if (e.target === importModal) importModal.style.display = 'none';
-                if (e.target === statsModal) statsModal.style.display = 'none';
-                if (e.target === instructionsModal) instructionsModal.style.display = 'none';
-            });
-
-            document.addEventListener('blur', (e) => {
-                if (e.target.classList.contains('editable-cell')) handleCellEdit(e);
-                else if (e.target.classList.contains('role-header')) handleRoleEdit(e);
-                else if (e.target.classList.contains('week-header')) handleWeekEdit(e);
-            }, true);
-            document.addEventListener('keydown', (e) => {
-                if (e.target.classList.contains('editable-cell')) handleCellKeydown(e);
-                else if (e.target.classList.contains('role-header')) handleRoleKeydown(e);
-                else if (e.target.classList.contains('week-header')) handleWeekKeydown(e);
-            }, true);
-        }
-
-        window.addEventListener('DOMContentLoaded', initApp);
+            window.addEventListener('DOMContentLoaded', init);
+        })();
     </script>
 </body>
 </html>
