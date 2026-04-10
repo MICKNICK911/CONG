@@ -1210,6 +1210,7 @@
 }
 
 // ---------- Auto-Assign: Shuffle (permute) suffixed names within their suffix group ----------
+// ---------- Sorted Month IDs (chronological) ----------
 function getSortedMonthIds() {
     const entries = Object.entries(allMonthsData);
     const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
@@ -1224,22 +1225,25 @@ function getSortedMonthIds() {
     return entries.map(e => e[0]);
 }
 
+// ---------- Auto‑Assign: Shuffle suffixed names within each suffix group ----------
 function autoAssignRoles() {
     if (Object.keys(allMonthsData).length === 0) {
         showNotification('No data available');
         return;
     }
 
+    // Save state for undo
     previousState = structuredClone(allMonthsData);
     const sortedIds = getSortedMonthIds();
 
-    // 1. Collect all single‑name suffixed cells, grouped by suffix
+    // ----- 1. Collect all single‑name suffixed cells, grouped by suffix -----
     const suffixGroups = {};
     sortedIds.forEach(monthId => {
         const month = allMonthsData[monthId];
         Object.entries(month.roles).forEach(([role, assignments]) => {
             assignments.forEach((ass, weekIndex) => {
                 const text = ass.text.trim();
+                // Only single‑name cells with a suffix
                 if (text && !text.includes('&') && hasSuffix(text)) {
                     const suffix = getSuffix(text);
                     if (!suffixGroups[suffix]) suffixGroups[suffix] = [];
@@ -1254,7 +1258,13 @@ function autoAssignRoles() {
         });
     });
 
-    // 2. For each suffix group, find a valid permutation and apply it
+    // If no suffixed cells exist, notify and exit
+    if (Object.keys(suffixGroups).length === 0) {
+        showNotification('No suffixed names found to shuffle.');
+        return;
+    }
+
+    // ----- 2. For each suffix group, find a valid permutation -----
     for (const suffix in suffixGroups) {
         const cells = suffixGroups[suffix];
         const names = cells.map(c => c.currentName);
@@ -1262,7 +1272,7 @@ function autoAssignRoles() {
         if (n === 0) continue;
 
         let success = false;
-        // Try up to 2000 times (increased for better chance)
+        // Try up to 2000 random permutations
         for (let attempt = 0; attempt < 2000; attempt++) {
             const shuffled = [...names];
             // Fisher–Yates shuffle
@@ -1272,6 +1282,7 @@ function autoAssignRoles() {
             }
 
             if (isValidPermutation(cells, shuffled, sortedIds)) {
+                // Apply the valid permutation
                 cells.forEach((cell, idx) => {
                     const month = allMonthsData[cell.monthId];
                     month.roles[cell.role][cell.weekIndex] = {
@@ -1285,33 +1296,32 @@ function autoAssignRoles() {
         }
 
         if (!success) {
-            console.warn(`Could not find a valid shuffle for suffix "${suffix}" after 2000 attempts.`);
+            console.warn(`Could not find valid shuffle for suffix "${suffix}" — keeping original.`);
         }
     }
 
     appCategories = buildCategoriesFromData(allMonthsData);
     saveToLocalStorage();
     renderTable();
-    showNotification('Suffixed names shuffled (permuted within each suffix group).');
+    showNotification('Auto‑assign complete (suffixed names shuffled).');
 }
 
-// ---------------------------------------------------------------------
-// Helper: Validate a proposed permutation of names across cells
-// ---------------------------------------------------------------------
+// ----- Helper: Validate a proposed permutation against constraints -----
 function isValidPermutation(cells, newNames, sortedIds) {
-    // Build a map of each cell's new name
+    // Map each cell's location to its new name
     const cellToNewName = new Map();
     cells.forEach((cell, idx) => {
         const key = `${cell.monthId}|${cell.role}|${cell.weekIndex}`;
         cellToNewName.set(key, newNames[idx]);
     });
 
-    // Simulate week usage across all months with the proposed changes
-    const weekUsage = {};
+    // Build a simulated week‑usage count map for all months
+    // Key: monthId -> array of Maps (week index -> Map of name -> count)
+    const weekCounts = {};
     sortedIds.forEach(monthId => {
         const month = allMonthsData[monthId];
         const weeks = month.weeks.length;
-        weekUsage[monthId] = Array(weeks).fill().map(() => new Set());
+        weekCounts[monthId] = Array(weeks).fill().map(() => new Map());
         Object.entries(month.roles).forEach(([role, assignments]) => {
             assignments.forEach((ass, w) => {
                 const key = `${monthId}|${role}|${w}`;
@@ -1320,33 +1330,33 @@ function isValidPermutation(cells, newNames, sortedIds) {
                 if (textToUse) {
                     textToUse.split(' & ').forEach(n => {
                         const lower = n.trim().toLowerCase();
-                        if (lower) weekUsage[monthId][w].add(lower);
+                        if (lower) {
+                            const countMap = weekCounts[monthId][w];
+                            countMap.set(lower, (countMap.get(lower) || 0) + 1);
+                        }
                     });
                 }
             });
         });
     });
 
-    // Check constraints for each cell in this suffix group
+    // Check each cell in the group
     for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
         const newName = newNames[i];
         const lowerNew = newName.toLowerCase();
 
-        // Constraint 1: No duplicate in the same week (across all roles in that month)
-        const sameWeekSet = weekUsage[cell.monthId][cell.weekIndex];
-        if (sameWeekSet.has(lowerNew)) {
-            // If the name already exists in this week, it means another cell in the same week
-            // (either in the same suffix group or outside) has the same name -> invalid.
+        // 1. No duplicate in the same week (count > 1 means duplicate)
+        const countMap = weekCounts[cell.monthId][cell.weekIndex];
+        if ((countMap.get(lowerNew) || 0) > 1) {
             return false;
         }
 
-        // Constraint 2: No adjacent duplicate in the same role (previous/next week)
+        // 2. No adjacent duplicate in the same role
         const month = allMonthsData[cell.monthId];
         const role = cell.role;
         const w = cell.weekIndex;
 
-        // Previous week
         if (w > 0) {
             const prevKey = `${cell.monthId}|${role}|${w - 1}`;
             const prevName = cellToNewName.get(prevKey) !== undefined
@@ -1356,7 +1366,6 @@ function isValidPermutation(cells, newNames, sortedIds) {
                 return false;
             }
         }
-        // Next week
         if (w < month.weeks.length - 1) {
             const nextKey = `${cell.monthId}|${role}|${w + 1}`;
             const nextName = cellToNewName.get(nextKey) !== undefined
@@ -1367,8 +1376,21 @@ function isValidPermutation(cells, newNames, sortedIds) {
             }
         }
     }
-
     return true;
+}
+
+// ---------- Undo ----------
+function undoAutoAssign() {
+    if (!previousState) {
+        showNotification('Nothing to undo');
+        return;
+    }
+    allMonthsData = structuredClone(previousState);
+    previousState = null;
+    appCategories = buildCategoriesFromData(allMonthsData);
+    saveToLocalStorage();
+    renderTable();
+    showNotification('Undo successful');
 }
 
             
