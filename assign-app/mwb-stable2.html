@@ -1198,17 +1198,6 @@
                 renderTable();
             }
             const debouncedSearch = (() => { let t; return () => { clearTimeout(t); t = setTimeout(handleSearch, 300); }; })();
-
-            // ---------- Auto-Assign (single-name suffixed cells only) ----------
-            function getSortedMonthIds() {
-                const entries = Object.entries(allMonthsData);
-                const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
-                entries.sort((a,b) => {
-                    const getDate = name => { const m = name.match(/(\w+)\s*(\d{4})/i); if(!m) return new Date(0); return new Date(parseInt(m[2]), monthNames.indexOf(m[1].toLowerCase())); };
-                    return getDate(a[1].name) - getDate(b[1].name);
-                });
-                return entries.map(e=>e[0]);
-            }
             // ---------- Helper: Check if a name has a suffix ----------
             function hasSuffix(name) {
     return /\s-[A-Za-z0-9]+$/.test(name.trim());
@@ -1221,34 +1210,39 @@
 }
 
 // ---------- Auto-Assign: Shuffle (permute) suffixed names within their suffix group ----------
-            function autoAssignRoles() {
+function getSortedMonthIds() {
+    const entries = Object.entries(allMonthsData);
+    const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+    entries.sort((a, b) => {
+        const getDate = name => {
+            const m = name.match(/(\w+)\s*(\d{4})/i);
+            if (!m) return new Date(0);
+            return new Date(parseInt(m[2]), monthNames.indexOf(m[1].toLowerCase()));
+        };
+        return getDate(a[1].name) - getDate(b[1].name);
+    });
+    return entries.map(e => e[0]);
+}
+
+function autoAssignRoles() {
     if (Object.keys(allMonthsData).length === 0) {
         showNotification('No data available');
         return;
     }
 
-    // Save state for undo
     previousState = structuredClone(allMonthsData);
+    const sortedIds = getSortedMonthIds();
 
-    const sortedIds = getSortedMonthIds(); // chronological order
-
-    // -----------------------------------------------------------------
-    // 1. Collect all cells that contain a single suffixed name
-    //    Store them as an array of objects with location and name info
-    // -----------------------------------------------------------------
-    const suffixGroups = {}; // key: suffix -> array of cell references
-
+    // 1. Collect all single‑name suffixed cells, grouped by suffix
+    const suffixGroups = {};
     sortedIds.forEach(monthId => {
         const month = allMonthsData[monthId];
         Object.entries(month.roles).forEach(([role, assignments]) => {
             assignments.forEach((ass, weekIndex) => {
                 const text = ass.text.trim();
-                // Only process single-name cells with a suffix
                 if (text && !text.includes('&') && hasSuffix(text)) {
                     const suffix = getSuffix(text);
-                    if (!suffixGroups[suffix]) {
-                        suffixGroups[suffix] = [];
-                    }
+                    if (!suffixGroups[suffix]) suffixGroups[suffix] = [];
                     suffixGroups[suffix].push({
                         monthId,
                         role,
@@ -1260,28 +1254,24 @@
         });
     });
 
-    // -----------------------------------------------------------------
-    // 2. For each suffix group, shuffle the names and reassign
-    //    while respecting constraints
-    // -----------------------------------------------------------------
+    // 2. For each suffix group, find a valid permutation and apply it
     for (const suffix in suffixGroups) {
         const cells = suffixGroups[suffix];
         const names = cells.map(c => c.currentName);
         const n = names.length;
+        if (n === 0) continue;
 
-        // Try up to 1000 times to find a valid permutation
         let success = false;
-        for (let attempt = 0; attempt < 1000; attempt++) {
-            // Shuffle names (Fisher–Yates)
+        // Try up to 2000 times (increased for better chance)
+        for (let attempt = 0; attempt < 2000; attempt++) {
             const shuffled = [...names];
+            // Fisher–Yates shuffle
             for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
-            // Check if this permutation is valid
-            if (isValidPermutation(cells, shuffled)) {
-                // Apply the permutation
+            if (isValidPermutation(cells, shuffled, sortedIds)) {
                 cells.forEach((cell, idx) => {
                     const month = allMonthsData[cell.monthId];
                     month.roles[cell.role][cell.weekIndex] = {
@@ -1295,13 +1285,10 @@
         }
 
         if (!success) {
-            console.warn(`Could not find a valid shuffle for suffix "${suffix}" after 1000 attempts. Keeping original assignment.`);
+            console.warn(`Could not find a valid shuffle for suffix "${suffix}" after 2000 attempts.`);
         }
     }
 
-    // -----------------------------------------------------------------
-    // 3. Clean up and save
-    // -----------------------------------------------------------------
     appCategories = buildCategoriesFromData(allMonthsData);
     saveToLocalStorage();
     renderTable();
@@ -1309,27 +1296,22 @@
 }
 
 // ---------------------------------------------------------------------
-// Helper: Check if a proposed permutation of names across cells
-// satisfies all constraints.
+// Helper: Validate a proposed permutation of names across cells
 // ---------------------------------------------------------------------
-function isValidPermutation(cells, newNames) {
-    // First, apply the new names temporarily to check constraints.
-    // We'll simulate the changes in a lightweight way without mutating actual data.
-
-    // Build a map for quick lookup of what name is assigned to each cell.
+function isValidPermutation(cells, newNames, sortedIds) {
+    // Build a map of each cell's new name
     const cellToNewName = new Map();
     cells.forEach((cell, idx) => {
         const key = `${cell.monthId}|${cell.role}|${cell.weekIndex}`;
         cellToNewName.set(key, newNames[idx]);
     });
 
-    // Build a map of week usage per month (across roles)
-    const weekUsage = {}; // monthId -> array of Sets (week index -> Set of lowercase names)
+    // Simulate week usage across all months with the proposed changes
+    const weekUsage = {};
     sortedIds.forEach(monthId => {
         const month = allMonthsData[monthId];
         const weeks = month.weeks.length;
         weekUsage[monthId] = Array(weeks).fill().map(() => new Set());
-        // Fill with current data (excluding cells that will be changed)
         Object.entries(month.roles).forEach(([role, assignments]) => {
             assignments.forEach((ass, w) => {
                 const key = `${monthId}|${role}|${w}`;
@@ -1351,24 +1333,20 @@ function isValidPermutation(cells, newNames) {
         const newName = newNames[i];
         const lowerNew = newName.toLowerCase();
 
-        // Constraint 1: No duplicate in the same week (within the same month)
+        // Constraint 1: No duplicate in the same week (across all roles in that month)
         const sameWeekSet = weekUsage[cell.monthId][cell.weekIndex];
-        // The name might already be in the set from another role; if it appears more than once, invalid.
-        // Since we're adding exactly one occurrence per cell, if the set already contains it, that means
-        // some other cell in the same week is also assigned this name -> duplicate.
         if (sameWeekSet.has(lowerNew)) {
-            // But we need to check if the duplicate comes from another cell in the same suffix group
-            // that is also being changed. Our weekUsage already includes all assignments (updated for this suffix group).
-            // So if the set has it, it's a duplicate.
+            // If the name already exists in this week, it means another cell in the same week
+            // (either in the same suffix group or outside) has the same name -> invalid.
             return false;
         }
 
-        // Constraint 2: No adjacent duplicate (same role, adjacent week)
+        // Constraint 2: No adjacent duplicate in the same role (previous/next week)
         const month = allMonthsData[cell.monthId];
         const role = cell.role;
         const w = cell.weekIndex;
 
-        // Check previous week
+        // Previous week
         if (w > 0) {
             const prevKey = `${cell.monthId}|${role}|${w - 1}`;
             const prevName = cellToNewName.get(prevKey) !== undefined
@@ -1378,7 +1356,7 @@ function isValidPermutation(cells, newNames) {
                 return false;
             }
         }
-        // Check next week
+        // Next week
         if (w < month.weeks.length - 1) {
             const nextKey = `${cell.monthId}|${role}|${w + 1}`;
             const nextName = cellToNewName.get(nextKey) !== undefined
@@ -1388,26 +1366,11 @@ function isValidPermutation(cells, newNames) {
                 return false;
             }
         }
-
-        // Constraint 3: Max 1 per role globally
-        // Count occurrences of (newName, role) across all months
-        // We can precompute counts for efficiency, but here we do a quick check.
-        let roleCount = 0;
-        for (const otherCell of cells) {
-            if (otherCell.role === role && newNames[cells.indexOf(otherCell)].toLowerCase() === lowerNew) {
-                roleCount++;
-            }
-        }
-        // Also need to consider existing assignments (unchanged cells) that already have this name in the same role.
-        // We can check historical counts including the changes.
-        // Since we only permute within suffix group, and we ensure no two cells in same suffix group get the same name (because we shuffle distinct names? Actually names list may have duplicates if multiple cells originally had the same name. That's allowed if they were duplicates originally. But we should avoid creating *new* duplicates beyond what existed.
-        // For simplicity, we'll allow the same name to appear in multiple cells of the same role if they were already there. The user didn't ask to change that.
-        // We'll just enforce the existing rules: no same-week duplicate, no adjacent duplicate.
-        // The "max 1 per role globally" was a previous requirement. Let's keep it optional or remove it per user's desire. Since user said "shuffle not deleted or duplicated", they may not want a strict limit. We'll skip the global limit to avoid unnecessary restrictions.
     }
 
     return true;
 }
+
             
             function undoAutoAssign() {
                 if (!previousState) return showNotification('Nothing to undo');
