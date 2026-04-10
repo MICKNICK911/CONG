@@ -2334,82 +2334,79 @@ function applyHighlightingRules() {
     const data = allMonthsData[currentMonthId];
     if (!data) return;
     
-    // Remove existing highlights
-    document.querySelectorAll('.editable-cell').forEach(c => c.classList.remove('duplicate-highlight', 'adjacent-highlight'));
-    
     const weeks = data.weeks.length;
     const roles = Object.keys(data.roles);
     
-    // ---- 1. Duplicate names in the same week (red) ----
+    // Remove all existing highlights
+    document.querySelectorAll('.editable-cell').forEach(c => {
+        c.classList.remove('duplicate-highlight', 'adjacent-highlight');
+    });
+    
+    // ----- 1. Same-week duplicates (red) -----
     for (let w = 0; w < weeks; w++) {
-        const nameCounts = {};
+        const nameCounts = new Map(); // name -> count in this week
+        
+        // Count occurrences of each name in this week (across all roles)
         for (const r of roles) {
             const text = data.roles[r][w].text;
-            if (text) {
-                text.split(' & ').forEach(name => {
-                    const lower = name.trim().toLowerCase();
-                    nameCounts[lower] = (nameCounts[lower] || 0) + 1;
-                });
+            if (!text) continue;
+            const names = text.split(' & ').map(n => n.trim().toLowerCase()).filter(n => n);
+            for (const name of names) {
+                nameCounts.set(name, (nameCounts.get(name) || 0) + 1);
             }
         }
-        // Highlight all cells containing a name that appears more than once in this week
+        
+        // Highlight cells containing any name that appears more than once
         for (const r of roles) {
             const text = data.roles[r][w].text;
-            if (text) {
-                const names = text.split(' & ').map(n => n.trim().toLowerCase());
-                if (names.some(n => nameCounts[n] > 1)) {
-                    const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
-                    if (cell) cell.classList.add('duplicate-highlight');
+            if (!text) continue;
+            const names = text.split(' & ').map(n => n.trim().toLowerCase()).filter(n => n);
+            if (names.some(name => nameCounts.get(name) > 1)) {
+                const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
+                if (cell) cell.classList.add('duplicate-highlight');
+            }
+        }
+    }
+    
+    // ----- 2. Adjacent-week duplicates (green) - robust across all roles -----
+    // Build a map: name -> Set of week indices where it appears
+    const nameToWeeks = new Map();
+    for (let w = 0; w < weeks; w++) {
+        for (const r of roles) {
+            const text = data.roles[r][w].text;
+            if (!text) continue;
+            const names = text.split(' & ').map(n => n.trim().toLowerCase()).filter(n => n);
+            for (const name of names) {
+                if (!nameToWeeks.has(name)) {
+                    nameToWeeks.set(name, new Set());
                 }
+                nameToWeeks.get(name).add(w);
             }
         }
     }
     
-    // ---- 2. Adjacent week duplicates (green) - any name appearing in consecutive weeks ----
-    // Build a Set of names present in each week (across all roles)
-    const weekNames = Array(weeks).fill().map(() => new Set());
+    // For each week, check each cell: if any name in the cell appears in week-1 or week+1
     for (let w = 0; w < weeks; w++) {
         for (const r of roles) {
             const text = data.roles[r][w].text;
-            if (text) {
-                text.split(' & ').forEach(name => {
-                    weekNames[w].add(name.trim().toLowerCase());
-                });
-            }
-        }
-    }
-    
-    // For each week, find common names with previous week and next week
-    for (let w = 0; w < weeks; w++) {
-        const currentSet = weekNames[w];
-        const adjacentNames = new Set();
-        
-        // Check previous week
-        if (w > 0) {
-            const prevSet = weekNames[w - 1];
-            for (const name of currentSet) {
-                if (prevSet.has(name)) adjacentNames.add(name);
-            }
-        }
-        // Check next week
-        if (w < weeks - 1) {
-            const nextSet = weekNames[w + 1];
-            for (const name of currentSet) {
-                if (nextSet.has(name)) adjacentNames.add(name);
-            }
-        }
-        
-        // If there are any adjacent duplicates, highlight all cells in this week that contain those names
-        if (adjacentNames.size > 0) {
-            for (const r of roles) {
-                const text = data.roles[r][w].text;
-                if (text) {
-                    const names = text.split(' & ').map(n => n.trim().toLowerCase());
-                    if (names.some(n => adjacentNames.has(n))) {
-                        const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
-                        if (cell) cell.classList.add('adjacent-highlight');
+            if (!text) continue;
+            const names = text.split(' & ').map(n => n.trim().toLowerCase()).filter(n => n);
+            
+            // Determine if any name appears in an adjacent week
+            let hasAdjacent = false;
+            for (const name of names) {
+                const weeksSet = nameToWeeks.get(name);
+                if (weeksSet) {
+                    if ((w > 0 && weeksSet.has(w - 1)) || (w < weeks - 1 && weeksSet.has(w + 1))) {
+                        hasAdjacent = true;
+                        break;
                     }
                 }
+            }
+            
+            if (hasAdjacent) {
+                const cell = document.querySelector(`td[data-role="${r}"][data-week="${w}"]`);
+                if (cell) cell.classList.add('adjacent-highlight');
             }
         }
     }
