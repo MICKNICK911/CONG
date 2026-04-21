@@ -1594,55 +1594,55 @@
         ],
         "4": [
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Dora Asare &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Augusta Appiah &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Mercy Entsie &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Elizabeth Yeboah &",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Tracy Yeboah &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Shadrach Asare &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Esther Takie &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Winfred Appiah &",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "Ɔkasa",
+            "text": "Emmanuel Entsie",
             "edited": true
           },
           {
-            "text": "Yɛ Asuafo",
+            "text": "Adwoa Onwona &",
             "edited": true
           },
           {
-            "text": "Yɛ Asuafo",
+            "text": "Nancy Baidoo &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Juliana Entsie &",
             "edited": true
           }
         ],
@@ -1660,7 +1660,7 @@
             "edited": true
           },
           {
-            "text": "Kyerɛkyerɛ Wo Gyidi Mu",
+            "text": "Emmanuel Asante &",
             "edited": true
           }
         ],
@@ -1851,67 +1851,67 @@
         ],
         "4": [
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Owusuwaa Appiah &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Ryan Takie &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Erica Soworlo &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Rebecca Abgenyo &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Lilian Ankomah &",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Sis Atobra &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Clara Prempeh &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Joana Entsie &",
             "edited": true
           },
           {
-            "text": "Hyɛ Nkɔmmɔ Ase",
+            "text": "Victoria Yeboah &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Adjoa Eshun &",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "Yɛ Asuafo",
+            "text": "Stephanie Onwona &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Cynthia Sam &",
             "edited": true
           },
           {
-            "text": "Yɛ Asuafo",
+            "text": "Selina Gyamfi &",
             "edited": true
           },
           {
-            "text": "Yɛ Sankɔhwɛ",
+            "text": "Lois Soworlo &",
             "edited": true
           },
           {
-            "text": "Ɔkasa",
+            "text": "Reuben Soworlo",
             "edited": true
           }
         ],
@@ -1921,7 +1921,7 @@
             "edited": true
           },
           {
-            "text": "Kyerɛkyerɛ Wo Gyidi",
+            "text": "Ephraim Sam &",
             "edited": true
           },
           {
@@ -2184,7 +2184,15 @@
         "Paul Asiedu",
         "Jesse Yeboah & Frank Essah",
         "Vivian Arhin & Cynthia Sam",
-        "Hyɛ Nkɔmmɔ Ase"
+        "Dora Asare &",
+        "Augusta Appiah &",
+        "Mercy Entsie &",
+        "Elizabeth Yeboah &",
+        "Owusuwaa Appiah &",
+        "Ryan Takie &",
+        "Erica Soworlo &",
+        "Rebecca Abgenyo &",
+        "Lilian Ankomah &"
       ],
       "standby": []
     },
@@ -2216,8 +2224,15 @@
         "Peace Yeboah & Selina Gyamfi",
         "Vivian Arhin & Stephanie Onwona",
         "Ephraim Sam",
-        "Hyɛ Nkɔmmɔ Ase",
-        "Yɛ Sankɔhwɛ"
+        "Tracy Yeboah &",
+        "Shadrach Asare &",
+        "Esther Takie &",
+        "Winfred Appiah &",
+        "Sis Atobra &",
+        "Clara Prempeh &",
+        "Joana Entsie &",
+        "Victoria Yeboah &",
+        "Adjoa Eshun &"
       ],
       "standby": []
     },
@@ -2250,10 +2265,14 @@
         "Margaret Entsie & Dora Asare",
         "Abigail Asiedu & Lois Soworlo",
         "Mary Entsie & Adwoa Onwona",
-        "Ɔkasa",
-        "Yɛ Asuafo",
-        "Hyɛ Nkɔmmɔ Ase",
-        "Yɛ Sankɔhwɛ"
+        "Adwoa Onwona &",
+        "Nancy Baidoo &",
+        "Juliana Entsie &",
+        "Stephanie Onwona &",
+        "Cynthia Sam &",
+        "Selina Gyamfi &",
+        "Lois Soworlo &",
+        "Reuben Soworlo"
       ],
       "standby": []
     },
@@ -2283,9 +2302,9 @@
         "Hilkiah Entsie",
         "AHIADE",
         "Derrick Yankson",
-        "Kyerɛkyerɛ Wo Gyidi Mu",
+        "Emmanuel Asante &",
         "Samuel Onwona",
-        "Kyerɛkyerɛ Wo Gyidi",
+        "Ephraim Sam &",
         "Michael Appiah"
       ],
       "standby": []
