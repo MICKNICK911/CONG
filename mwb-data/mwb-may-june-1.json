@@ -1281,7 +1281,7 @@
       "weeks": [
         {
           "range": "April 6 - 12",
-          "isCurrent": true
+          "isCurrent": false
         },
         {
           "range": "April 13 - 19",
@@ -1289,7 +1289,7 @@
         },
         {
           "range": "April 20 - 26",
-          "isCurrent": false
+          "isCurrent": true
         },
         {
           "range": "April 27 - May 3",
@@ -1576,73 +1576,73 @@
         ],
         "3": [
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           }
         ],
         "4": [
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "",
+            "text": "Ɔkasa",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Asuafo",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Asuafo",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           }
         ],
@@ -1660,7 +1660,7 @@
             "edited": true
           },
           {
-            "text": "",
+            "text": "Kyerɛkyerɛ Wo Gyidi Mu",
             "edited": true
           }
         ],
@@ -1829,90 +1829,90 @@
         ],
         "3": [
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Bible Akenkan",
             "edited": true
           },
           {
-            "text": "",
-            "edited": false
+            "text": "Bible Akenkan",
+            "edited": true
           }
         ],
         "4": [
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
-            "edited": false
+            "text": "Hyɛ Nkɔmmɔ Ase",
+            "edited": true
           }
         ],
         "5": [
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hyɛ Nkɔmmɔ Ase",
             "edited": true
           },
           {
-            "text": "",
-            "edited": false
+            "text": "Yɛ Sankɔhwɛ",
+            "edited": true
           }
         ],
         "6": [
           {
-            "text": "",
+            "text": "Yɛ Asuafo",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Asuafo",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Yɛ Sankɔhwɛ",
             "edited": true
           },
           {
-            "text": "",
-            "edited": false
+            "text": "Ɔkasa",
+            "edited": true
           }
         ],
         "7": [
@@ -1921,7 +1921,7 @@
             "edited": true
           },
           {
-            "text": "",
+            "text": "Kyerɛkyerɛ Wo Gyidi",
             "edited": true
           },
           {
@@ -2145,7 +2145,8 @@
         "Collins Yeboah",
         "Sadick Mohammed",
         "CONVENTION",
-        "Michael Obeng"
+        "Michael Obeng",
+        "Bible Akenkan"
       ],
       "standby": []
     },
@@ -2180,7 +2181,8 @@
         "Reuben Soworlo",
         "Paul Asiedu",
         "Jesse Yeboah & Frank Essah",
-        "Vivian Arhin & Cynthia Sam"
+        "Vivian Arhin & Cynthia Sam",
+        "Hyɛ Nkɔmmɔ Ase"
       ],
       "standby": []
     },
@@ -2211,7 +2213,9 @@
         "CONVENTION",
         "Peace Yeboah & Selina Gyamfi",
         "Vivian Arhin & Stephanie Onwona",
-        "Ephraim Sam"
+        "Ephraim Sam",
+        "Hyɛ Nkɔmmɔ Ase",
+        "Yɛ Sankɔhwɛ"
       ],
       "standby": []
     },
@@ -2243,7 +2247,11 @@
         "CONVENTION",
         "Margaret Entsie & Dora Asare",
         "Abigail Asiedu & Lois Soworlo",
-        "Mary Entsie & Adwoa Onwona"
+        "Mary Entsie & Adwoa Onwona",
+        "Ɔkasa",
+        "Yɛ Asuafo",
+        "Hyɛ Nkɔmmɔ Ase",
+        "Yɛ Sankɔhwɛ"
       ],
       "standby": []
     },
@@ -2273,7 +2281,9 @@
         "Hilkiah Entsie",
         "AHIADE",
         "Derrick Yankson",
+        "Kyerɛkyerɛ Wo Gyidi Mu",
         "Samuel Onwona",
+        "Kyerɛkyerɛ Wo Gyidi",
         "Michael Appiah"
       ],
       "standby": []
