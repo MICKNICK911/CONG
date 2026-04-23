@@ -1872,11 +1872,11 @@ const NoticeData = {
         ],
         "5": [
           {
-            "text": "Sis Atobra & Lois Soworlo",
+            "text": "Stephanie Onwona & Margaret Entsie",
             "edited": true
           },
           {
-            "text": "Clara Prempeh & Esther Takie",
+            "text": "Clara Prempeh & Esther Takie",
             "edited": true
           },
           {
@@ -1894,7 +1894,7 @@ const NoticeData = {
         ],
         "6": [
           {
-            "text": "Stephanie Onwona & Margaret Entsie",
+            "text": "Sis Atobra & Lois Soworlo",
             "edited": true
           },
           {
