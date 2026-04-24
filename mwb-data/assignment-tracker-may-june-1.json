@@ -607,7 +607,7 @@
     "MALES_41_9": "#ffff00",
     "FEMALES_27_9": "#ffff00",
     "FEMALES_25_9": "#ffff00",
-    "FEMALES_20_9": "#ffff00",
+    "FEMALES_20_9": "white",
     "FEMALES_17_9": "#ffff00",
     "FEMALES_2_9": "#ffff00",
     "FEMALES_43_9": "#ffff00",
@@ -628,6 +628,8 @@
     "FEMALES_34_10": "#ffff00",
     "FEMALES_27_10": "#ffff00",
     "MALES_30_9": "#ffff00",
-    "FEMALES_1_10": "#ffff00"
+    "FEMALES_1_10": "#ffff00",
+    "FEMALES_38_10": "white",
+    "FEMALES_36_10": "#ffff00"
   }
 }

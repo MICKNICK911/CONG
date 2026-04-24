@@ -1898,7 +1898,7 @@ const NoticeData = {
             "edited": true
           },
           {
-            "text": "Cynthia Sam & Joana Ekwama Entsie",
+            "text": "Cynthia Sam & Dora Asare",
             "edited": true
           },
           {
