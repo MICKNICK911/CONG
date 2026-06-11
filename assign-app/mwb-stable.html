@@ -2070,176 +2070,102 @@ function autoAssignRoles() {
         return;
     }
     
+    // Save state for undo
     previousState = structuredClone(allMonthsData[currentMonthId]);
     
     const currentMonthData = allMonthsData[currentMonthId];
     const numWeeks = currentMonthData.weeks.length;
     const roles = Object.keys(currentMonthData.roles);
     
-    const prevMonthIds = getPreviousMonths(currentMonthId, 3);
-    // Add current month to historical assignments
-    const allHistoricalMonths = [currentMonthId, ...prevMonthIds];
-    const historicalAssignments = getHistoricalAssignments(allHistoricalMonths);
-    
+    // ----- 1. Detect pair roles -----
+    // A role is treated as a "pair role" if any of its current assignments contain '&'.
+    const pairRoles = new Set();
     roles.forEach(role => {
+        const hasAmp = currentMonthData.roles[role].some(a => a.text.includes(' & '));
+        if (hasAmp) pairRoles.add(role);
+    });
+    
+    // ----- 2. Get previous month's last-week assignments -----
+    const prevMonthIds = getPreviousMonths(currentMonthId, 1);
+    let previousLastWeekNames = new Set();
+    if (prevMonthIds.length > 0) {
+        const prevMonth = allMonthsData[prevMonthIds[0]];
+        const lastWeekIndex = prevMonth.weeks.length - 1;
+        Object.values(prevMonth.roles).forEach(assignments => {
+            const text = assignments[lastWeekIndex].text;
+            if (text) {
+                text.split(' & ').forEach(name => {
+                    const cleaned = name.trim().toLowerCase();
+                    if (cleaned) previousLastWeekNames.add(cleaned);
+                });
+            }
+        });
+    }
+    
+    // ----- 3. Assign single-person roles with alternating pattern -----
+    roles.forEach(role => {
+        // Skip pair roles – leave them untouched
+        if (pairRoles.has(role)) return;
+        
+        // Skip if the role doesn't exist in categories (shouldn't happen, but be safe)
         const category = appCategories[role] || { normal: [], standby: [] };
-        const normalNames = [...category.normal];
-        const standbyNames = [...category.standby];
+        let availableNames = [...category.normal.map(n => n.trim())];
+        const standbyNames = category.standby.map(n => n.trim());
         
-        let availableNormal = [...normalNames];
-        let availableStandby = [...standbyNames];
-        
-        const isMultiNameRole = normalNames.some(name => name.includes(' & '));
-        
-        const weekAssignments = [];
-        for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
-            weekAssignments[weekIndex] = new Set();
+        // Remove names from previous month's last week
+        availableNames = availableNames.filter(name => !previousLastWeekNames.has(name.toLowerCase()));
+        // If not enough names left, add standby names that are not in previous week
+        if (availableNames.length < 2) {
+            const extraStandby = standbyNames.filter(name => !previousLastWeekNames.has(name.toLowerCase()) && !availableNames.includes(name));
+            availableNames = availableNames.concat(extraStandby);
         }
         
+        // If still < 2, relax constraint and allow previously used names
+        if (availableNames.length < 2) {
+            availableNames = [
+                ...new Set([
+                    ...category.normal.map(n => n.trim()),
+                    ...standbyNames
+                ])
+            ];
+        }
+        
+        // Shuffle the pool
+        availableNames = availableNames.sort(() => Math.random() - 0.5);
+        
+        // Pick two distinct names (or one if only one is available)
+        let nameA = availableNames[0] || '';
+        let nameB = availableNames.length > 1 ? availableNames[1] : nameA; // fallback to same if only one
+        
+        // If only one unique name is available, we still alternate but it will be the same name – that's okay as a last resort
+        if (nameA === nameB && availableNames.length === 1) {
+            // Only one person available; alternating is impossible but we'll still apply the pattern (same person every week)
+            showNotification(`Warning: Only one available name for role "${role}". Alternating pattern cannot be fully satisfied.`);
+        }
+        
+        // Assign weeks
         for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
-            if (currentMonthData.roles[role][weekIndex].edited) {
-                const names = currentMonthData.roles[role][weekIndex].text
-                    .split(' & ')
-                    .map(name => name.trim().toLowerCase())
-                    .filter(name => name);
-                names.forEach(name => weekAssignments[weekIndex].add(name));
-                continue;
-            }
-            
-            const prevWeekNames = weekIndex > 0 ? weekAssignments[weekIndex - 1] : new Set();
-            const nextWeekNames = weekIndex < numWeeks - 1 ? weekAssignments[weekIndex + 1] : new Set();
-            
-            const assignSingle = () => {
-                let selectedName = '';
-                for (let i = 0; i < 2; i++) {
-                    if (availableNormal.length > 0) {
-                        const shuffledNormal = availableNormal.sort(() => Math.random() - 0.5);
-                        for (const name of shuffledNormal) {
-                            const nameLower = name.toLowerCase();
-                            const recentAssignments = historicalAssignments[nameLower] || [];
-                            const recentCount = recentAssignments.filter(a => a.role === role).length;
-                            if (recentCount >= 3) continue;
-                            if (!weekAssignments[weekIndex].has(nameLower) &&
-                                !prevWeekNames.has(nameLower) &&
-                                !nextWeekNames.has(nameLower)) {
-                                selectedName = name;
-                                availableNormal = availableNormal.filter(n => n !== name);
-                                break;
-                            }
-                        }
-                        if (selectedName) break;
-                    }
-                    if (i === 1 && availableStandby.length > 0) {
-                        const shuffledStandby = availableStandby.sort(() => Math.random() - 0.5);
-                        for (const name of shuffledStandby) {
-                            const nameLower = name.toLowerCase();
-                            const recentAssignments = historicalAssignments[nameLower] || [];
-                            const recentCount = recentAssignments.filter(a => a.role === role).length;
-                            if (recentCount >= 3) continue;
-                            if (!weekAssignments[weekIndex].has(nameLower)) {
-                                selectedName = name;
-                                availableStandby = availableStandby.filter(n => n !== name);
-                                break;
-                            }
-                        }
-                    }
-                }
-                return selectedName;
-            };
-            
-            const assignMulti = () => {
-                let selectedNames = [];
-                for (let i = 0; i < 2; i++) {
-                    if (availableNormal.length >= 2) {
-                        const shuffledNormal = availableNormal.sort(() => Math.random() - 0.5);
-                        let pairFound = false;
-                        for (let j = 0; j < shuffledNormal.length - 1; j++) {
-                            const name1 = shuffledNormal[j];
-                            const name1Lower = name1.toLowerCase();
-                            if (weekAssignments[weekIndex].has(name1Lower) ||
-                                prevWeekNames.has(name1Lower) ||
-                                nextWeekNames.has(name1Lower)) {
-                                continue;
-                            }
-                            const recentAssignments1 = historicalAssignments[name1Lower] || [];
-                            const recentCount1 = recentAssignments1.filter(a => a.role === role).length;
-                            if (recentCount1 >= 3) continue;
-                            
-                            for (let k = j + 1; k < shuffledNormal.length; k++) {
-                                const name2 = shuffledNormal[k];
-                                const name2Lower = name2.toLowerCase();
-                                if (weekAssignments[weekIndex].has(name2Lower) ||
-                                    prevWeekNames.has(name2Lower) ||
-                                    nextWeekNames.has(name2Lower)) {
-                                    continue;
-                                }
-                                const recentAssignments2 = historicalAssignments[name2Lower] || [];
-                                const recentCount2 = recentAssignments2.filter(a => a.role === role).length;
-                                if (recentCount2 >= 3) continue;
-                                
-                                selectedNames = [name1, name2];
-                                availableNormal = availableNormal.filter(n => n !== name1 && n !== name2);
-                                pairFound = true;
-                                break;
-                            }
-                            if (pairFound) break;
-                        }
-                        if (pairFound) break;
-                    }
-                    if (i === 1 && availableStandby.length >= 2) {
-                        const shuffledStandby = availableStandby.sort(() => Math.random() - 0.5);
-                        let pairFound = false;
-                        for (let j = 0; j < shuffledStandby.length - 1; j++) {
-                            const name1 = shuffledStandby[j];
-                            const name1Lower = name1.toLowerCase();
-                            if (weekAssignments[weekIndex].has(name1Lower)) continue;
-                            const recentAssignments1 = historicalAssignments[name1Lower] || [];
-                            const recentCount1 = recentAssignments1.filter(a => a.role === role).length;
-                            if (recentCount1 >= 3) continue;
-                            
-                            for (let k = j + 1; k < shuffledStandby.length; k++) {
-                                const name2 = shuffledStandby[k];
-                                const name2Lower = name2.toLowerCase();
-                                if (weekAssignments[weekIndex].has(name2Lower)) continue;
-                                const recentAssignments2 = historicalAssignments[name2Lower] || [];
-                                const recentCount2 = recentAssignments2.filter(a => a.role === role).length;
-                                if (recentCount2 >= 3) continue;
-                                
-                                selectedNames = [name1, name2];
-                                availableStandby = availableStandby.filter(n => n !== name1 && n !== name2);
-                                pairFound = true;
-                                break;
-                            }
-                            if (pairFound) break;
-                        }
-                        if (pairFound) break;
-                    }
-                }
-                return selectedNames.length === 2 ? selectedNames.join(' & ') : '';
-            };
-            
-            let selected = '';
-            if (isMultiNameRole) {
-                selected = assignMulti();
+            let chosenName;
+            if (numWeeks === 1) {
+                chosenName = nameA;
+            } else if (weekIndex % 2 === 0) {
+                // Even weeks (0,2,4...) -> nameA
+                chosenName = nameA;
             } else {
-                selected = assignSingle();
+                // Odd weeks (1,3,5...) -> nameB
+                chosenName = nameB;
             }
             
-            if (selected) {
-                currentMonthData.roles[role][weekIndex] = { text: selected, edited: true };
-                selected.split(' & ').forEach(name => {
-                    const nameLower = name.trim().toLowerCase();
-                    weekAssignments[weekIndex].add(nameLower);
-                });
-            } else {
-                currentMonthData.roles[role][weekIndex] = { text: '', edited: true };
-            }
+            currentMonthData.roles[role][weekIndex] = {
+                text: chosenName,
+                edited: true
+            };
         }
     });
     
     saveToLocalStorage();
     renderTable();
-    showNotification('Auto-assignment completed!');
+    showNotification('Auto-assignment completed with alternating pattern!');
 }
 
 function undoAutoAssign() {
