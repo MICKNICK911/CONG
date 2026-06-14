@@ -1098,11 +1098,11 @@
         ],
         "3": [
           {
-            "text": "Akenkan",
+            "text": "Wonder Sowolo",
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Jesse Yeboah",
             "edited": true
           },
           {
@@ -1110,17 +1110,17 @@
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Samuel Larbi",
             "edited": true
           }
         ],
         "4": [
           {
-            "text": "Nkɔmmɔ",
+            "text": "Dora Asare &",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Perlita Gyafua &",
             "edited": true
           },
           {
@@ -1128,17 +1128,17 @@
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Nhyira Appiah &",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Sankɔhwɛ",
+            "text": "Vivian Arhin &",
             "edited": true
           },
           {
-            "text": "Sankɔhwɛ",
+            "text": "Margaret Entsie &",
             "edited": true
           },
           {
@@ -1146,17 +1146,17 @@
             "edited": true
           },
           {
-            "text": "Sankɔhwɛ",
+            "text": "Samuel Onwona & Francis Entsie",
             "edited": true
           }
         ],
         "6": [
           {
-            "text": "Isaac Arhin",
+            "text": "Barack Afriyie",
             "edited": true
           },
           {
-            "text": "Shadrach Asare &",
+            "text": "Shadrach Asare & Stanley Yamekpe",
             "edited": true
           },
           {
@@ -1164,7 +1164,7 @@
             "edited": true
           },
           {
-            "text": "Samuel Onwona &",
+            "text": "Reuben Sowolo & Lois Sowolo",
             "edited": true
           }
         ],
@@ -1351,67 +1351,67 @@
         ],
         "3": [
           {
-            "text": "Akenkan",
+            "text": "Paul Asiedu",
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Jeromoth Arhin",
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Ebenezer Normanyo",
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Raymond Sam",
             "edited": true
           },
           {
-            "text": "Akenkan",
+            "text": "Emmanuel Entsie",
             "edited": true
           }
         ],
         "4": [
           {
-            "text": "Nkɔmmɔ",
+            "text": "Naomi Entsie &",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Mawusi Appiah & Stephanie Onwona",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Sis Ofori & Esther Takie",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Hannah Adumoah &",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Joana Ekwama Entsie &",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Sankɔhwɛ",
+            "text": "Alimatu Saadia &",
             "edited": true
           },
           {
-            "text": "Sankɔhwɛ",
+            "text": "Mary Entsie &",
             "edited": true
           },
           {
-            "text": "Sankɔhwɛ",
+            "text": "Shulamite Sam &",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Jemimah Miezah & Tracy Yeboah",
             "edited": true
           },
           {
-            "text": "Nkɔmmɔ",
+            "text": "Rosina Yankson & Joana Entsie Snr",
             "edited": true
           }
         ],
@@ -1421,15 +1421,15 @@
             "edited": true
           },
           {
-            "text": "Asuafo",
+            "text": "Abigail Asiedua &",
             "edited": true
           },
           {
-            "text": "Asuafo",
+            "text": "Jonathan Arthur & Frank Essah",
             "edited": true
           },
           {
-            "text": "Paul Asiedu",
+            "text": "Isaac Arhin",
             "edited": true
           },
           {
@@ -1636,7 +1636,10 @@
         "Abel Eshun",
         "George Tenkorang",
         "Barack Ayisi",
-        "Akenkan"
+        "Wonder Sowolo",
+        "Jesse Yeboah",
+        "Samuel Larbi",
+        "Emmanuel Entsie"
       ],
       "standby": []
     },
@@ -1660,7 +1663,15 @@
         "Erica Soworlo & Nancy Baidoo",
         "Rebecca Abgenyo & Winifred Appiah",
         "Lilian Ankomah & Cynthia Sam",
-        "Nkɔmmɔ"
+        "Dora Asare &",
+        "Perlita Gyafua &",
+        "Nhyira Appiah &",
+        "Naomi Entsie &",
+        "Mawusi Appiah & Stephanie Onwona",
+        "Sis Ofori",
+        "Esther Takie",
+        "Hannah Adumoah &",
+        "Joana Ekwama Entsie &"
       ],
       "standby": []
     },
@@ -1683,8 +1694,14 @@
         "Joana Entsie & Mawusi Appiah",
         "Victoria Yeboah & Juliana Entsie",
         "Adjoa Eshun & Shulamite Sam",
-        "Sankɔhwɛ",
-        "Nkɔmmɔ"
+        "Vivian Arhin &",
+        "Margaret Entsie &",
+        "Samuel Onwona & Francis Entsie",
+        "Alimatu Saadia &",
+        "Mary Entsie &",
+        "Shulamite Sam &",
+        "Jemimah Miezah & Tracy Yeboah",
+        "Rosina Yankson & Joana Entsie Snr"
       ],
       "standby": []
     },
@@ -1709,11 +1726,13 @@
         "Selina Gyamfi & Mary Entsie",
         "Lois Soworlo & Hannah Adumoah",
         "Reuben Soworlo",
-        "Shadrach Asare &",
-        "Samuel Onwona &",
+        "Barack Afriyie",
+        "Shadrach Asare & Stanley Yamekpe",
+        "Reuben Sowolo",
+        "Lois Sowolo",
         "Hilkiah Entsie",
-        "Asuafo",
-        "Paul Asiedu",
+        "Abigail Asiedua &",
+        "Jonathan Arthur & Frank Essah",
         "Ephraim Sam"
       ],
       "standby": []
