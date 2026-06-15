@@ -620,7 +620,7 @@
     "FEMALES_19_10": "#ffff00",
     "FEMALES_21_17": "white",
     "FEMALES_15_10": "#ffff00",
-    "FEMALES_46_10": "white",
+    "FEMALES_46_10": "#ffff00",
     "FEMALES_43_10": "#ff0000",
     "FEMALES_6_10": "#ffff00",
     "FEMALES_33_10": "#ff0000",
@@ -629,7 +629,7 @@
     "FEMALES_27_10": "#ff0000",
     "MALES_30_9": "#ffff00",
     "FEMALES_1_10": "#ff0000",
-    "FEMALES_38_10": "white",
+    "FEMALES_38_10": "#ffff00",
     "FEMALES_36_10": "#ff0000",
     "MALES_0_10": "#ff0000",
     "MALES_3_10": "#ff0000",
@@ -666,6 +666,13 @@
     "FEMALES_20_14": "white",
     "FEMALES_0_10": "#ffff00",
     "FEMALES_3_10": "#ffff00",
-    "FEMALES_13_10": "#ffff00"
+    "FEMALES_13_10": "#ffff00",
+    "FEMALES_22_10": "#ffff00",
+    "FEMALES_22_14": "white",
+    "FEMALES_26_10": "#ffff00",
+    "FEMALES_31_10": "#ffff00",
+    "FEMALES_37_10": "#ffff00",
+    "FEMALES_40_10": "#ffff00",
+    "FEMALES_44_10": "white"
   }
 }

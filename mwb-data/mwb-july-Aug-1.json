@@ -733,11 +733,11 @@
         },
         {
           "range": "June 8 - 14",
-          "isCurrent": true
+          "isCurrent": false
         },
         {
           "range": "June 15 - 21",
-          "isCurrent": false
+          "isCurrent": true
         },
         {
           "range": "June 22 - 28",
@@ -1116,11 +1116,11 @@
         ],
         "4": [
           {
-            "text": "Dora Asare &",
+            "text": "Dora Asare & Juliana Entsie",
             "edited": true
           },
           {
-            "text": "Perlita Gyafua &",
+            "text": "Perlita Gyafua & Cynthia Sam",
             "edited": true
           },
           {
@@ -1128,17 +1128,17 @@
             "edited": true
           },
           {
-            "text": "Nhyira Appiah &",
+            "text": "Nhyira Appiah & Winifred Appiah",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Vivian Arhin &",
+            "text": "Vivian Arhin & Sis Atobora",
             "edited": true
           },
           {
-            "text": "Margaret Entsie &",
+            "text": "Margaret Entsie & Esther Takie",
             "edited": true
           },
           {
@@ -1242,11 +1242,11 @@
         ],
         "Opening Prayer": [
           {
-            "text": "",
+            "text": "Isaac Arhin",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Gideon Miezah",
             "edited": true
           },
           {
@@ -1254,17 +1254,17 @@
             "edited": true
           },
           {
-            "text": "",
+            "text": "Derrick Yankson",
             "edited": true
           }
         ],
         "Closing Prayer": [
           {
-            "text": "",
+            "text": "Kingsley Arhin",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Isaac Ampomah",
             "edited": true
           },
           {
@@ -1272,7 +1272,7 @@
             "edited": true
           },
           {
-            "text": "",
+            "text": "Emmanuel Asante",
             "edited": true
           }
         ]
@@ -1373,7 +1373,7 @@
         ],
         "4": [
           {
-            "text": "Naomi Entsie &",
+            "text": "Naomi Entsie & Augusta Appiah",
             "edited": true
           },
           {
@@ -1385,29 +1385,29 @@
             "edited": true
           },
           {
-            "text": "Hannah Adumoah &",
+            "text": "Hannah Adumoah & Selina Gyamfi",
             "edited": true
           },
           {
-            "text": "Joana Ekwama Entsie &",
+            "text": "Joana Ekwama Entsie & Tracy Yeboah",
             "edited": true
           }
         ],
         "5": [
           {
-            "text": "Alimatu Saadia &",
+            "text": "Alimatu Saadia & Lois Soworlo",
             "edited": true
           },
           {
-            "text": "Mary Entsie &",
+            "text": "Mary Entsie & Lilian Ankomah",
             "edited": true
           },
           {
-            "text": "Shulamite Sam &",
+            "text": "Shulamite Sam & Mercy Entsie",
             "edited": true
           },
           {
-            "text": "Jemimah Miezah & Tracy Yeboah",
+            "text": "Jemimah Miezah & Rebecca Abgenyo",
             "edited": true
           },
           {
@@ -1421,7 +1421,7 @@
             "edited": true
           },
           {
-            "text": "Abigail Asiedua &",
+            "text": "Abigail Asiedua & Victoria Yeboah",
             "edited": true
           },
           {
@@ -1527,45 +1527,45 @@
         ],
         "Opening Prayer": [
           {
-            "text": "",
+            "text": "Emmanuel Entsie",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Archibald Entsie",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Hilkiah Entsie",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Obed Gyamfi",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Shadrach Asare",
             "edited": true
           }
         ],
         "Closing Prayer": [
           {
-            "text": "",
+            "text": "Isaac Newton",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Reuben Sowolo",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Ephraim Sam",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Samuel Onwona",
             "edited": true
           },
           {
-            "text": "",
+            "text": "Paul Asiedu",
             "edited": true
           }
         ]
@@ -1663,15 +1663,15 @@
         "Erica Soworlo & Nancy Baidoo",
         "Rebecca Abgenyo & Winifred Appiah",
         "Lilian Ankomah & Cynthia Sam",
-        "Dora Asare &",
-        "Perlita Gyafua &",
-        "Nhyira Appiah &",
-        "Naomi Entsie &",
+        "Dora Asare & Juliana Entsie",
+        "Perlita Gyafua & Cynthia Sam",
+        "Nhyira Appiah & Winifred Appiah",
+        "Naomi Entsie & Augusta Appiah",
         "Mawusi Appiah & Stephanie Onwona",
         "Sis Ofori",
         "Esther Takie",
-        "Hannah Adumoah &",
-        "Joana Ekwama Entsie &"
+        "Hannah Adumoah & Selina Gyamfi",
+        "Joana Ekwama Entsie & Tracy Yeboah"
       ],
       "standby": []
     },
@@ -1694,13 +1694,13 @@
         "Joana Entsie & Mawusi Appiah",
         "Victoria Yeboah & Juliana Entsie",
         "Adjoa Eshun & Shulamite Sam",
-        "Vivian Arhin &",
-        "Margaret Entsie &",
+        "Vivian Arhin & Sis Atobora",
+        "Margaret Entsie & Esther Takie",
         "Samuel Onwona & Francis Entsie",
-        "Alimatu Saadia &",
-        "Mary Entsie &",
-        "Shulamite Sam &",
-        "Jemimah Miezah & Tracy Yeboah",
+        "Alimatu Saadia & Lois Soworlo",
+        "Mary Entsie & Lilian Ankomah",
+        "Shulamite Sam & Mercy Entsie",
+        "Jemimah Miezah & Rebecca Abgenyo",
         "Rosina Yankson & Joana Entsie Snr"
       ],
       "standby": []
@@ -1731,7 +1731,7 @@
         "Reuben Sowolo",
         "Lois Sowolo",
         "Hilkiah Entsie",
-        "Abigail Asiedua &",
+        "Abigail Asiedua & Victoria Yeboah",
         "Jonathan Arthur & Frank Essah",
         "Ephraim Sam"
       ],
@@ -1824,7 +1824,10 @@
         "Anthony Entsie",
         "Isaac Ampomah",
         "Emmanuel Entsie",
-        "Wonder Sowolo"
+        "Wonder Sowolo",
+        "Gideon Miezah",
+        "Derrick Yankson",
+        "Archibald Entsie"
       ],
       "standby": []
     },
@@ -1843,7 +1846,9 @@
         "Kingsley Arhin",
         "Isaac Arhin",
         "Isaac Newton",
-        "Abel Eshun"
+        "Abel Eshun",
+        "Reuben Sowolo",
+        "Samuel Onwona"
       ],
       "standby": []
     }
