@@ -1956,7 +1956,7 @@ const NoticeData = {
             "edited": true
           },
           {
-            "text": "Alexander Bawuah & Shulamite Sam",
+            "text": "Jemimah Miezah & Shulamite Sam",
             "edited": true
           }
         ],
