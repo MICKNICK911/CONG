@@ -1902,7 +1902,7 @@ const NoticeData = {
             "edited": true
           },
           {
-            "text": "Francis Entsie",
+            "text": "Foster Entsie",
             "edited": true
           }
         ],
