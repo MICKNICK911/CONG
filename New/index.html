@@ -66,6 +66,13 @@ textarea.cb{width:100%;height:90px;margin-top:8px;font:11px/1.3 monospace;color:
 .row.r-e{background:#fdd9d5}.row.r-h{background:#fff3c4}
 .ind{width:12px;height:12px;border-radius:50%;flex:none}.ind.e{background:#d93025}.ind.h{background:#f2b705}
 @media (prefers-color-scheme:dark){.row.r-e{background:#4a1e1b}.row.r-h{background:#4a3d0c}.ind.e{background:#f0645b}}
+.pwrap{margin-bottom:6px}.pw{display:flex;gap:6px}.pw .pn{margin:0;width:auto;flex:1;min-width:0}
+.dbtn{flex:none;min-height:44px;padding:0 12px;font-size:12px}.dbtn.on{background:var(--abg);color:var(--afg);border-color:var(--abd)}
+.pdates{margin:4px 0 0;padding:6px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--sec);font-size:12px}
+.pd{display:flex;flex-direction:column;padding:4px 0;border-bottom:1px solid var(--bd)}.pd:last-child{border-bottom:none}.pd span{color:var(--mut)}
+.pmo{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px;border-bottom:1px solid var(--bd)}
+.mchk{display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:0 10px;border:1px solid var(--bd);border-radius:16px;background:var(--card);font-size:12px;cursor:pointer}.mchk.on{background:var(--abg);color:var(--afg);border-color:var(--abd)}
+.pd .pp{color:var(--afg);font-weight:500}
 .wkgrid{display:block}
 @media screen and (min-width:900px){
  body{max-width:1600px;padding-left:28px;padding-right:28px}
@@ -233,7 +240,10 @@ function drawSheet(){
   if(!pe.length)box.appendChild(el('p','note','No one is ticked for '+cat+'. Add people in the People tab, or type a name below.'));
   pe.forEach(function(x){var why=conflict(w,i,x.name),b=el('button','pn');b.disabled=!!why;
    var l=el('span');l.appendChild(document.createTextNode(x.name));if(why){l.appendChild(document.createElement('br'));l.appendChild(el('small','warn',why))}
-   b.appendChild(l);b.appendChild(el('span','cnt',us[x.name]||0));b.onclick=function(){setName(p,x.name,cat,slots)};box.appendChild(b)});
+   b.appendChild(l);b.appendChild(el('span','cnt',us[x.name]||0));b.onclick=function(){setName(p,x.name,cat,slots)};
+   var wr=el('div','pwrap'),pr2=el('div','pw'),db=el('button','dbtn','Dates'),dl2=el('div','pdates');dl2.style.display='none';
+   db.onclick=function(){var o=dl2.style.display==='none';dl2.style.display=o?'block':'none';db.className='dbtn'+(o?' on':'');dl2.dataset.name=x.name;if(o)fillDates(dl2,x.name)};
+   pr2.appendChild(b);pr2.appendChild(db);wr.appendChild(pr2);wr.appendChild(dl2);box.appendChild(wr)});
   var oi=el('input');oi.placeholder='Or type a name';box.appendChild(oi);
   var ob=el('button','big','Use typed name');ob.onclick=function(){if(oi.value.trim())setName(p,oi.value.trim(),cat,slots)};box.appendChild(ob);
   var cr=el('button','big','Clear this cell');cr.onclick=function(){i.n=[];i.c='';save();ui.p=null;drawSheet();render()};box.appendChild(cr)}
@@ -243,6 +253,18 @@ function drawSheet(){
   if(i.sec>1&&i.ty!=='cbs'){var se=el('select');TYPES.forEach(function(t){var o=el('option','',t[1]);o.value=t[0];se.appendChild(o)});se.value=i.ty;se.onchange=function(){i.ty=se.value;save();ui.p=null;drawSheet();render()};f.appendChild(se)}
   var dn=el('button','big','Save changes');dn.onclick=function(){ui.p=null;drawSheet();render()};f.appendChild(dn);box.appendChild(f)}
  sh.appendChild(box)}
+function refreshDates(){Array.prototype.forEach.call(document.querySelectorAll('.pdates'),function(d){if(d.style.display!=='none')fillDates(d,d.dataset.name)})}
+function fillDates(box,name){
+ box.innerHTML='';ui.dm=ui.dm||{};
+ var ch=el('div','pmo');months().forEach(function(k){var on=ui.dm[k]!==false,l=el('label','mchk'+(on?' on':'')),c=el('input');c.type='checkbox';c.checked=on;
+  c.onchange=function(){ui.dm[k]=c.checked;refreshDates()};l.appendChild(c);l.appendChild(document.createTextNode(' '+MS[+k.slice(5)-1]+' '+k.slice(0,4)));ch.appendChild(l)});
+ box.appendChild(ch);
+ var n=0,list=el('div');
+ S.weeks.forEach(function(w){if(w.cv||ui.dm[w.mon.slice(0,7)]===false)return;vis(w).forEach(function(i){if(i.n.indexOf(name)<0)return;n++;
+  var r=el('div','pd');r.appendChild(el('b','',lab(w)+', '+w.mon.slice(0,4)));r.appendChild(el('span','',i.t));
+  if(i.n.filter(Boolean).length>1||i.c==='Duet'){var o=i.n.filter(function(x){return x&&x!==name})[0];r.appendChild(el('span','pp',o?'With '+o:'Partner not set'))}
+  list.appendChild(r)})});
+ box.appendChild(el('div','pd',n?n+' assignment'+(n>1?'s':'')+' in selected months':'Nothing in the selected months.'));box.appendChild(list)}
 function setName(p,name,cat,slots){
  var i=p.i,n=i.n.slice();if(slots===2)n[p.slot]=name;else n=[name];i.n=n;i.c=cat;save();
  if(slots===2&&p.slot===0&&!n[1]){p.slot=1;drawSheet()}else{ui.p=null;drawSheet()}render()}
