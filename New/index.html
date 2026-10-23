@@ -60,6 +60,24 @@ nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;padding:8px 10px
 body.vw{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}body.vw nav{display:none}
 textarea.cb{width:100%;height:90px;margin-top:8px;font:11px/1.3 monospace;color:inherit;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px}
 #print{display:none}
+.card.cv{background:#fdecea;border-color:#e57373}
+.card.co{background:#e6f5ec;border-color:#5fb887}
+@media (prefers-color-scheme:dark){.card.cv{background:#3a1715;border-color:#c0504a}.card.co{background:#10301f;border-color:#2f8a5a}}
+.row.r-e{background:#fdd9d5}.row.r-h{background:#fff3c4}
+.ind{width:12px;height:12px;border-radius:50%;flex:none}.ind.e{background:#d93025}.ind.h{background:#f2b705}
+@media (prefers-color-scheme:dark){.row.r-e{background:#4a1e1b}.row.r-h{background:#4a3d0c}.ind.e{background:#f0645b}}
+.wkgrid{display:block}
+@media screen and (min-width:900px){
+ body{max-width:1600px;padding-left:28px;padding-right:28px}
+ h1{font-size:22px}
+ .tab{flex:none;min-width:150px}
+ .wkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;align-items:start}
+ .wkgrid .card{margin:0}
+ #v.v-people,#v.v-create,#v.v-set{max-width:600px;margin-left:auto;margin-right:auto}
+ nav{max-width:640px}
+ #sheet.open{align-items:center;justify-content:center}
+ .sh{border-radius:16px;max-width:600px;max-height:85vh;margin:0;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+}
 @media print{
  @page{size:letter;margin:.5in .55in}
  body{padding:0;max-width:none;color:#000;background:#fff}#app,#sheet,nav{display:none!important}#print{display:block}
@@ -136,6 +154,8 @@ function keyOf(w,i){if(w.cv)return null;if(w.co&&i.ty==='cbs')return'C.O Talk';r
 function vis(w){return w.co?w.items.filter(function(i){return i.ty!=='rd'}):w.items}
 function nums(w){var n=0;return w.items.map(function(i){return i.sec>0&&i.ty!=='rd'?++n:0})}
 function ttl(w,i){var t=(w.co&&i.ty==='cbs')?'Circuit Overseer First Talk':i.t;return t+(i.m?' ('+i.m+' min.)':'')}
+function fillSt(w,i){var k=keyOf(w,i);if(!k||k==='C.O Talk')return'';var c=i.n.filter(Boolean).length,need=(i.c==='Duet'||k==='Duet')?2:1;return c===0?'e':c<need?'h':''}
+function secSt(w,si){var r='';w.items.forEach(function(i){if(i.sec!==si||vis(w).indexOf(i)<0)return;var s=fillSt(w,i);if(s==='e')r='e';else if(s==='h'&&r!=='e')r='h'});return r}
 function nmText(i){var n=i.n.filter(Boolean).join(' & ');return(i.c==='Duet'&&i.n.filter(Boolean).length===1)?n+' & …':n}
 /* rules + usage */
 function wkOf(mon){return S.weeks.filter(function(w){return w.mon===mon})[0]}
@@ -156,7 +176,7 @@ function go(v){view=v;render();window.scrollTo(0,0)}
 function render(){
  ['sched','people','create','stats','set'].forEach(function(v){$('n_'+v).className='nv'+(view===v?' on':'')});
  $('ttl').textContent=S.settings.cong||'Midweek schedule';
- var box=$('v');box.innerHTML='';({sched:schedView,people:peopleView,create:createView,stats:statsView,set:setView})[view](box)}
+ var box=$('v');box.innerHTML='';box.className='v-'+view;({sched:schedView,people:peopleView,create:createView,stats:statsView,set:setView})[view](box)}
 /* schedule */
 function schedView(box){
  var ms=months();if(!ms.length){box.appendChild(el('p','note',VIEW?'No schedule has been published yet.':'No weeks yet. Open Create to add some.'));return}
@@ -168,9 +188,9 @@ function schedView(box){
  var lg=el('div');lg.id='leg';Object.keys(cnt).forEach(function(k){var b=el('button','chip'+(sel===k?' on':''));b.appendChild(dot(k));b.appendChild(document.createTextNode(k+' · '+cnt[k]));b.onclick=function(){sel=sel===k?null:k;render()};lg.appendChild(b)});box.appendChild(lg);
  var bar=el('div','bar2'),pb=el('button','','Print month'),ea=el('button','',all?'Collapse all':'Expand all');
  pb.onclick=function(){printMonth(ws)};ea.onclick=function(){all=!all;op={};render()};bar.appendChild(pb);bar.appendChild(ea);box.appendChild(bar);
- ws.forEach(function(w){box.appendChild(card(w))})}
+ var gr=el('div','wkgrid');ws.forEach(function(w){gr.appendChild(card(w))});box.appendChild(gr)}
 function card(w){
- var c=el('div','card'),h=el('div','wk',lab(w));if(w.cv)h.appendChild(el('span','ev','Convention week'));c.appendChild(h);
+ var c=el('div','card'+(w.cv?' cv':w.co?' co':'')),h=el('div','wk',lab(w));if(w.cv)h.appendChild(el('span','ev','Convention week'));c.appendChild(h);
  var tg=el('div','tg');
  tg.appendChild(sw('Convention week',w.cv,function(){w.cv=!w.cv;save();render()}));
  tg.appendChild(sw('C.O week',w.co,function(){w.co=!w.co;save();render()}));if(!VIEW)c.appendChild(tg);
@@ -181,6 +201,7 @@ function card(w){
   if(!rows.length)return;
   var key=w.id+'-'+si,o=all||op[key]||sel,s=el('div','sec'),hd=el('button','hd');
   var b=el('span','bar');b.style.background=sc.c;hd.appendChild(b);hd.appendChild(el('span','hl',sc.n));
+  if(!VIEW&&!w.cv){var ss=secSt(w,si);if(ss){var ind=el('span','ind '+ss);ind.title=ss==='e'?'Empty slots':'Pair incomplete';hd.appendChild(ind)}}
   var mn=el('span','mini');rows.forEach(function(p){var k=keyOf(w,p[0]);if(k)mn.appendChild(dot(k))});hd.appendChild(mn);
   hd.appendChild(el('span','chev'+(o?' o':''),'▾'));hd.onclick=function(){op[key]=!o;render()};s.appendChild(hd);
   if(o){
@@ -191,7 +212,7 @@ function card(w){
  if(w.cv)c.appendChild(el('p','note','Convention week: no keys or assignments.'));
  var dl=el('button','del','Delete this week');dl.onclick=function(){if(confirm('Delete '+lab(w)+'?')){S.weeks.splice(S.weeks.indexOf(w),1);save();render()}};if(!VIEW)c.appendChild(dl);return c}
 function row(w,i,n){
- var k=keyOf(w,i),r=el('div','row'),t=el('div','rt');t.appendChild(el('span','num',n?n:''));t.appendChild(el('span','',ttl(w,i)));r.appendChild(t);
+ var k=keyOf(w,i),fs=VIEW?'':fillSt(w,i),r=el('div','row'+(fs==='e'?' r-e':fs==='h'?' r-h':'')),t=el('div','rt');t.appendChild(el('span','num',n?n:''));t.appendChild(el('span','',ttl(w,i)));r.appendChild(t);
  if(k){var a=el('div','ra');a.appendChild(badge(k));if(VIEW){var vt=i.n.filter(Boolean).join(' & ');a.appendChild(el('span','vn'+(vt?'':' empty'),vt||'—'))}else{var tx=nmText(i),b=el('button','nm'+(tx?(tx.slice(-1)==='…'?' half':''):' empty'),tx||'Assign');b.onclick=function(){ui.p={w:w,i:i,slot:0,cat:null,back:false};drawSheet()};a.appendChild(b)}r.appendChild(a)}
  return r}
 /* picker sheet */
