@@ -1,0 +1,2678 @@
+{
+ "settings": {
+  "cong": "",
+  "start": "19:00",
+  "adj": true,
+  "conc": true
+ },
+ "people": [
+  {
+   "name": "Jesse Yeboah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Mark Arhibald Entsie",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Abel Ekow Eshun",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Raymond Sam",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Frank Essah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Ephraim Sam",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Hilkiah Entsie",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Emmanuel Entsie",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Francis Entsie",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Foster Entsie",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Kingsley Arhin",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Obed Gyamfi",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Collins Yeboah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Isaac Ampomah",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Sadick Mohammed",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Augustine Appiah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Alexander Ankomah",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Derrick Yankson",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Gideon Miezah",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Dickson Onwona",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Samuel Onwona",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Paul Asiedu",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Isaac Newton Sam",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Daniel Boakye",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Stephen Essilfie",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Wonder Soworlo",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Reuben Soworlo",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Emmanuel Asante",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Ebenezer Normanyo",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Isaac Arhin",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Samuel Larbi",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Boaz Yeboah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Joseph Eshun",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Kwasi Amponsah",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Michael Appiah",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Shadrach Asare",
+   "cats": [
+    "Ms"
+   ]
+  },
+  {
+   "name": "Jeromoth Arhin",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Stanley Yamekpe",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "John Essel",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Michael Obeng",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Mark Anthony Entsie",
+   "cats": [
+    "Eld"
+   ]
+  },
+  {
+   "name": "Jonathan Arthur",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "George Tenkorang",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Barack Ayisi",
+   "cats": [
+    "Pub"
+   ]
+  },
+  {
+   "name": "Tracy Yeboah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Margaret Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Mary Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Joana Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Naomi Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Claudia Polley",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Esther Takie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Adjoa Eshun",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Gloria Adobea",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Claudia Sam",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Joan Sam",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Joana Sam",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Adwoa Onwona",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Stephanie Onwona",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Christina Amponsah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Nancy Baidoo",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Elizabeth Yeboah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Abigail Asiedua",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Winifred Appiah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Juliana Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Joana Ekwama Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Lois Ofosu",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Mercy Entsie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Vivian Arhin",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Perlita Gyafua",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Alimatu Saadia",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Augusta Appiah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Mawusi Appiah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Owusuwaa Appiah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Nhyira Appiah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Barbara Amponsah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Lilian Ankomah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Rosina Yankson",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Jemimah Miezah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Lois Soworlo",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Erica Soworlo",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Dora Asare",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Victoria Yeboah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Selina Gyamfi",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Barbara Asamoah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Rebecca Abgenyo",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Adelaide Allotey",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Pricilla Essel",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Hannah Adumoah",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Clara Prempeh",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Cynthia Sam",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Sis Atobora",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Mariama Mohammed",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Ryan Takie",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Shulamite Sam",
+   "cats": [
+    "Duet"
+   ]
+  },
+  {
+   "name": "Sis Ofori",
+   "cats": [
+    "Duet"
+   ]
+  }
+ ],
+ "lastBackup": "",
+ "weeks": [
+  {
+   "id": "w2026-09-07",
+   "mon": "2026-09-07",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Michael Appiah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Gideon Miezah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Isaac Ampomah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Samuel Onwona"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Mark Anthony Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Sadick Mohammed"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Lois Soworlo",
+      "Alimatu Saadia"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Adwoa Onwona",
+      "Margaret Entsie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Tracy Yeboah",
+      "Hannah Adumoah"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "liv",
+     "t": "Title",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Obed Gyamfi"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Wonder Soworlo"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-09-14",
+   "mon": "2026-09-14",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Derrick Yankson"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Alexander Ankomah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Ephraim Sam"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Mark Arhibald Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Emmanuel Asante"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Stephen Essilfie"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Selina Gyamfi",
+      "Abigail Asiedua"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Victoria Yeboah",
+      "Mary Entsie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Nancy Baidoo",
+      "Naomi Entsie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "eb",
+     "t": "Explaining Your Beliefs",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Reuben Soworlo",
+      "Samuel Larbi"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "liv",
+     "t": "Nneɛma a Asafo No Atumi Ayɛ",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Kingsley Arhin"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Isaac Newton Sam"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-09-21",
+   "mon": "2026-09-21",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Abel Ekow Eshun"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Wonder Soworlo"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Emmanuel Entsie"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Gideon Miezah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Dickson Onwona"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Hilkiah Entsie"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Augusta Appiah",
+      "Dora Asare"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Joana Entsie",
+      "Ryan Takie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "ww",
+     "t": "What Would You Say?",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Michael Appiah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "liv",
+     "t": "Title",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Isaac Ampomah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Obed Gyamfi"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-09-28",
+   "mon": "2026-09-28",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Mark Anthony Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Derrick Yankson"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Raymond Sam"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Isaac Newton Sam"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Shadrach Asare"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Stanley Yamekpe"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Mercy Entsie",
+      "Vivian Arhin"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Esther Takie",
+      "Joana Ekwama Entsie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "ww",
+     "t": "What Would You Say?",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Alexander Ankomah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "liv",
+     "t": "Title",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Emmanuel Asante"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Mark Arhibald Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-10-05",
+   "mon": "2026-10-05",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Wonder Soworlo"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Shadrach Asare"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Mark Arhibald Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Hilkiah Entsie"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Derrick Yankson"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Francis Entsie"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Rebecca Abgenyo",
+      "Alimatu Saadia"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Cynthia Sam",
+      "Mawusi Appiah"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Sis Atobora",
+      "Jemimah Miezah"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "eb",
+     "t": "Explaining Your Beliefs",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Samuel Onwona",
+      "Ebenezer Normanyo"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "liv",
+     "t": "Title",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Michael Appiah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Abel Ekow Eshun"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-10-12",
+   "mon": "2026-10-12",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Dickson Onwona"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Isaac Arhin"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Reuben Soworlo"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Kingsley Arhin"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Gideon Miezah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Michael Obeng"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Erica Soworlo",
+      "Hannah Adumoah"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Lilian Ankomah",
+      "Clara Prempeh"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "ww",
+     "t": "What Would You Say?",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Obed Gyamfi"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "ln",
+     "t": "Local Needs",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Mark Anthony Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-10-19",
+   "mon": "2026-10-19",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Mark Arhibald Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Samuel Onwona"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Michael Appiah"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Isaac Ampomah"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Abel Ekow Eshun"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Frank Essah"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Juliana Entsie",
+      "Rosina Yankson"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Stephanie Onwona",
+      "Dora Asare"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "eb",
+     "t": "Explaining Your Beliefs",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Shadrach Asare",
+      "Isaac Arhin"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "tk",
+     "t": "Talk",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Raymond Sam"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "liv",
+     "t": "Title",
+     "m": 15,
+     "sec": 3,
+     "n": [
+      "Isaac Newton Sam"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Derrick Yankson"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-10-26",
+   "mon": "2026-10-26",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Kingsley Arhin"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Mark Anthony Entsie"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [
+      "Hilkiah Entsie"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t1",
+     "t": "Title",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Wonder Soworlo"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [
+      "Ephraim Sam"
+     ],
+     "c": "Ms"
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [
+      "Francis Entsie"
+     ],
+     "c": "Pub"
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [
+      "Winifred Appiah",
+      "Ryan Takie"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [
+      "Adjoa Eshun",
+      "Pricilla Essel"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "eb",
+     "t": "Explaining Your Beliefs",
+     "m": 5,
+     "sec": 2,
+     "n": [
+      "Alexander Ankomah",
+      "Shulamite Sam"
+     ],
+     "c": "Duet"
+    },
+    {
+     "ty": "ln",
+     "t": "Local Needs",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [
+      "Dickson Onwona"
+     ],
+     "c": "Eld"
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-11-02",
+   "mon": "2026-11-02",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Help Others Benefit From…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Never Forget What Jehovah…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-11-09",
+   "mon": "2026-11-09",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Learn From the Warning…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "tk",
+     "t": "Talk",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Our Donations Glorify God’s…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-11-16",
+   "mon": "2026-11-16",
+   "cv": false,
+   "co": true,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "An Understandable Response…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "ww",
+     "t": "What Would You Say?",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Do Not Forget Our Inactive…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-11-23",
+   "mon": "2026-11-23",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Do Not Give Out When…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "tk",
+     "t": "Talk",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Help Caregivers Not to Give…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-11-30",
+   "mon": "2026-11-30",
+   "cv": true,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Keep Pace With Jehovah’s…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "tk",
+     "t": "Talk",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "ln",
+     "t": "Local Needs",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-12-07",
+   "mon": "2026-12-07",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Why We Preach Fearlessly",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "ln",
+     "t": "Local Needs",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-12-14",
+   "mon": "2026-12-14",
+   "cv": false,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Idolaters Break Jehovah’s…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "ww",
+     "t": "What Would You Say?",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Why Refrain From…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-12-21",
+   "mon": "2026-12-21",
+   "cv": true,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Jehovah’s Day Will Come on…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "md",
+     "t": "Making Disciples",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Imagine the Outcome",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  },
+  {
+   "id": "w2026-12-28",
+   "mon": "2026-12-28",
+   "cv": true,
+   "co": false,
+   "bible": "",
+   "songs": [
+    "",
+    "",
+    ""
+   ],
+   "items": [
+    {
+     "ty": "ch",
+     "t": "Chairman",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Opening Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "pr",
+     "t": "Closing Prayer",
+     "m": null,
+     "sec": 0,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t1",
+     "t": "Help Others to Survive…",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t2",
+     "t": "Spiritual Gems",
+     "m": 10,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "t3",
+     "t": "Bible Reading",
+     "m": 4,
+     "sec": 1,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "sc",
+     "t": "Starting a Conversation",
+     "m": 3,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "fu",
+     "t": "Following Up",
+     "m": 4,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "eb",
+     "t": "Explaining Your Beliefs",
+     "m": 5,
+     "sec": 2,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "liv",
+     "t": "Save Yourself and Those Who…",
+     "m": 15,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "cbs",
+     "t": "Congregation Bible Study",
+     "m": 30,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    },
+    {
+     "ty": "rd",
+     "t": "Reader",
+     "m": null,
+     "sec": 3,
+     "n": [],
+     "c": ""
+    }
+   ]
+  }
+ ]
+}
