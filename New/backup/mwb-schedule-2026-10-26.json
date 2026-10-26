@@ -3,7 +3,8 @@
   "cong": "SARPEIMAN EAST TWI CONG",
   "start": "18:30",
   "adj": true,
-  "conc": true
+  "conc": true,
+  "lang": "tw"
  },
  "people": [
   {
@@ -577,7 +578,7 @@
    ]
   }
  ],
- "lastBackup": "2026-10-23",
+ "lastBackup": "2026-10-26",
  "weeks": [
   {
    "id": "w2026-09-07",
@@ -1689,11 +1690,11 @@
    "mon": "2026-11-02",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "YEREMIA 49-50",
    "songs": [
-    "",
-    "",
-    ""
+    "1",
+    "44",
+    "33"
    ],
    "items": [
     {
@@ -1761,24 +1762,33 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Dora Asare",
+      "Stephanie Onwona"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "fu",
      "t": "Following Up",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Joana Ekwama Entsie",
+      "Sis Ofori"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "md",
      "t": "Making Disciples",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Mary Entsie",
+      "Nancy Baidoo"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "liv",
@@ -1817,11 +1827,11 @@
    "mon": "2026-11-09",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "YEREMIA 51-52",
    "songs": [
-    "",
-    "",
-    ""
+    "98",
+    "10",
+    "150"
    ],
    "items": [
     {
@@ -1889,24 +1899,32 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Hannah Adumoah",
+      "Victoria Yeboah"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "sc",
      "t": "Starting a Conversation",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Mawusi Appiah",
+      "Rebecca Abgenyo"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "tk",
      "t": "Talk",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Reuben Soworlo"
+     ],
+     "c": "Pub"
     },
     {
      "ty": "liv",
@@ -1945,11 +1963,11 @@
    "mon": "2026-11-16",
    "cv": false,
    "co": true,
-   "bible": "",
+   "bible": "KWADWOM 1-2",
    "songs": [
-    "",
-    "",
-    ""
+    "28",
+    "90",
+    "75"
    ],
    "items": [
     {
@@ -1968,9 +1986,9 @@
      "m": null,
      "sec": 0,
      "n": [
-      "Emmanuel Entsie"
+      "Hilkiah Entsie"
      ],
-     "c": "Pub"
+     "c": "Ms"
     },
     {
      "ty": "pr",
@@ -2017,24 +2035,32 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Esther Takie",
+      "Adjoa Eshun"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "fu",
      "t": "Following Up",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Naomi Entsie",
+      "Cynthia Sam"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "ww",
      "t": "What Would You Say?",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Ephraim Sam"
+     ],
+     "c": "Ms"
     },
     {
      "ty": "liv",
@@ -2071,11 +2097,11 @@
    "mon": "2026-11-23",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "KWADWOM 3-5",
    "songs": [
-    "",
-    "",
-    ""
+    "158",
+    "109",
+    "74"
    ],
    "items": [
     {
@@ -2143,24 +2169,32 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Ryan Takie",
+      "Juliana Entsie"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "sc",
      "t": "Starting a Conversation",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Shulamite Sam",
+      "Adwoa Onwona"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "tk",
      "t": "Talk",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Emmanuel Entsie"
+     ],
+     "c": "Pub"
     },
     {
      "ty": "liv",
@@ -2309,11 +2343,11 @@
    "mon": "2026-12-07",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "HESEKIEL 3-4",
    "songs": [
-    "",
-    "",
-    ""
+    "71",
+    "161",
+    "7"
    ],
    "items": [
     {
@@ -2381,24 +2415,33 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Clara Prempeh",
+      "Lois Soworlo"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "sc",
      "t": "Starting a Conversation",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Alimatu Saadia",
+      "Cynthia Sam"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "md",
      "t": "Making Disciples",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Margaret Entsie",
+      "Lilian Ankomah"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "ln",
@@ -2437,11 +2480,11 @@
    "mon": "2026-12-14",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "HESEKIEL 5-6",
    "songs": [
-    "",
-    "",
-    ""
+    "49",
+    "153",
+    "133"
    ],
    "items": [
     {
@@ -2509,24 +2552,32 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Nhyira Appiah",
+      "Joana Entsie"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "fu",
      "t": "Following Up",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Abigail Asiedua",
+      "Selina Gyamfi"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "ww",
      "t": "What Would You Say?",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Derrick Yankson"
+     ],
+     "c": "Eld"
     },
     {
      "ty": "liv",
@@ -2565,11 +2616,11 @@
    "mon": "2026-12-21",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "HESEKIEL 7-8",
    "songs": [
-    "",
-    "",
-    ""
+    "128",
+    "139",
+    "154"
    ],
    "items": [
     {
@@ -2637,24 +2688,33 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Perlita Gyafua",
+      "Victoria Yeboah"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "fu",
      "t": "Following Up",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Rosina Yankson",
+      "Adwoa Onwona"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "md",
      "t": "Making Disciples",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Jemimah Miezah",
+      "Christina Amponsah"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "liv",
@@ -2693,11 +2753,11 @@
    "mon": "2026-12-28",
    "cv": false,
    "co": false,
-   "bible": "",
+   "bible": "HESEKIEL 9-10",
    "songs": [
-    "",
-    "",
-    ""
+    "119",
+    "60",
+    "135"
    ],
    "items": [
     {
@@ -2765,24 +2825,33 @@
      "t": "Starting a Conversation",
      "m": 3,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Owusuwaa Appiah",
+      "Rebecca Abgenyo"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "fu",
      "t": "Following Up",
      "m": 4,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Vivian Arhin",
+      "Nancy Baidoo"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "eb",
      "t": "Explaining Your Beliefs",
      "m": 5,
      "sec": 2,
-     "n": [],
-     "c": ""
+     "n": [
+      "Winifred Appiah",
+      "Esther Takie"
+     ],
+     "c": "Duet"
     },
     {
      "ty": "liv",
