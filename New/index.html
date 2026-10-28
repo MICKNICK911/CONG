@@ -157,6 +157,94 @@ function L(x){return isTw()&&TW[x]?TW[x]:x}
 function MINS(m){return isTw()?'(Simma '+m+')':'('+m+' min.)'}
 function sk(x){return String(x||'').replace(/[^A-Za-z0-9]/g,'').toLowerCase()}
 var MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],ML=['January','February','March','April','May','June','July','August','September','October','November','December'];
+/*__PDF_PATCH_HELPERS__*/
+var _pdfHint=null;
+function firstMondayOf(y,m){var d=new Date(Date.UTC(y,m,1));while(d.getUTCDay()!==1)d.setUTCDate(d.getUTCDate()+1);return iso(d)}
+function findBible(lines){
+  var PAT=/[1-3]?\s*[A-Z][A-Z'’\-]*(?:\s+[A-Z][A-Z'’\-]*)*\s+\d{1,3}\s*[-–—]\s*\d{1,3}/;
+  var OLD=/\|\s*([1-3]?\s*[A-Z][A-Z'’\-]*(?:\s+[A-Z][A-Z'’\-]*)*\s+\d{1,3}\s*[-–—]\s*\d{1,3})/;
+  for(var i=0;i<lines.length;i++){
+    var s=lines[i].replace(/\s+/g,' ').trim().toUpperCase();
+    if(!s)continue;
+    if(/^SONG\s+\d+/.test(s))continue;
+    if(/^\d{1,3}$/.test(s))continue;
+    if(/^\d{1,2}\.\s/.test(s))continue;
+    var m=s.match(OLD)||s.match(PAT);
+    if(m)return(m[1]||m[0]).replace(/\s+/g,' ').trim();
+  }
+  return '';
+}
+function splitPartLine(line){
+  var re=/(^|\s)(\d{1,2})\.\s+/g,m,idxs=[];
+  while((m=re.exec(line))!==null)idxs.push({n:+m[2],start:m.index,content:re.lastIndex});
+  if(!idxs.length)return null;
+  var out=[];
+  for(var i=0;i<idxs.length;i++){
+    var end=i+1<idxs.length?idxs[i+1].start:line.length;
+    out.push({n:idxs[i].n,text:line.slice(idxs[i].content,end).trim()});
+  }
+  return out;
+}
+function parsePageWeeks(P,m0,yr){
+  if(!P.length)return [];
+  var weekStart=/^\s*1\.\s+\S.*\((?:Simma\s+\d+|\d+\s*min)/i;
+  var weekPages=[];
+  P.forEach(function(lines,pi){
+    if(pi===0)return;
+    if(lines.some(function(ln){return weekStart.test(ln)}))weekPages.push(pi);
+  });
+  if(!weekPages.length)return [];
+  var coverTxt=(P[0]||[]).join(' ').toUpperCase();
+  var cm=coverTxt.match(/JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER/);
+  var startMonth=cm?MN.indexOf(cm[0]):(m0>=0?m0:(_pdfHint?_pdfHint.month:0));
+  var useYear=_pdfHint?_pdfHint.year:yr;
+  var firstMon=firstMondayOf(useYear,startMonth);
+  var W=[];
+  weekPages.forEach(function(pi,wi){
+    var cur={key:'auto-'+wi,sm:startMonth,day:0,mon:add(firstMon,7*wi),bible:findBible(P[pi]),songs:['','',''],parts:[]};
+    var sec=1;
+    var songSlot=0;
+    var open=null;
+    var end=weekPages[wi+1]||P.length;
+    function close(){
+      if(!open)return;
+      var t=open.text,mm=minM(t);
+      var ti=twFix((mm?t.slice(0,mm.index):t).replace(/[\s,;:–-]+$/g,'').trim());
+      if(!cur.parts.some(function(p){return p.sec===open.sec&&p.n===open.n}))
+        cur.parts.push({sec:open.sec,n:open.n,t:ti,m:mm?Math.max(+mm[1],+(mm[2]||0)):null});
+      open=null;
+    }
+    for(var p=pi;p<end;p++){
+      P[p].forEach(function(ln){
+        var k=sk(ln);
+        if(k==='treasuresfromgodsword'||k==='biblemuakorade'){close();sec=1;return}
+        if(k==='applyyourselftothefieldministry'||k==='mawaninkuasnkaho'){close();sec=2;return}
+        if(k==='livingaschristians'||k==='kristofoabrab'){close();sec=3;return}
+        var sg=ln.match(/\bSong\s+(\d+)/i)||ln.match(/(?:^|\s)Dwom\s+(\d+)(?![\d:])/);
+        if(sg&&!open){
+          if(songSlot<3){cur.songs[songSlot]=sg[1];songSlot++}
+          return;
+        }
+        var segs=splitPartLine(ln);
+        if(segs){
+          for(var si=0;si<segs.length;si++){
+            close();
+            open={sec:sec,n:segs[si].n,text:segs[si].text};
+            if(minM(open.text))close();
+          }
+        }else if(open){
+          open.text+=' '+ln;
+          if(open.text.length>200)open=null;
+          if(open&&minM(open.text))close();
+        }
+      });
+    }
+    close();
+    W.push(cur);
+  });
+  return W;
+}
+
 var VIEW=false,S,st,view='sched',mi=0,sel=null,op={},all=false,ui={cn:4,keep:false,src:'',cd:''};
 function $(i){return document.getElementById(i)}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
@@ -457,8 +545,8 @@ function parseLines(P){
    if(m&&sec){close();open={sec:sec,n:+m[1],text:m[2]}}else if(open){open.text+=' '+ln;if(open.text.length>200)open=null}
    if(open&&minM(open.text))close()});
   close()});
- var f=W.length?(m0>-1?m0:W[0].sm):-1;var na=0,nb=0;P.forEach(function(Ls){Ls.forEach(function(x){if(/\(Simma\s+\d/.test(x))na++;if(/\d\s*min\.?\)/i.test(x))nb++})});return{weeks:W,m0:f,year:yr,lang:na>nb?'tw':'en'}}
-function monFor(r,R){var y=r.sm<R.m0?R.year+1:R.year;return monOf(iso(new Date(Date.UTC(y,r.sm,r.day))))}
+ var na=0,nb=0;P.forEach(function(Ls){Ls.forEach(function(x){if(/\(Simma\s+\d/.test(x))na++;if(/\d\s*min\.?\)/i.test(x))nb++})});var lang=na>nb?'tw':'en';if(!W.length){W=parsePageWeeks(P,m0,yr);}var f=W.length?(m0>-1?m0:W[0].sm):-1;return{weeks:W,m0:f,year:yr,lang:lang}}
+function monFor(r,R){if(r.mon)return r.mon;var y=r.sm<R.m0?R.year+1:R.year;return monOf(iso(new Date(Date.UTC(y,r.sm,r.day))))}
 function buildWeek(r){
  var I=[it('ch','Chairman',null,0),it('pr','Opening Prayer',null,0),it('pr','Closing Prayer',null,0)],P=r.parts,cb=null;
  P.filter(function(p){return p.sec===1}).forEach(function(p,i){I.push(it(['t1','t2','t3'][i]||'x',p.t,p.m,1))});
@@ -473,7 +561,7 @@ function warns(r){var o=[],c=function(s){return r.parts.filter(function(p){retur
 function pickPdf(btn){var f=document.createElement('input');f.type='file';f.accept='application/pdf';
  f.onchange=function(){if(!f.files[0])return;var t=btn.textContent;btn.textContent='Reading PDF…';
   f.files[0].arrayBuffer().then(pdfLines).then(function(L){btn.textContent=t;if(!L.length){alert('No text found. Scanned PDFs are not supported.');return}
-   var R=parseLines(L);if(!R.weeks.length){alert('No week headings such as "NOVEMBER 2-8" were found.');return}
+   var _fn=(f.files[0]&&f.files[0].name)||'',_fm=_fn.match(/mwb_[A-Za-z]+_(\d{4})(\d{2})/i);if(_fm)_pdfHint={year:+_fm[1],month:+_fm[2]-1};var R=parseLines(L);if(!R.weeks.length){alert('No week headings such as "NOVEMBER 2-8" were found.');return}
    R.weeks.forEach(function(r){r.on=true});R.mode='keep';ui.imp=R;drawReview()}).catch(function(e){btn.textContent=t;alert('Could not read the PDF. Check that libs/pdf.min.mjs and libs/pdf.worker.min.mjs are next to index.html and that the app is opened from Netlify, not from a file. ('+(e&&e.message||e)+')')})};f.click()}
 function drawReview(){
  var R=ui.imp,sh=$('sheet');sh.innerHTML='';if(!R){sh.className='';return}sh.className='open';
@@ -483,6 +571,7 @@ function drawReview(){
  if(ex){b.appendChild(el('p','note','Some weeks already exist. For those weeks:'));var cb=el('div','ch2');[['keep','Keep names'],['replace','Replace week'],['skip','Skip']].forEach(function(m){var x=el('button',R.mode===m[0]?'on':'',m[1]);x.onclick=function(){R.mode=m[0];drawReview()};cb.appendChild(x)});b.appendChild(cb)}
  R.weeks.forEach(function(r){var w=buildWeek(r),mon=monFor(r,R),c=el('div','card'),h=el('label','wk'),ck=el('input');ck.type='checkbox';ck.checked=r.on;ck.onchange=function(){r.on=ck.checked;drawReview()};h.appendChild(ck);
   h.appendChild(document.createTextNode(' '+lab({mon:mon})+(wkOf(mon)?' (exists)':'')+(r.bible?' · '+r.bible:'')+(r.songs.some(Boolean)?' · songs '+r.songs.join('/'):'')));c.appendChild(h);
+  var bbi=el('input');bbi.type='text';bbi.placeholder='Bible reading';bbi.value=r.bible||'';bbi.oninput=function(){r.bible=bbi.value};c.appendChild(bbi);
   var n=0;w.items.forEach(function(i){if(i.sec<1||i.ty==='rd')return;n++;var k=PRE[i.ty]||'Eld-Ms',d=el('div','note',n+'. '+i.t+(i.m?' ('+i.m+' min.) ':' (no min.) ')+'· '+k+(i.df?' · default':''));c.appendChild(d)});
   warns(r).forEach(function(x){c.appendChild(el('div','warn',x))});b.appendChild(c)});
  var go2=el('button','big','Import selected weeks');go2.onclick=applyImp;b.appendChild(go2);sh.appendChild(b)}
