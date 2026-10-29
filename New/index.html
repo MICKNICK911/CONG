@@ -48,8 +48,6 @@ input[type=checkbox]{width:auto;height:auto}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd);max-width:560px;margin:0 auto}
 .nv{flex:1;height:44px;font-size:12px;padding:0 2px}
 .sw2{overflow-x:auto;border:1px solid var(--bd);border-radius:10px}.st{border-collapse:separate;border-spacing:0;font-size:11px}.st th,.st td{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:0;min-width:54px;height:30px;text-align:center}.st th{background:var(--sec);font-weight:500;padding:4px 3px;line-height:1.2}.st .nc{position:sticky;left:0;z-index:1;min-width:110px;max-width:130px;text-align:left;padding:0 8px;background:var(--bg);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.st th.nc{background:var(--sec);z-index:2}.st td.cvc{background:var(--sec)}.st td.tot{font-weight:600;font-size:12px}
-
-/* ---- month band tints (stats table) ---- */
 .st .m0{--mt:#eef4fb;--mh:#dbe8f6;--me:#a9c4e0}
 .st .m1{--mt:#fcf6ea;--mh:#f6e8c9;--me:#dcc088}
 .st .m2{--mt:#ecf5ee;--mh:#d7ecdb;--me:#a9c9af}
@@ -141,7 +139,292 @@ textarea.cb{width:100%;height:90px;margin-top:8px;font:11px/1.3 monospace;color:
 </nav>
 <div id="sheet"></div>
 <div id="print"></div>
+
+<script type="text/plain" id="aiPrompt">
+You are converting a JW Meeting Workbook PDF into a JSON file for a
+scheduling web app. The PDF is attached. Read it carefully before
+producing any output.
+
+==================== STEP 0 — CONFIRM YOU CAN READ IT ====================
+
+Before doing anything else, reply with a short list in this exact form
+and nothing else:
+
+  Week 1: <Month> <D1>-<D2>   (e.g. "January 4-10")
+  Week 2: ...
+  ...
+  Total: N weeks
+  Bible readings found: yes / no
+  Songs found: yes / no
+
+If you cannot read the PDF text layer, say "Cannot extract text — please
+upload a text version" and STOP.
+
+Do not produce the JSON yet. Wait for my "go ahead" reply.
+
+==================== STEP 1 — OUTPUT FORMAT ====================
+
+After I say "go ahead", reply with ONE fenced code block:
+
+```json
+{ ... }
+```
+
+No prose before or after. No explanations. No markdown around it.
+The block must be valid JSON (paste-able directly into the app).
+
+==================== STEP 2 — TOP-LEVEL SCHEMA ====================
+
+The object has exactly these four keys, in this order:
+
+"settings"   — object (see Step 3)
+"people"     — array  (see Step 3)
+"lastBackup" — "" (empty string)
+"weeks"      — array  (see Step 4)
+
+Do not add any other top-level keys. Do not rename them. Do not
+reorder them. Order inside each object is also fixed — see examples.
+
+==================== STEP 3 — SETTINGS AND PEOPLE ====================
+
+If I pasted my current "settings" and "people" blocks at the top of my
+message, copy them verbatim into the output.
+
+If I did NOT paste them, use:
+
+"settings": {
+"cong": "",
+"start": "19:00",
+"adj": true,
+"conc": true,
+"lang": "en"
+},
+
+"people": [],
+
+(Note: importing JSON in the app REPLACES settings and people. So if I
+pasted my blocks, you MUST copy them — otherwise my congregation name
+and people list would be lost.)
+
+==================== STEP 4 — WEEK DATES ====================
+
+Every week object has these fields IN THIS ORDER:
+
+id, mon, cv, co, bible, songs, items
+
+· "id":   "w" + mon       →  "w2027-01-04"
+· "mon":  the Monday of that week, "YYYY-MM-DD"
+· "cv":   true if the page is a Convention Week, else false
+· "co":   true if the page is a Circuit Overseer visit week, else false
+· "bible": the Bible reading printed at the TOP of the week page,
+  uppercase, e.g. "EZEKIEL 11-12". If absent, use "".
+· "songs": array of exactly 3 strings (opening, middle, concluding).
+  If a song is missing, use "".
+· "items": array (see Step 5)
+
+How to derive the dates:
+
+· The cover shows "JANUARY-FEBRUARY 2027" (or similar).
+· Find the FIRST MONDAY of the first month of the cover.
+· Week 1 = that Monday. Week 2 = +7 days. Week 3 = +7 more. Etc.
+· Verify against the printed dates on the pages if visible.
+
+For Jan-Feb 2027 the first Monday is 2027-01-04.
+For Mar-Apr 2027 the first Monday is 2027-03-01.
+For May-Jun 2027 the first Monday is 2027-05-03.
+For Jul-Aug 2027 the first Monday is 2027-07-05.
+For Sep-Oct 2027 the first Monday is 2027-09-06.
+For Nov-Dec 2027 the first Monday is 2027-11-01.
+
+==================== STEP 5 — ITEMS ====================
+
+Every week has these items in this order:
+
+1. Chairman            ty:"ch"  m:null   sec:0  t:"Chairman"
+2. Opening Prayer      ty:"pr"  m:null   sec:0  t:"Opening Prayer"
+3. Closing Prayer      ty:"pr"  m:null   sec:0  t:"Closing Prayer"
+4. Treasures part 1    ty:"t1"  m:<N>    sec:1  t:<actual title>
+5. Spiritual Gems      ty:"t2"  m:10     sec:1  t:"Spiritual Gems"
+6. Bible Reading       ty:"t3"  m:4      sec:1  t:"Bible Reading"
+   7-10. Ministry parts   ty:<see> m:<N>    sec:2  t:<actual title>
+   ...   Living part      ty:"liv" m:<N>    sec:3  t:<actual title>
+   or Local Needs      ty:"ln"  m:<N>    sec:3  t:"Local Needs"
+   ...
+   Congregation
+   Bible Study    ty:"cbs" m:30     sec:3  t:"Congregation Bible Study"
+   Reader           ty:"rd"  m:null   sec:3  t:"Reader"
+
+Number of Ministry parts (7-10 above) varies by week:
+
+· 2 parts: following-up pair
+· 3 parts: starting/following/explaining
+· 4 parts: "Making Disciples" series
+  Use whatever the PDF prints. Keep them in printed order.
+
+Ministry part type mapping (printed title → ty):
+"Starting a Conversation"     → "sc"
+"Following Up"                → "fu"
+"Making Disciples"            → "md"
+"Explaining Your Beliefs"     → "eb"
+"Talk"                        → "tk"
+"What Would You Say?"         → "ww"
+
+Living part mapping:
+"Local Needs"                 → "ln"
+Anything else in Living       → "liv"
+"Annual Service Report"       → "liv"
+"Memorial Campaign ..."       → "liv"
+"Convention/Assembly" notices → "liv"
+
+Minutes ("m"):
+
+· Parse from "(N min.)" or "(Simma N)" after the title.
+· For range like "(3 or 4 min.)" use the larger number.
+· Use null ONLY for ch, pr, rd.
+· Use integers (no quotes) for everything else.
+
+Section (sec):
+
+· ch, pr                  → 0
+· t1, t2, t3              → 1
+· sc, fu, md, eb, tk, ww  → 2
+· liv, ln, cbs, rd        → 3
+
+Titles ("t"):
+
+· For fixed parts (ch, pr, t2, t3, cbs, rd, ln) use the exact
+  strings shown in the list above.
+· For t1, sc, fu, md, eb, tk, ww, liv use the printed title from
+  the PDF, WITHOUT the "(N min.)" suffix.
+· Preserve curly quotes " " as printed.
+· If the title is truncated on the page with "…", keep it.
+· If the PDF is Twi, keep Twi titles verbatim.
+
+==================== STEP 6 — n AND c ====================
+
+THIS IS CRITICAL. READ TWICE.
+
+Every item has exactly these two assignment fields:
+
+"n": []          ← ALWAYS an empty array. NEVER put a name in it.
+"c": "<value>"   ← fill using the table below.
+
+The "c" value depends only on "ty":
+
+ty    key template       fill "c" with
+────────────────────────────────────────
+ch    Eld                "Eld"
+pr    Pub-Ms-Eld         "Pub"
+t1    Eld-Ms             "Eld"
+t2    Eld-Ms             "Eld"
+t3    Pub                "Pub"
+sc    Duet               "Duet"
+fu    Duet               "Duet"
+md    Duet               "Duet"
+eb    Duet-Pub           "Duet"
+tk    Pub                "Pub"
+ww    Eld-Ms             "Eld"
+liv   Eld-Ms             "Eld"
+ln    LN                 ""
+cbs   Eld                "Eld"
+rd    Eld-Ms             ""
+
+Two special cases override the table:
+
+A) Convention Week (cv: true):
+EVERY item gets  "n": [],  "c": ""
+(no assignments at all)
+
+B) Circuit Overseer Week (co: true):
+The cbs item gets  "c": "C.O Talk"  (with "n": [])
+Everything else follows the table.
+
+Do NOT invent names. Do NOT try to balance or suggest people.
+Do NOT add a "key" field. "c" IS the key per your instruction.
+
+==================== STEP 7 — WORKED EXAMPLE ====================
+
+Here is exactly what week 1 (2027-01-04) must look like. Use it as the
+template for object key order and formatting:
+
+{
+"id": "w2027-01-04",
+"mon": "2027-01-04",
+"cv": false,
+"co": false,
+"bible": "EZEKIEL 11-12",
+"songs": ["83", "2", "164"],
+"items": [
+{ "ty": "ch",  "t": "Chairman",                              "m": null, "sec": 0, "n": [], "c": "Eld"  },
+{ "ty": "pr",  "t": "Opening Prayer",                        "m": null, "sec": 0, "n": [], "c": "Pub"  },
+{ "ty": "pr",  "t": "Closing Prayer",                        "m": null, "sec": 0, "n": [], "c": "Pub"  },
+{ "ty": "t1",  "t": "“Perhaps They Will Take Notice”",       "m": 10,   "sec": 1, "n": [], "c": "Eld"  },
+{ "ty": "t2",  "t": "Spiritual Gems",                        "m": 10,   "sec": 1, "n": [], "c": "Eld"  },
+{ "ty": "t3",  "t": "Bible Reading",                         "m": 4,    "sec": 1, "n": [], "c": "Pub"  },
+{ "ty": "fu",  "t": "Following Up",                          "m": 3,    "sec": 2, "n": [], "c": "Duet" },
+{ "ty": "fu",  "t": "Following Up",                          "m": 4,    "sec": 2, "n": [], "c": "Duet" },
+{ "ty": "ww",  "t": "What Would You Say?",                   "m": 5,    "sec": 2, "n": [], "c": "Eld"  },
+{ "ty": "ln",  "t": "Local Needs",                           "m": 15,   "sec": 3, "n": [], "c": ""     },
+{ "ty": "cbs", "t": "Congregation Bible Study",              "m": 30,   "sec": 3, "n": [], "c": "Eld"  },
+{ "ty": "rd",  "t": "Reader",                                "m": null, "sec": 3, "n": [], "c": ""     }
+]
+}
+
+Note the key order inside each item: ty, t, m, sec, n, c.
+Use that order EXACTLY, with the same spacing shown above.
+
+==================== STEP 8 — WHAT NOT TO DO ====================
+
+DO NOT:
+
+· Put any name in any "n" field. Every "n" is [].
+· Add extra fields (no "key", "assigned", "status", "notes", "title_extra").
+· Remove any of the six required fields (ty, t, m, sec, n, c).
+· Use 0 for m where null is required (ch, pr, rd).
+· Use "" for m where a number is expected.
+· Reorder top-level keys or item keys.
+· Merge weeks.
+· Skip weeks that "look like" convention weeks — still emit them with
+  cv: true and all c: "".
+· Add weeks that aren't in the PDF.
+· Format as pretty-printed JSON spanning multiple pages; the app
+  requires a single valid object (2-space indent is fine).
+· Wrap the JSON block in commentary.
+
+==================== STEP 9 — SELF-VERIFICATION ====================
+
+Before outputting, silently check each of these:
+
+[ ] Number of "weeks" equals the number confirmed in Step 0.
+[ ] Every "mon" is a Monday (getUTCDay() === 1).
+[ ] Every week has at least 12 items, at most 15.
+[ ] Every item has exactly six fields in order: ty, t, m, sec, n, c.
+[ ] Every "n" equals [].
+[ ] Every "c" is one of: "", "Eld", "Ms", "Pub", "Duet", "LN", "C.O Talk".
+[ ] Every "cv: true" week has every "c" equal to "".
+[ ] Every "co: true" week's cbs item has "c": "C.O Talk".
+[ ] "bible" is uppercase or empty.
+[ ] "songs" has exactly 3 elements.
+[ ] The whole thing parses as JSON.
+
+If any check fails, fix it before outputting. Never output an invalid
+object.
+
+==================== STEP 10 — RESPOND ====================
+
+Now produce the JSON code block as specified in Step 1.
+
+After the code block, on a new line, add exactly one line:
+
+Weeks: N · Bible readings: M/N · Songs: K/N
+
+where N is total weeks, M is weeks whose "bible" is non-empty, K is
+weeks whose "songs" has 3 non-empty entries. This is for me to verify
+the AI didn't silently drop data.
+</script>
+
 <script src="libs/jszip.min.js"></script>
+
 <script>
 
 /*PUBLISHED_START*/var PUBLISHED={"at":"2026-10-27","settings":{"cong":"SARPEIMAN EAST TWI CONG","start":"18:30","lang":"tw"},"weeks":[{"id":"w2026-09-07","mon":"2026-09-07","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Michael Appiah"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Gideon Miezah"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Isaac Ampomah"],"c":"Ms"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Samuel Onwona"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Sadick Mohammed"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Lois Soworlo","Alimatu Saadia"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Adwoa Onwona","Margaret Entsie"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Tracy Yeboah","Hannah Adumoah"],"c":"Duet"},{"ty":"liv","t":"Title","m":15,"sec":3,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-09-14","mon":"2026-09-14","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Alexander Ankomah"],"c":"Eld"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Ephraim Sam"],"c":"Ms"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Emmanuel Asante"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Stephen Essilfie"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Selina Gyamfi","Abigail Asiedua"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Victoria Yeboah","Mary Entsie"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Nancy Baidoo","Naomi Entsie"],"c":"Duet"},{"ty":"eb","t":"Explaining Your Beliefs","m":5,"sec":2,"n":["Reuben Soworlo","Samuel Larbi"],"c":"Duet"},{"ty":"liv","t":"Nneɛma a Asafo No Atumi Ayɛ","m":15,"sec":3,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-09-21","mon":"2026-09-21","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Emmanuel Entsie"],"c":"Pub"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Gideon Miezah"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Augusta Appiah","Dora Asare"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Joana Entsie","Ryan Takie"],"c":"Duet"},{"ty":"ww","t":"What Would You Say?","m":5,"sec":2,"n":["Michael Appiah"],"c":"Eld"},{"ty":"liv","t":"Title","m":15,"sec":3,"n":["Isaac Ampomah"],"c":"Ms"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-09-28","mon":"2026-09-28","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Raymond Sam"],"c":"Pub"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Shadrach Asare"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Stanley Yamekpe"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Mercy Entsie","Vivian Arhin"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Esther Takie","Joana Ekwama Entsie"],"c":"Duet"},{"ty":"ww","t":"What Would You Say?","m":5,"sec":2,"n":["Alexander Ankomah"],"c":"Eld"},{"ty":"liv","t":"Title","m":15,"sec":3,"n":["Emmanuel Asante"],"c":"Ms"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-10-05","mon":"2026-10-05","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Shadrach Asare"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Francis Entsie"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Rebecca Abgenyo","Alimatu Saadia"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Cynthia Sam","Mawusi Appiah"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Sis Atobora","Jemimah Miezah"],"c":"Duet"},{"ty":"eb","t":"Explaining Your Beliefs","m":5,"sec":2,"n":["Samuel Onwona","Ebenezer Normanyo"],"c":"Duet"},{"ty":"liv","t":"Title","m":15,"sec":3,"n":["Michael Appiah"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-10-12","mon":"2026-10-12","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Isaac Arhin"],"c":"Pub"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Reuben Soworlo"],"c":"Pub"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Gideon Miezah"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Michael Obeng"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Erica Soworlo","Hannah Adumoah"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Lilian Ankomah","Clara Prempeh"],"c":"Duet"},{"ty":"ww","t":"What Would You Say?","m":5,"sec":2,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"ln","t":"Local Needs","m":15,"sec":3,"n":[],"c":""},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-10-19","mon":"2026-10-19","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Samuel Onwona"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Michael Appiah"],"c":"Eld"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Isaac Ampomah"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Frank Essah"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Juliana Entsie","Rosina Yankson"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Stephanie Onwona","Dora Asare"],"c":"Duet"},{"ty":"eb","t":"Explaining Your Beliefs","m":5,"sec":2,"n":["Shadrach Asare","Isaac Arhin"],"c":"Duet"},{"ty":"tk","t":"Talk","m":5,"sec":2,"n":["Raymond Sam"],"c":"Pub"},{"ty":"liv","t":"Title","m":15,"sec":3,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-10-26","mon":"2026-10-26","cv":false,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"t1","t":"Title","m":10,"sec":1,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Ephraim Sam"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Francis Entsie"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Winifred Appiah","Ryan Takie"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Adjoa Eshun","Pricilla Essel"],"c":"Duet"},{"ty":"eb","t":"Explaining Your Beliefs","m":5,"sec":2,"n":["Jemimah Miezah","Shulamite Sam"],"c":"Duet"},{"ty":"ln","t":"Local Needs","m":15,"sec":3,"n":[],"c":""},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-11-02","mon":"2026-11-02","cv":false,"co":false,"bible":"YEREMIA 49-50","songs":["1","44","33"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Barack Ayisi"],"c":"Pub"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Michael Appiah"],"c":"Eld"},{"ty":"t1","t":"Help Others Benefit From…","m":10,"sec":1,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Shadrach Asare"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Jeromoth Arhin"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Dora Asare","Stephanie Onwona"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Joana Ekwama Entsie","Sis Ofori"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Mary Entsie","Nancy Baidoo"],"c":"Duet"},{"ty":"liv","t":"Never Forget What Jehovah…","m":15,"sec":3,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-11-09","mon":"2026-11-09","cv":false,"co":false,"bible":"YEREMIA 51-52","songs":["98","10","150"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Gideon Miezah"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Alexander Ankomah"],"c":"Eld"},{"ty":"t1","t":"Learn From the Warning…","m":10,"sec":1,"n":["Emmanuel Asante"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Ebenezer Normanyo"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Hannah Adumoah","Victoria Yeboah"],"c":"Duet"},{"ty":"sc","t":"Starting a Conversation","m":4,"sec":2,"n":["Mawusi Appiah","Rebecca Abgenyo"],"c":"Duet"},{"ty":"tk","t":"Talk","m":5,"sec":2,"n":["Reuben Soworlo"],"c":"Pub"},{"ty":"liv","t":"Our Donations Glorify God’s…","m":15,"sec":3,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-11-16","mon":"2026-11-16","cv":false,"co":true,"bible":"KWADWOM 1-2","songs":["28","90","75"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"t1","t":"An Understandable Response…","m":10,"sec":1,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Isaac Ampomah"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Jesse Yeboah"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Esther Takie","Adjoa Eshun"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Naomi Entsie","Cynthia Sam"],"c":"Duet"},{"ty":"ww","t":"What Would You Say?","m":5,"sec":2,"n":["Ephraim Sam"],"c":"Ms"},{"ty":"liv","t":"Do Not Forget Our Inactive…","m":15,"sec":3,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Circuit Overseer"],"c":"C.O Talk"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-11-23","mon":"2026-11-23","cv":false,"co":false,"bible":"KWADWOM 3-5","songs":["158","109","74"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Emmanuel Asante"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"t1","t":"Do Not Give Out When…","m":10,"sec":1,"n":["Samuel Onwona"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["George Tenkorang"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Ryan Takie","Juliana Entsie"],"c":"Duet"},{"ty":"sc","t":"Starting a Conversation","m":4,"sec":2,"n":["Shulamite Sam","Adwoa Onwona"],"c":"Duet"},{"ty":"tk","t":"Talk","m":5,"sec":2,"n":["Emmanuel Entsie"],"c":"Pub"},{"ty":"liv","t":"Help Caregivers Not to Give…","m":15,"sec":3,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Michael Appiah"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-11-30","mon":"2026-11-30","cv":true,"co":false,"bible":"","songs":["","",""],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":[],"c":""},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":[],"c":""},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":[],"c":""},{"ty":"t1","t":"Keep Pace With Jehovah’s…","m":10,"sec":1,"n":[],"c":""},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":[],"c":""},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":[],"c":""},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":[],"c":""},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":[],"c":""},{"ty":"tk","t":"Talk","m":4,"sec":2,"n":[],"c":""},{"ty":"ln","t":"Local Needs","m":15,"sec":3,"n":[],"c":""},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":[],"c":""},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":[],"c":""}]},{"id":"w2026-12-07","mon":"2026-12-07","cv":false,"co":false,"bible":"HESEKIEL 3-4","songs":["71","161","7"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Isaac Ampomah"],"c":"Ms"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"t1","t":"Why We Preach Fearlessly","m":10,"sec":1,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Alexander Ankomah"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Samuel Larbi"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Clara Prempeh","Lois Soworlo"],"c":"Duet"},{"ty":"sc","t":"Starting a Conversation","m":4,"sec":2,"n":["Alimatu Saadia","Cynthia Sam"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Margaret Entsie","Lilian Ankomah"],"c":"Duet"},{"ty":"ln","t":"Local Needs","m":15,"sec":3,"n":["Ahiade"],"c":"LN"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-12-14","mon":"2026-12-14","cv":false,"co":false,"bible":"HESEKIEL 5-6","songs":["49","153","133"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Reuben Soworlo"],"c":"Pub"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"t1","t":"Idolaters Break Jehovah’s…","m":10,"sec":1,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Samuel Onwona"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Foster Entsie"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Nhyira Appiah","Joana Entsie"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Abigail Asiedua","Selina Gyamfi"],"c":"Duet"},{"ty":"ww","t":"What Would You Say?","m":5,"sec":2,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"liv","t":"Why Refrain From…","m":15,"sec":3,"n":["Michael Appiah"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Abel Ekow Eshun"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-12-21","mon":"2026-12-21","cv":false,"co":false,"bible":"HESEKIEL 7-8","songs":["128","139","154"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Wonder Soworlo"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Isaac Arhin"],"c":"Pub"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Shadrach Asare"],"c":"Ms"},{"ty":"t1","t":"Jehovah’s Day Will Come on…","m":10,"sec":1,"n":["Gideon Miezah"],"c":"Ms"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Kingsley Arhin"],"c":"Eld"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Paul Asiedu"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Perlita Gyafua","Victoria Yeboah"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Rosina Yankson","Adwoa Onwona"],"c":"Duet"},{"ty":"md","t":"Making Disciples","m":5,"sec":2,"n":["Jemimah Miezah","Christina Amponsah"],"c":"Duet"},{"ty":"liv","t":"Imagine the Outcome","m":15,"sec":3,"n":["Dickson Onwona"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Mark Anthony Entsie"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]},{"id":"w2026-12-28","mon":"2026-12-28","cv":false,"co":false,"bible":"HESEKIEL 9-10","songs":["119","60","135"],"items":[{"ty":"ch","t":"Chairman","m":null,"sec":0,"n":["Isaac Newton Sam"],"c":"Eld"},{"ty":"pr","t":"Opening Prayer","m":null,"sec":0,"n":["Raymond Sam"],"c":"Pub"},{"ty":"pr","t":"Closing Prayer","m":null,"sec":0,"n":["Mark Arhibald Entsie"],"c":"Eld"},{"ty":"t1","t":"Help Others to Survive…","m":10,"sec":1,"n":["Michael Appiah"],"c":"Eld"},{"ty":"t2","t":"Spiritual Gems","m":10,"sec":1,"n":["Hilkiah Entsie"],"c":"Ms"},{"ty":"t3","t":"Bible Reading","m":4,"sec":1,"n":["Sadick Mohammed"],"c":"Pub"},{"ty":"sc","t":"Starting a Conversation","m":3,"sec":2,"n":["Owusuwaa Appiah","Rebecca Abgenyo"],"c":"Duet"},{"ty":"fu","t":"Following Up","m":4,"sec":2,"n":["Vivian Arhin","Nancy Baidoo"],"c":"Duet"},{"ty":"eb","t":"Explaining Your Beliefs","m":5,"sec":2,"n":["Winifred Appiah","Esther Takie"],"c":"Duet"},{"ty":"liv","t":"Save Yourself and Those Who…","m":15,"sec":3,"n":["Obed Gyamfi"],"c":"Eld"},{"ty":"cbs","t":"Congregation Bible Study","m":30,"sec":3,"n":["Derrick Yankson"],"c":"Eld"},{"ty":"rd","t":"Reader","m":null,"sec":3,"n":["Reader of the week"],"c":"Eld"}]}]};/*PUBLISHED_END*/
@@ -157,94 +440,6 @@ function L(x){return isTw()&&TW[x]?TW[x]:x}
 function MINS(m){return isTw()?'(Simma '+m+')':'('+m+' min.)'}
 function sk(x){return String(x||'').replace(/[^A-Za-z0-9]/g,'').toLowerCase()}
 var MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],ML=['January','February','March','April','May','June','July','August','September','October','November','December'];
-/*__PDF_PATCH_HELPERS__*/
-var _pdfHint=null;
-function firstMondayOf(y,m){var d=new Date(Date.UTC(y,m,1));while(d.getUTCDay()!==1)d.setUTCDate(d.getUTCDate()+1);return iso(d)}
-function findBible(lines){
-  var PAT=/[1-3]?\s*[A-Z][A-Z'’\-]*(?:\s+[A-Z][A-Z'’\-]*)*\s+\d{1,3}\s*[-–—]\s*\d{1,3}/;
-  var OLD=/\|\s*([1-3]?\s*[A-Z][A-Z'’\-]*(?:\s+[A-Z][A-Z'’\-]*)*\s+\d{1,3}\s*[-–—]\s*\d{1,3})/;
-  for(var i=0;i<lines.length;i++){
-    var s=lines[i].replace(/\s+/g,' ').trim().toUpperCase();
-    if(!s)continue;
-    if(/^SONG\s+\d+/.test(s))continue;
-    if(/^\d{1,3}$/.test(s))continue;
-    if(/^\d{1,2}\.\s/.test(s))continue;
-    var m=s.match(OLD)||s.match(PAT);
-    if(m)return(m[1]||m[0]).replace(/\s+/g,' ').trim();
-  }
-  return '';
-}
-function splitPartLine(line){
-  var re=/(^|\s)(\d{1,2})\.\s+/g,m,idxs=[];
-  while((m=re.exec(line))!==null)idxs.push({n:+m[2],start:m.index,content:re.lastIndex});
-  if(!idxs.length)return null;
-  var out=[];
-  for(var i=0;i<idxs.length;i++){
-    var end=i+1<idxs.length?idxs[i+1].start:line.length;
-    out.push({n:idxs[i].n,text:line.slice(idxs[i].content,end).trim()});
-  }
-  return out;
-}
-function parsePageWeeks(P,m0,yr){
-  if(!P.length)return [];
-  var weekStart=/^\s*1\.\s+\S.*\((?:Simma\s+\d+|\d+\s*min)/i;
-  var weekPages=[];
-  P.forEach(function(lines,pi){
-    if(pi===0)return;
-    if(lines.some(function(ln){return weekStart.test(ln)}))weekPages.push(pi);
-  });
-  if(!weekPages.length)return [];
-  var coverTxt=(P[0]||[]).join(' ').toUpperCase();
-  var cm=coverTxt.match(/JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER/);
-  var startMonth=cm?MN.indexOf(cm[0]):(m0>=0?m0:(_pdfHint?_pdfHint.month:0));
-  var useYear=_pdfHint?_pdfHint.year:yr;
-  var firstMon=firstMondayOf(useYear,startMonth);
-  var W=[];
-  weekPages.forEach(function(pi,wi){
-    var cur={key:'auto-'+wi,sm:startMonth,day:0,mon:add(firstMon,7*wi),bible:findBible(P[pi]),songs:['','',''],parts:[]};
-    var sec=1;
-    var songSlot=0;
-    var open=null;
-    var end=weekPages[wi+1]||P.length;
-    function close(){
-      if(!open)return;
-      var t=open.text,mm=minM(t);
-      var ti=twFix((mm?t.slice(0,mm.index):t).replace(/[\s,;:–-]+$/g,'').trim());
-      if(!cur.parts.some(function(p){return p.sec===open.sec&&p.n===open.n}))
-        cur.parts.push({sec:open.sec,n:open.n,t:ti,m:mm?Math.max(+mm[1],+(mm[2]||0)):null});
-      open=null;
-    }
-    for(var p=pi;p<end;p++){
-      P[p].forEach(function(ln){
-        var k=sk(ln);
-        if(k==='treasuresfromgodsword'||k==='biblemuakorade'){close();sec=1;return}
-        if(k==='applyyourselftothefieldministry'||k==='mawaninkuasnkaho'){close();sec=2;return}
-        if(k==='livingaschristians'||k==='kristofoabrab'){close();sec=3;return}
-        var sg=ln.match(/\bSong\s+(\d+)/i)||ln.match(/(?:^|\s)Dwom\s+(\d+)(?![\d:])/);
-        if(sg&&!open){
-          if(songSlot<3){cur.songs[songSlot]=sg[1];songSlot++}
-          return;
-        }
-        var segs=splitPartLine(ln);
-        if(segs){
-          for(var si=0;si<segs.length;si++){
-            close();
-            open={sec:sec,n:segs[si].n,text:segs[si].text};
-            if(minM(open.text))close();
-          }
-        }else if(open){
-          open.text+=' '+ln;
-          if(open.text.length>200)open=null;
-          if(open&&minM(open.text))close();
-        }
-      });
-    }
-    close();
-    W.push(cur);
-  });
-  return W;
-}
-
 var VIEW=false,S,st,view='sched',mi=0,sel=null,op={},all=false,ui={cn:4,keep:false,src:'',cd:''};
 function $(i){return document.getElementById(i)}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
@@ -431,10 +626,66 @@ function peopleView(box){
   CATS.forEach(function(c){var b=el('button','cc'+(p.cats.indexOf(c)>-1?' on':''),c);b.onclick=function(){var x=p.cats.indexOf(c);if(x>-1)p.cats.splice(x,1);else p.cats.push(c);save();render()};r.appendChild(b)});
   var d=el('button','cc','Remove');d.onclick=function(){if(confirm('Remove '+p.name+'? Names already in the schedule stay.')){S.people.splice(S.people.indexOf(p),1);save();render()}};r.appendChild(d);l.appendChild(r)});
  box.appendChild(l)}
+/* ---- AI Prompt section ---- */
+function aiPromptSection(){
+  var det=el('details');
+  det.style.cssText='margin:0 0 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);overflow:hidden';
+  var sum=el('summary');
+  sum.textContent='AI Prompt: Convert workbook PDF to JSON';
+  sum.style.cssText='padding:12px 14px;cursor:pointer;font-weight:600;font-size:14px;background:var(--sec)';
+  det.appendChild(sum);
+  var inner=el('div');
+  inner.style.cssText='padding:12px 14px';
+  inner.appendChild(el('p','note','Use this when PDF import fails or misses data. It tells any AI (Claude, ChatGPT, Gemini) how to convert the workbook PDF into the exact JSON format this app imports.'));
+  var steps=el('ol');
+  steps.style.cssText='margin:0 0 10px;padding-left:20px;font-size:12px;line-height:1.6';
+  ['Open an AI chat that can read PDFs (e.g. Claude.ai).',
+   'Attach the workbook PDF.',
+   'Copy the prompt below and paste it as your message.',
+   'Wait for the AI to list the weeks, then reply "go ahead".',
+   'Save the JSON block it returns as mwb-schedule-YYYY.json.',
+   'Settings → Backup → Import JSON → pick that file.'
+  ].forEach(function(s){steps.appendChild(el('li','',s))});
+  inner.appendChild(steps);
+  var ta=el('textarea','cb');
+  var tpl=document.getElementById('aiPrompt');
+  ta.value=tpl?tpl.textContent.trim():'';
+  ta.readOnly=true;
+  ta.style.height='120px';
+  ta.style.fontSize='10px';
+  ta.spellcheck=false;
+  inner.appendChild(ta);
+  var row=el('div');
+  row.style.cssText='display:flex;gap:8px;margin-top:8px';
+  var cp=el('button','big','Copy prompt');
+  cp.style.flex='1';
+  cp.onclick=function(){
+    copyText(ta.value).then(function(ok){
+      if(ok){cp.textContent='Copied \u2713';setTimeout(function(){cp.textContent='Copy prompt'},2000)}
+      else{ta.focus();ta.select();alert('Select all and copy manually.')}
+    })
+  };
+  var dl=el('button','big','Download .txt');
+  dl.style.flex='1';
+  dl.onclick=function(){
+    var u=URL.createObjectURL(new Blob([ta.value],{type:'text/plain'}));
+    var a=document.createElement('a');
+    a.href=u;
+    a.download='workbook-to-json-prompt.txt';
+    a.click();
+    setTimeout(function(){URL.revokeObjectURL(u)},2000)
+  };
+  row.appendChild(cp);
+  row.appendChild(dl);
+  inner.appendChild(row);
+  det.appendChild(inner);
+  return det;
+}
 /* create */
 function plan(){var m=monOf(ui.cd),n=Math.max(1,parseInt(ui.cn)||1),o=[];for(var x=0;x<n;x++){var d=add(m,7*x);o.push({d:d,ex:!!wkOf(d)})}return o}
 function createView(box){
  var pb=el('button','big','Import from workbook PDF');pb.style.marginBottom='12px';pb.onclick=function(){pickPdf(pb)};box.appendChild(pb);
+ box.appendChild(aiPromptSection());
  var f=el('div','f'),l1=el('label','','Start date (snaps to Monday)'),di=el('input');di.type='date';di.value=ui.cd;
  var l2=el('label','','Number of weeks'),ni=el('input');ni.type='number';ni.min=1;ni.value=ui.cn;
  var l3=el('label','','Start from'),se=el('select'),o0=el('option','','Default table');o0.value='';se.appendChild(o0);
@@ -545,8 +796,8 @@ function parseLines(P){
    if(m&&sec){close();open={sec:sec,n:+m[1],text:m[2]}}else if(open){open.text+=' '+ln;if(open.text.length>200)open=null}
    if(open&&minM(open.text))close()});
   close()});
- var na=0,nb=0;P.forEach(function(Ls){Ls.forEach(function(x){if(/\(Simma\s+\d/.test(x))na++;if(/\d\s*min\.?\)/i.test(x))nb++})});var lang=na>nb?'tw':'en';if(!W.length){W=parsePageWeeks(P,m0,yr);}var f=W.length?(m0>-1?m0:W[0].sm):-1;return{weeks:W,m0:f,year:yr,lang:lang}}
-function monFor(r,R){if(r.mon)return r.mon;var y=r.sm<R.m0?R.year+1:R.year;return monOf(iso(new Date(Date.UTC(y,r.sm,r.day))))}
+ var f=W.length?(m0>-1?m0:W[0].sm):-1;var na=0,nb=0;P.forEach(function(Ls){Ls.forEach(function(x){if(/\(Simma\s+\d/.test(x))na++;if(/\d\s*min\.?\)/i.test(x))nb++})});return{weeks:W,m0:f,year:yr,lang:na>nb?'tw':'en'}}
+function monFor(r,R){var y=r.sm<R.m0?R.year+1:R.year;return monOf(iso(new Date(Date.UTC(y,r.sm,r.day))))}
 function buildWeek(r){
  var I=[it('ch','Chairman',null,0),it('pr','Opening Prayer',null,0),it('pr','Closing Prayer',null,0)],P=r.parts,cb=null;
  P.filter(function(p){return p.sec===1}).forEach(function(p,i){I.push(it(['t1','t2','t3'][i]||'x',p.t,p.m,1))});
@@ -561,8 +812,8 @@ function warns(r){var o=[],c=function(s){return r.parts.filter(function(p){retur
 function pickPdf(btn){var f=document.createElement('input');f.type='file';f.accept='application/pdf';
  f.onchange=function(){if(!f.files[0])return;var t=btn.textContent;btn.textContent='Reading PDF…';
   f.files[0].arrayBuffer().then(pdfLines).then(function(L){btn.textContent=t;if(!L.length){alert('No text found. Scanned PDFs are not supported.');return}
-   var _fn=(f.files[0]&&f.files[0].name)||'',_fm=_fn.match(/mwb_[A-Za-z]+_(\d{4})(\d{2})/i);if(_fm)_pdfHint={year:+_fm[1],month:+_fm[2]-1};var R=parseLines(L);if(!R.weeks.length){alert('No week headings such as "NOVEMBER 2-8" were found.');return}
-   R.weeks.forEach(function(r){r.on=true});R.mode='keep';ui.imp=R;drawReview()}).catch(function(e){btn.textContent=t;alert('Could not read the PDF. Check that libs/pdf.min.mjs and libs/pdf.worker.min.mjs are next to index.html and that the app is opened from Netlify, not from a file. ('+(e&&e.message||e)+')')})};f.click()}
+   var R=parseLines(L);if(!R.weeks.length){alert('No week headings found in this PDF. Try the AI Prompt in the Create tab to convert it to JSON manually.');return}
+   R.weeks.forEach(function(r){r.on=true});R.mode='keep';ui.imp=R;drawReview()}).catch(function(e){btn.textContent=t;alert('Could not read the PDF. Check that libs/pdf.min.mjs and libs/pdf.worker.min.mjs are next to index.html and that the app is opened from Netlify, not from a file. If it keeps failing, use the AI Prompt in the Create tab. ('+(e&&e.message||e)+')')})};f.click()}
 function drawReview(){
  var R=ui.imp,sh=$('sheet');sh.innerHTML='';if(!R){sh.className='';return}sh.className='open';
  var b=el('div','sh'),hh=el('div','shh');hh.appendChild(el('b','','Review import'));var cl=el('button','','Cancel');cl.onclick=function(){ui.imp=null;drawReview()};hh.appendChild(cl);b.appendChild(hh);
@@ -571,7 +822,6 @@ function drawReview(){
  if(ex){b.appendChild(el('p','note','Some weeks already exist. For those weeks:'));var cb=el('div','ch2');[['keep','Keep names'],['replace','Replace week'],['skip','Skip']].forEach(function(m){var x=el('button',R.mode===m[0]?'on':'',m[1]);x.onclick=function(){R.mode=m[0];drawReview()};cb.appendChild(x)});b.appendChild(cb)}
  R.weeks.forEach(function(r){var w=buildWeek(r),mon=monFor(r,R),c=el('div','card'),h=el('label','wk'),ck=el('input');ck.type='checkbox';ck.checked=r.on;ck.onchange=function(){r.on=ck.checked;drawReview()};h.appendChild(ck);
   h.appendChild(document.createTextNode(' '+lab({mon:mon})+(wkOf(mon)?' (exists)':'')+(r.bible?' · '+r.bible:'')+(r.songs.some(Boolean)?' · songs '+r.songs.join('/'):'')));c.appendChild(h);
-  var bbi=el('input');bbi.type='text';bbi.placeholder='Bible reading';bbi.value=r.bible||'';bbi.oninput=function(){r.bible=bbi.value};c.appendChild(bbi);
   var n=0;w.items.forEach(function(i){if(i.sec<1||i.ty==='rd')return;n++;var k=PRE[i.ty]||'Eld-Ms',d=el('div','note',n+'. '+i.t+(i.m?' ('+i.m+' min.) ':' (no min.) ')+'· '+k+(i.df?' · default':''));c.appendChild(d)});
   warns(r).forEach(function(x){c.appendChild(el('div','warn',x))});b.appendChild(c)});
  var go2=el('button','big','Import selected weeks');go2.onclick=applyImp;b.appendChild(go2);sh.appendChild(b)}
@@ -694,5 +944,6 @@ VIEW=isViewer();window.onhashchange=function(){location.reload()};
 if(VIEW){document.body.className='vw';S={at:PUBLISHED.at||'',settings:Object.assign({cong:'',start:'19:00'},PUBLISHED.settings),people:[],weeks:PUBLISHED.weeks};all=true;mi=nowMonth();start()}
 else load().then(function(x){S=x||seed();start()}).catch(function(){S=seed();start()});
 </script>
+
 </body>
 </html>
