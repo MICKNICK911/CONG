@@ -1,0 +1,216 @@
+{
+  "settings": {
+    "cong": "",
+    "start": "19:00",
+    "adj": true,
+    "conc": true,
+    "lang": "en"
+  },
+  "people": [],
+  "lastBackup": "",
+  "weeks": [
+    {
+      "id": "w2027-03-01",
+      "mon": "2027-03-01",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 27-28",
+      "songs": ["123", "114", "8"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Hwɛ Yie Na Woanyɛ Ahantan",                 "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 1,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Nya Aboterɛ, Ɛnyɛ Ahantan",                 "m": 15,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-03-08",
+      "mon": "2027-03-08",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 29-30",
+      "songs": ["8", "151", "2"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Adeɛ Biara a Yɛbɛyɛ Ama Yehowa No, Ne Werɛ Remfi", "m": 10, "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "eb",  "t": "Kyerɛkyerɛ Wo Gyidi Mu",                    "m": 5,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Kae Yehowa Wɔ Wo Mmabunberem",              "m": 7,    "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "liv", "t": "Afe 2027 Amanneɛbɔ a Efi Adansi Dwumadibea No Hɔ", "m": 8, "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-03-15",
+      "mon": "2027-03-15",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 31-32",
+      "songs": ["150", "18", "21"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Atumfoɔ Akukudam a Ɛwɔ Hɔ No Rentumi Nnyina Yehowa Anim Simma Mpo!", "m": 10, "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 5,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Yɛrebɛkae Yesu Wuo No, Woaboboa Wo Ho?",    "m": 5,    "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "liv", "t": "Video a yɛato din, Nneɛma a Asafo No Atumi Ayɛ", "m": 10, "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-03-22",
+      "mon": "2027-03-22",
+      "cv": true,
+      "co": false,
+      "bible": "",
+      "songs": ["", "", ""],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": ""     },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": ""     },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": ""     },
+        { "ty": "t1",  "t": "Treasures",                                 "m": 10,   "sec": 1, "n": [], "c": ""     },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": ""     },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": ""     },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 3,    "sec": 2, "n": [], "c": ""     },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 4,    "sec": 2, "n": [], "c": ""     },
+        { "ty": "ww",  "t": "Ɛdɛn Na Wobɛka?",                           "m": 5,    "sec": 2, "n": [], "c": ""     },
+        { "ty": "ln",  "t": "Local Needs",                               "m": 15,   "sec": 3, "n": [], "c": ""     },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": ""     },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-03-29",
+      "mon": "2027-03-29",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 33",
+      "songs": ["1", "32", "135"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Yehowa Bu Atɛntrenee Bere Nyinaa",          "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "fu",  "t": "Yɛ Sankɔhwɛ",                               "m": 5,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Asafo Mu Ahiade",                           "m": 15,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-04-05",
+      "mon": "2027-04-05",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 34",
+      "songs": ["4", "99", "153"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Yehowa Hwɛ Ne Nnwan",                       "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 2,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Asafo Mu Ahiade",                           "m": 15,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-04-12",
+      "mon": "2027-04-12",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 35-36",
+      "songs": ["148", "10", "30"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Yehowa Yɛɛ Saa De Tee Ne Din Ho",           "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "ww",  "t": "Ɛdɛn Na Wobɛka?",                           "m": 5,    "sec": 2, "n": [], "c": "Eld-Ms" },
+        { "ty": "tk",  "t": "Ɔkasa",                                     "m": 5,    "sec": 2, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Yɛhyɛ Onyankopɔn Din Anuonyam",             "m": 15,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-04-19",
+      "mon": "2027-04-19",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 37",
+      "songs": ["113", "157", "165"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Nnua Mmienu a Na Wɔbɛka Abom Ama Ayɛ Baako", "m": 10, "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "sc",  "t": "Hyɛ Nkɔmmɔ Ase",                            "m": 3,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "eb",  "t": "Kyerɛkyerɛ Wo Gyidi Mu",                    "m": 5,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Akwankyerɛ Kuw No Hwɛ Ma Baakoyɛ Tena Onyankopɔn Nkurɔfo Mu—Ɔfã 2", "m": 15, "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    },
+    {
+      "id": "w2027-04-26",
+      "mon": "2027-04-26",
+      "cv": false,
+      "co": false,
+      "bible": "HESEKIEL 38-39",
+      "songs": ["12", "53", "133"],
+      "items": [
+        { "ty": "ch",  "t": "Chairman",                                  "m": null, "sec": 0, "n": [], "c": "Eld-Ms" },
+        { "ty": "pr",  "t": "Opening Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "pr",  "t": "Closing Prayer",                            "m": null, "sec": 0, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "t1",  "t": "Sɛ Gog To Hyɛ Yɛn So a, Dɛn Na Yehowa Bɛyɛ?", "m": 10, "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t2",  "t": "Spiritual Gems",                            "m": 10,   "sec": 1, "n": [], "c": "Eld-Ms" },
+        { "ty": "t3",  "t": "Bible Reading",                             "m": 4,    "sec": 1, "n": [], "c": "Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 2,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 2,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "md",  "t": "Yɛ Asuafoɔ",                                "m": 4,    "sec": 2, "n": [], "c": "Duet-Pub-Ms-Eld" },
+        { "ty": "liv", "t": "Sɛ Wowɔ Asɛnka Mu a, Ɛyɛ a Kae Sɛ Abɔfoɔ No Ka Wo Ho", "m": 15, "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "cbs", "t": "Congregation Bible Study",                  "m": 30,   "sec": 3, "n": [], "c": "Eld-Ms" },
+        { "ty": "rd",  "t": "Reader",                                    "m": null, "sec": 3, "n": [], "c": ""     }
+      ]
+    }
+  ]
+}
